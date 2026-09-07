@@ -145,6 +145,7 @@
   font-size: var(--fs-micro);
   font-weight: 800;
   letter-spacing: .06em;
+  white-space: nowrap;
 }
 .mtrack-badge svg { width: 15px; height: 15px; }
 
