@@ -58,15 +58,24 @@
 }
 html[lang="he"] .hero-eyebrow { letter-spacing: .1em; font-size: clamp(15px, 12px + .5vw, 19px); }
 
+/* הכותרת פורצת את רוחב הקונטיינר ורצה מקצה לקצה של המסך.
+   הפריצה נעשית ב-margin שלילי בגודל ה-gutter, כדי לא להיאבק ב-.container. */
 .hero h1 {
   font-size: var(--fs-h1);
-  line-height: .96;
+  line-height: 1.06;
   font-weight: 800;
   color: #fff;
   margin-bottom: var(--sp-5);
-  max-width: 16ch;
-  margin-inline: auto;
+  margin-inline: calc(var(--gutter) * -1);
+  max-width: none;
+  overflow: hidden;
+  /* דעיכה בקצוות, כדי שהמילים לא נחתכות בחתך חד בשולי המסך */
+  -webkit-mask-image: linear-gradient(to left, transparent, #000 7%, #000 93%, transparent);
+          mask-image: linear-gradient(to left, transparent, #000 7%, #000 93%, transparent);
 }
+/* כשהאנימציה מושבתת הכותרת חוזרת להיות משפט אחד ממורכז */
+html.a11y-no-motion .hero h1 { text-align: center; }
+@media (prefers-reduced-motion: reduce) { .hero h1 { text-align: center; } }
 
 .hero-sub {
   font-size: var(--fs-body-lg);

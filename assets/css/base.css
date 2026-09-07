@@ -193,18 +193,44 @@ html[lang="he"] .sechead-side  { letter-spacing: .06em; font-size: var(--fs-body
 }
 .reveal.is-visible { opacity: 1; transform: none; }
 
-/* ---- כותרת ההירו: מילה־מילה ---- */
-.word {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(.5em) rotate(2.5deg);
-  animation: wordIn .78s var(--ease-bounce) forwards;
-  animation-delay: calc(.25s + var(--w, 0) * 90ms);
+/* ==========================================================================
+   כותרת ההירו רצה - "השיפוד לא מפסיק לרוץ", וגם המשפט לא מפסיק
+   --------------------------------------------------------------------------
+   הרצועה מכילה את הרצף פעמיים, ולכן הזזה של 50% נוחתת על פריים זהה
+   והלולאה אינסופית בלי תפר. הכיוון הפיזי הפוך בין עברית לאנגלית:
+   בעברית קוראים מימין לשמאל, ולכן טקסט חדש צריך להיכנס מהצד השמאלי.
+   ========================================================================== */
+.run-track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  will-change: transform;
+  animation: heroRunRtl 30s linear infinite;
 }
-@keyframes wordIn { to { opacity: 1; transform: none; } }
-html.a11y-no-motion .word { opacity: 1 !important; transform: none !important; animation: none !important; }
+html[dir="ltr"] .run-track { animation-name: heroRunLtr; }
+
+@keyframes heroRunRtl { from { transform: translateX(0); } to { transform: translateX(50%); } }
+@keyframes heroRunLtr { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+.run-item { padding-inline: .28em; }
+
+.run-sep {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  color: var(--brand-gold);
+  opacity: .8;
+}
+.run-sep svg { width: .62em; height: .62em; }
+html[dir="rtl"] .run-sep svg { transform: scaleX(-1); }
+
+/* בעצירת אנימציות ובהעדפת פחות תנועה: משפט אחד, במרכז, בלי תנועה. */
+html.a11y-no-motion .run-track { animation: none !important; transform: none !important; }
+html.a11y-no-motion .run-item[aria-hidden],
+html.a11y-no-motion .run-sep { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
-  .word { opacity: 1; transform: none; animation: none; }
+  .run-track { animation: none; transform: none; }
+  .run-item[aria-hidden], .run-sep { display: none; }
 }
 
 html.a11y-no-motion *,

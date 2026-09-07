@@ -185,14 +185,30 @@
            window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 
-  /* ---- פיצול כותרת ההירו למילים, לכניסה מדורגת ----
+  /* ---- כותרת ההירו רצה בלולאה, כמו השיפוד ----
+     המשפט נבנה COPIES פעמים, והרצועה כולה מוכפלת. מכאן שהזזה של 50%
+     נוחתת בדיוק על פריים זהה, והלולאה נראית אינסופית בלי תפר.
+     העותק הראשון הוא הכותרת האמיתית; כל השאר aria-hidden, כדי שקורא
+     מסך ישמע את המשפט פעם אחת.
      רץ מחדש בכל החלפת שפה, כי i18n כותב מחדש את התוכן. */
-  function splitWords(el) {
+  const RUN_COPIES = 3;
+
+  function buildRunner(el) {
     if (!el) return;
     const text = el.textContent.trim();
-    el.innerHTML = text.split(/\s+/)
-      .map((w, i) => `<span class="word" style="--w:${i}">${w}</span>`)
-      .join(' ');
+    if (!text) return;
+
+    const sep  = `<span class="run-sep" aria-hidden="true">${window.ICON ? window.ICON.skewer : ''}</span>`;
+    const item = hidden => `<span class="run-item"${hidden ? ' aria-hidden="true"' : ''}>${esc(text)}</span>`;
+
+    let half = item(false);
+    for (let i = 1; i < RUN_COPIES; i++) half += sep + item(true);
+    half += sep;
+
+    let hidden = '';
+    for (let i = 0; i < RUN_COPIES; i++) hidden += item(true) + sep;
+
+    el.innerHTML = `<span class="run-track">${half}${hidden}</span>`;
   }
 
   /* ---- קונפטי קרנבל בסקשן המסלולים ---- */
@@ -393,7 +409,7 @@
     if (window.Gallery) window.Gallery.render();
     if (window.Menu)    window.Menu.render();
     if (window.Pages)   window.Pages.render();
-    splitWords(document.getElementById('heroTitle'));
+    buildRunner(document.getElementById('heroTitle'));
     initReveal();
   }
 

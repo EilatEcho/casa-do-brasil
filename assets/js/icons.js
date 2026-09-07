@@ -21,6 +21,8 @@ window.ICON = (function () {
     minus:   wrap('<path d="M5 12h14"/>'),
     check:   wrap('<path d="M4 12.5l5 5L20 6.5"/>'),
     flame:   wrap('<path d="M12 2s5 4.5 5 9a5 5 0 0 1-10 0c0-1.6.6-3 1.4-4.2.3 1.3 1.1 2.2 2 2.2 1.3 0 1.6-1.6 1.6-3.2C12 4.6 12 2 12 2z"/><path d="M7 13a5 5 0 0 0 10 0"/>'),
+    /* שיפוד - מפריד בין חזרות הכותרת הרצה */
+    skewer:  wrap('<path d="M2 12h15"/><path d="M17 8.5l4 3.5-4 3.5z" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.6" fill="currentColor" stroke="none"/>'),
     crown:   wrap('<path d="M3 7l4 4 5-7 5 7 4-4-2 12H5L3 7z"/>'),
     glass:   wrap('<path d="M7 3h10l-1 6a4 4 0 0 1-8 0L7 3z"/><path d="M12 13v6M8.5 21h7"/>'),
     search:  wrap('<circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/>'),
