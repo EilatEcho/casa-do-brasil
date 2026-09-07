@@ -230,13 +230,29 @@ html[dir="ltr"] .run-track { animation-name: heroRunLtr; }
 .run-sep svg { width: .62em; height: .62em; }
 html[dir="rtl"] .run-sep svg { transform: scaleX(-1); }
 
-/* בעצירת אנימציות ובהעדפת פחות תנועה: משפט אחד, במרכז, בלי תנועה. */
-html.a11y-no-motion .run-track { animation: none !important; transform: none !important; }
+/* משפט אחד, במרכז, בלי תנועה - בשלושה מצבים:
+   עצירת אנימציות, העדפת פחות תנועה, ומסך צר.
+   ⚠️ במובייל הכותרת רחבה פי כמה מהמסך, ולכן בכל רגע נראית ממנה רק מילה
+   או שתיים והיא נקראת כטקסט שברח הצידה. שם עדיף משפט שלם וממורכז. */
+html.a11y-no-motion .run-track,
+.run-track.is-static { animation: none !important; transform: none !important; }
 html.a11y-no-motion .run-item[aria-hidden],
 html.a11y-no-motion .run-sep { display: none !important; }
+
 @media (prefers-reduced-motion: reduce) {
   .run-track { animation: none; transform: none; }
   .run-item[aria-hidden], .run-sep { display: none; }
+}
+
+@media (max-width: 760px) {
+  .run-track {
+    animation: none;
+    transform: none;
+    display: inline;          /* מאפשר גלישה טבעית לשתי שורות */
+    white-space: normal;
+  }
+  .run-item[aria-hidden], .run-sep { display: none; }
+  .run-item { padding-inline: 0; }
 }
 
 html.a11y-no-motion *,

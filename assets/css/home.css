@@ -77,6 +77,20 @@ html[lang="he"] .hero-eyebrow { letter-spacing: .1em; font-size: clamp(15px, 12p
 html.a11y-no-motion .hero h1 { text-align: center; }
 @media (prefers-reduced-motion: reduce) { .hero h1 { text-align: center; } }
 
+/* מובייל: הכותרת חוזרת לתוך הקונטיינר, ממורכזת, בלי פריצה ובלי דעיכת קצוות.
+   על מסך צר ריצה של המשפט מציגה מילה אחת בכל רגע ונראית כמו טקסט שברח. */
+@media (max-width: 760px) {
+  .hero h1 {
+    margin-inline: auto;
+    max-width: 15ch;
+    overflow: visible;
+    text-align: center;
+    text-wrap: balance;
+    -webkit-mask-image: none;
+            mask-image: none;
+  }
+}
+
 .hero-sub {
   font-size: var(--fs-body-lg);
   line-height: 1.75;
@@ -190,12 +204,15 @@ html.a11y-no-motion .hero h1 { text-align: center; }
 /* --- גוף הכרטיס ---
    הכותרות, המחיר והכפתורים ממורכזים. רשימת הנתחים נשארת מיושרת להתחלה -
    שורות קצרות ממורכזות יוצרות "קצה משונן" וקשות לסריקה. */
+/* --card-pad-x חייב להישאר זהה לריפוד האופקי בפועל: סרט המחיר נמתח
+   לקצוות הכרטיס בעזרת שוליים שליליים בגודלו. אם משנים ריפוד - לשנות גם אותו. */
 .track-body {
+  --card-pad-x: var(--sp-5);
   flex: 1;
   display: flex; flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: var(--sp-6) var(--sp-5);
+  padding: var(--sp-6) var(--card-pad-x);
 }
 .track-kicker, .track-title { width: 100%; }
 .track-tagline { max-width: 44ch; }
@@ -204,8 +221,11 @@ html.a11y-no-motion .hero h1 { text-align: center; }
    שורת הכפתורים שלו (margin-top:auto) יורדת ב-24px ביחס לשכנה,
    ושתי השורות כבר לא על אותו קו. */
 @media (min-width: 960px) {
-  .track-body { padding: var(--sp-7) var(--sp-6); }
-  .track--featured .track-body { padding: var(--sp-8) var(--sp-7) var(--sp-7); }
+  .track-body { --card-pad-x: var(--sp-6); padding: var(--sp-7) var(--card-pad-x); }
+  .track--featured .track-body {
+    --card-pad-x: var(--sp-7);
+    padding: var(--sp-8) var(--card-pad-x) var(--sp-7);
+  }
 }
 
 .track-kicker {
@@ -248,19 +268,43 @@ html.a11y-no-motion .hero h1 { text-align: center; }
 }
 
 /* --- המחיר: בלוק צבע גדול --- */
+/* ==========================================================================
+   המחיר כסרט (ribbon) שחוצה את הכרטיס מקצה לקצה
+   --------------------------------------------------------------------------
+   הסרט נמתח על כל רוחב הכרטיס בעזרת שוליים שליליים בגודל הריפוד של הגוף
+   (--card-pad-x, מוגדר לכל נקודת שבירה), ושני קצותיו נחתכים בזנב סנונית.
+   שיפוע כהה בכל קצה נותן את תחושת הקיפול מתחת לסרט.
+   --ribbon-notch הוא עומק החיתוך; שינוי שלו מספיק כדי לשנות את הצורה.
+   ========================================================================== */
 .track-price {
+  --ribbon-notch: 26px;
+
+  position: relative;
+  align-self: stretch;                 /* בלי זה הסרט מתכווץ לרוחב התוכן */
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: var(--sp-3) var(--sp-5);
   justify-content: center;
-  padding: var(--sp-4) var(--sp-6);
+  padding: var(--sp-4) calc(var(--ribbon-notch) + var(--sp-5));
+  margin-inline: calc(var(--card-pad-x) * -1);
   margin-bottom: var(--sp-5);
-  background: var(--brand-red);
+
+  background-color: var(--brand-red);
+  /* הצללת הקיפול בשני הקצוות */
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, .22), transparent var(--ribbon-notch)),
+    linear-gradient(to left,  rgba(0, 0, 0, .22), transparent var(--ribbon-notch));
   color: #fff;
+
+  clip-path: polygon(
+    0 0, 100% 0,
+    calc(100% - var(--ribbon-notch)) 50%, 100% 100%,
+    0 100%, var(--ribbon-notch) 50%
+  );
 }
 .track--featured .track-price {
-  background: var(--brand-gold);
+  background-color: var(--brand-gold);
   color: #2a1c06;
 }
 .track-price .amount {
