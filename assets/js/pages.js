@@ -327,6 +327,16 @@ window.Pages = (function () {
     </section>`;
   }
 
+  /* תמונת כרטיס מאמר. p.img נקבע ב-_tools/build_posts.py לפי נושא המאמר;
+     אם הוא חסר (ארכיון ישן) הכרטיס פשוט מוצג בלי תמונה. */
+  function postMedia(p) {
+    if (!p || !p.img) return '';
+    return `<span class="pg-post-media">
+              <img src="${R()}assets/img/gallery/${esc(p.img.base)}-thumb.jpg" alt=""
+                   loading="lazy" width="${esc(p.img.w)}" height="${esc(p.img.h)}">
+            </span>`;
+  }
+
   /* ======================================================================
      6. בלוג - רשימה עם חיפוש וטעינה מדורגת
      ====================================================================== */
@@ -392,6 +402,7 @@ window.Pages = (function () {
     list.insertAdjacentHTML('beforeend', next.map((p, i) => `
       <li class="pg-post reveal" style="--reveal-delay:${(i % 3) * 70}ms">
         <a href="${R()}post/${encodeURIComponent(p.slug)}.html">
+          ${postMedia(p)}
           <h3>${esc(p.title)}</h3>
           <p>${esc(p.desc)}</p>
           <span class="link-underline">${esc(t('pg.readMore'))}${I().arrow}</span>
@@ -451,6 +462,10 @@ window.Pages = (function () {
         </nav>
 
         <h1 class="pg-post-title reveal">${esc(p.title)}</h1>
+        ${p.img ? `<figure class="pg-post-hero reveal">
+          <img src="${R()}assets/img/gallery/${esc(p.img.base)}.jpg" alt="${esc(p.img.alt)}"
+               width="${esc(p.img.w)}" height="${esc(p.img.h)}">
+        </figure>` : ''}
         <div class="prose pg-prose reveal">${body}</div>
 
         <div class="pg-actions reveal">

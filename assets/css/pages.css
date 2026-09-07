@@ -319,11 +319,35 @@
 .pg-post a {
   display: flex; flex-direction: column; gap: 10px;
   width: 100%;
-  padding: clamp(20px, 14px + 1.2vw, 32px);
+  padding: 0 0 clamp(20px, 14px + 1.2vw, 32px);
   border: 1px solid var(--line);
+  overflow: hidden;
   transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease-bounce),
               background var(--dur) var(--ease);
 }
+/* התמונה נושקת לשלוש הפאות העליונות; הטקסט מקבל ריפוד משלו */
+.pg-post h3, .pg-post p, .pg-post .link-underline {
+  padding-inline: clamp(20px, 14px + 1.2vw, 32px);
+}
+
+/* התמונות בגלריה הן תערובת של לאורך ולרוחב. יחס קבוע + cover נותן
+   שורת כרטיסים אחידה בלי למתוח או לעוות אף צילום. */
+.pg-post-media {
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--ink-900);
+  margin-bottom: 6px;
+}
+.pg-post-media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .8s var(--ease-out);
+}
+.pg-post a:hover .pg-post-media img,
+.pg-post a:focus-visible .pg-post-media img { transform: scale(1.05); }
+html.a11y-no-motion .pg-post-media img { transition: none !important; transform: none !important; }
 .pg-post a:hover {
   border-color: var(--line-gold);
   background: rgba(248, 211, 152, .04);
@@ -362,6 +386,21 @@
   margin: 0 auto clamp(28px, 18px + 1.4vw, 48px);
   text-wrap: balance;
 }
+/* תמונת הפתיח של המאמר. יחס רחב וקבוע, כך שגם צילום לאורך וגם צילום
+   לרוחב נותנים את אותה רצועה ולא מזיזים את הטקסט למטה. */
+.pg-post-hero {
+  margin: 0 0 clamp(28px, 18px + 1.4vw, 48px);
+  aspect-ratio: 16 / 7;
+  overflow: hidden;
+  background: var(--ink-900);
+}
+.pg-post-hero img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+@media (max-width: 640px) { .pg-post-hero { aspect-ratio: 4 / 3; } }
+
 .pg-prose { max-width: 68ch; }
 .pg-prose p { line-height: var(--lh-body); margin-bottom: var(--sp-4); }
 .pg-prose h2 {
