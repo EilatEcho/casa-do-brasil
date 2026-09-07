@@ -1,0 +1,407 @@
+/* ==========================================================================
+   pages.css - הדפים הפנימיים: קצביה, שאלות נפוצות, הטבות, VIP,
+   CASA FRIENDS, בלוג ומאמר בודד.
+   כל הקומפוננטות כאן משותפות ליותר מדף אחד.
+   ========================================================================== */
+
+.section--alt { background: var(--bg-alt); }
+.container--narrow { max-width: 940px; }
+
+/* ==========================================================================
+   1. כותרת סקשן
+   ========================================================================== */
+.pg-head {
+  text-align: center;
+  max-width: 62ch;
+  margin-inline: auto;
+  margin-bottom: clamp(36px, 20px + 2.4vw, 64px);
+}
+.pg-head h2 {
+  font-size: clamp(28px, 20px + 2.2vw, 54px);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-display);
+  margin-bottom: var(--sp-4);
+}
+.pg-head h2::after {
+  content: "";
+  display: block;
+  width: 78px; height: 4px;
+  margin: var(--sp-4) auto 0;
+  background: var(--carnival-bar);
+}
+.pg-head p { color: var(--text-soft); text-wrap: balance; margin: 0; }
+
+.pg-sub {
+  font-size: var(--fs-h4);
+  color: var(--accent);
+  text-align: center;
+  margin-top: clamp(44px, 26px + 2vw, 76px);
+  margin-bottom: var(--sp-5);
+}
+.pg-lead { color: var(--text-soft); text-align: center; max-width: 60ch; margin-inline: auto; }
+
+/* ==========================================================================
+   2. שורת פעולות
+   ========================================================================== */
+.pg-actions {
+  display: flex; flex-wrap: wrap; gap: var(--sp-3); justify-content: center;
+  margin-top: clamp(40px, 24px + 2vw, 72px);
+}
+
+/* ==========================================================================
+   3. קצביה - רשימת מחירים
+   ========================================================================== */
+.pg-offer {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: var(--sp-3);
+  text-align: center;
+  padding: clamp(18px, 12px + 1vw, 28px) var(--sp-5);
+  margin-bottom: clamp(32px, 20px + 1.6vw, 56px);
+  border: 1px solid var(--line-gold);
+  background: rgba(248, 211, 152, .07);
+}
+.pg-offer svg { width: 22px; height: 22px; color: var(--carnival-orange); }
+.pg-offer strong { font-size: clamp(18px, 15px + .7vw, 26px); color: var(--accent); }
+.pg-offer span { color: var(--text-soft); }
+
+.pg-price-list, .pg-extras { list-style: none; display: grid; gap: 0; }
+@media (min-width: 780px) {
+  .pg-price-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(28px, 16px + 3vw, 70px); }
+}
+
+.pg-price-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: 10px;
+  padding-block: clamp(13px, 10px + .5vw, 19px);
+  border-bottom: 1px solid var(--line);
+  min-width: 0;
+}
+.pg-price-name {
+  font-size: clamp(16px, 14px + .45vw, 21px);
+  font-weight: 700;
+  min-width: 0;
+}
+.pg-star { color: var(--carnival-orange); font-weight: 800; }
+
+.pg-price-val { display: inline-flex; align-items: baseline; gap: 6px; white-space: nowrap; }
+.pg-price-val b {
+  font-size: clamp(16px, 14px + .45vw, 21px);
+  font-weight: 800;
+  color: var(--accent);
+}
+.pg-price-val i { font-style: normal; font-size: .74em; opacity: .8; margin-inline-end: 1px; }
+.pg-price-val em { font-style: normal; font-size: var(--fs-micro); color: var(--text-faint); }
+
+/* התיאור יורד לשורה שלמה מתחת לשם ולמחיר */
+.pg-price-note {
+  grid-column: 1 / -1;
+  font-size: var(--fs-label);
+  color: var(--text-soft);
+  margin-top: 2px;
+}
+
+.pg-extra { padding-block: var(--sp-4); border-bottom: 1px solid var(--line); }
+.pg-extra-head { display: flex; align-items: baseline; gap: 10px; margin: 0 0 4px; }
+.pg-extra-desc { font-size: var(--fs-body-sm); color: var(--text-soft); margin: 0; max-width: 62ch; }
+
+/* ==========================================================================
+   4. הערות תחתונות
+   ========================================================================== */
+.pg-notes {
+  margin-top: clamp(36px, 22px + 1.8vw, 64px);
+  padding: clamp(20px, 14px + 1.2vw, 36px);
+  border: 1px solid var(--line);
+}
+.pg-notes h3 { font-size: var(--fs-h4); color: var(--accent); margin-bottom: var(--sp-4); }
+.pg-notes ul { list-style: none; display: grid; gap: 10px; }
+.pg-notes li {
+  position: relative;
+  padding-inline-start: 20px;
+  color: var(--text-soft);
+  font-size: var(--fs-body-sm);
+  line-height: 1.65;
+}
+.pg-notes li::before {
+  content: "";
+  position: absolute; inset-inline-start: 0; top: .62em;
+  width: 7px; height: 7px;
+  background: var(--brand-gold);
+}
+
+.pg-fine { font-size: var(--fs-micro); color: var(--text-faint); line-height: 1.6; }
+.pg-fine--block {
+  max-width: 70ch; margin: var(--sp-6) auto 0; text-align: center;
+  padding-top: var(--sp-5); border-top: 1px solid var(--line);
+}
+
+/* ==========================================================================
+   5. אקורדיון שאלות נפוצות
+   ========================================================================== */
+.pg-acc { list-style: none; display: grid; gap: 0; }
+.pg-acc-item { border-bottom: 1px solid var(--line); }
+.pg-acc-item h3 { margin: 0; font-size: inherit; font-weight: inherit; }
+
+.pg-acc-btn {
+  width: 100%;
+  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-4);
+  padding-block: clamp(18px, 14px + .6vw, 26px);
+  background: none; border: 0;
+  text-align: start;
+  font-size: clamp(17px, 15px + .5vw, 23px);
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease);
+}
+.pg-acc-btn:hover { color: var(--accent); }
+
+/* פלוס שהופך למינוס - שני קווים, בלי אייקון חיצוני */
+.pg-acc-icon {
+  position: relative;
+  flex: 0 0 auto;
+  width: 22px; height: 22px;
+}
+.pg-acc-icon::before, .pg-acc-icon::after {
+  content: "";
+  position: absolute; inset: 50% 0 auto 0;
+  height: 2px; margin-top: -1px;
+  background: var(--accent);
+  transition: transform var(--dur) var(--ease);
+}
+.pg-acc-icon::after { transform: rotate(90deg); }
+.pg-acc-item.is-open .pg-acc-icon::after { transform: rotate(0deg); }
+
+.pg-acc-panel { padding-bottom: clamp(18px, 14px + .6vw, 26px); }
+.pg-acc-panel p { color: var(--text-soft); max-width: 74ch; margin: 0; line-height: var(--lh-body); }
+
+/* ==========================================================================
+   6. כרטיסים - הטבות, VIP, פרקים של המועדון
+   ========================================================================== */
+.pg-cards { display: grid; gap: clamp(16px, 10px + 1.2vw, 28px); }
+@media (min-width: 720px)  { .pg-cards--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+                             .pg-cards--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+                             .pg-cards--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1020px) { .pg-cards--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+                             .pg-cards--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+.pg-card {
+  padding: clamp(22px, 16px + 1.2vw, 36px);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, .02);
+  transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease-bounce);
+}
+.pg-card:hover { border-color: var(--line-gold); transform: translateY(-4px); }
+.pg-card-icon {
+  display: grid; place-items: center;
+  width: 46px; height: 46px;
+  margin-bottom: var(--sp-4);
+  border: 1px solid var(--line-gold);
+  color: var(--accent);
+}
+.pg-card-icon svg { width: 20px; height: 20px; }
+.pg-card h3 { font-size: var(--fs-h4); line-height: 1.2; margin-bottom: 10px; }
+.pg-card p { color: var(--text-soft); font-size: var(--fs-body-sm); line-height: 1.65; margin: 0; }
+.pg-card .pg-fine { margin-top: var(--sp-3); }
+
+/* ==========================================================================
+   7. כרטיסי מתנה ורשימת סימונים
+   ========================================================================== */
+.pg-gifts {
+  list-style: none;
+  display: grid; gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  max-width: 620px; margin-inline: auto;
+}
+.pg-gift {
+  display: grid; gap: 4px;
+  padding: var(--sp-5);
+  text-align: center;
+  border: 1px solid var(--line);
+}
+.pg-gift b { font-size: var(--fs-h4); color: var(--accent); }
+.pg-gift span { font-size: var(--fs-body-sm); color: var(--text-soft); }
+
+.pg-ticks {
+  list-style: none;
+  display: grid; gap: 10px;
+  max-width: 44ch; margin-inline: auto;
+  margin-top: var(--sp-5);
+}
+.pg-ticks li {
+  display: grid; grid-template-columns: 18px minmax(0, 1fr);
+  align-items: start; gap: 10px;
+  color: var(--text-soft);
+}
+.pg-ticks svg { width: 15px; height: 15px; margin-top: 4px; color: var(--carnival-green); }
+
+/* ==========================================================================
+   8. קריאה לפעולה בתוך הדף
+   ========================================================================== */
+.pg-cta {
+  text-align: center;
+  max-width: 620px;
+  margin: clamp(40px, 24px + 2vw, 72px) auto 0;
+  padding: clamp(26px, 18px + 1.4vw, 48px);
+  border: 1px solid var(--line-gold);
+  background: rgba(248, 211, 152, .05);
+}
+.pg-cta h3 { font-size: var(--fs-h3); margin-bottom: var(--sp-3); }
+.pg-cta p { color: var(--text-soft); margin-bottom: var(--sp-5); }
+.pg-cta--soon { margin-top: 0; }
+.pg-badge {
+  display: inline-block;
+  padding: 8px 20px;
+  margin-bottom: var(--sp-4);
+  background: var(--brand-red);
+  color: #fff;
+  font-size: var(--fs-micro);
+  font-weight: 800;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   9. שלבי ההצטרפות
+   ========================================================================== */
+.pg-steps {
+  list-style: none;
+  display: grid; gap: clamp(20px, 12px + 1.4vw, 36px);
+  counter-reset: step;
+}
+@media (min-width: 760px) { .pg-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.pg-step { text-align: center; }
+.pg-step-num {
+  display: grid; place-items: center;
+  width: 54px; height: 54px;
+  margin: 0 auto var(--sp-4);
+  border: 2px solid var(--brand-gold);
+  color: var(--accent);
+  font-size: 22px; font-weight: 800;
+}
+.pg-step h3 { font-size: var(--fs-h4); margin-bottom: 8px; }
+.pg-step p { color: var(--text-soft); font-size: var(--fs-body-sm); margin: 0; }
+
+/* ==========================================================================
+   10. בלוג
+   ========================================================================== */
+.pg-blog-bar {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-6);
+  padding-bottom: var(--sp-4);
+  border-bottom: 1px solid var(--line);
+}
+.pg-search {
+  display: flex; align-items: center; gap: 10px;
+  flex: 1 1 260px; max-width: 420px;
+  padding: 12px 16px;
+  border: 1px solid var(--line-strong);
+}
+.pg-search svg { width: 17px; height: 17px; color: var(--text-faint); flex: 0 0 auto; }
+.pg-search input {
+  flex: 1; min-width: 0;
+  background: none; border: 0;
+  color: var(--text);
+  font: inherit; font-size: var(--fs-body-sm);
+}
+.pg-search input::placeholder { color: var(--text-faint); }
+.pg-search:focus-within { border-color: var(--brand-gold); }
+.pg-count { margin: 0; color: var(--text-faint); font-size: var(--fs-body-sm); }
+.pg-count b { color: var(--accent); font-size: var(--fs-body); }
+
+.pg-posts { list-style: none; display: grid; gap: clamp(16px, 10px + 1.2vw, 28px); }
+@media (min-width: 720px)  { .pg-posts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1080px) { .pg-posts { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+.pg-post { display: flex; }
+.pg-post a {
+  display: flex; flex-direction: column; gap: 10px;
+  width: 100%;
+  padding: clamp(20px, 14px + 1.2vw, 32px);
+  border: 1px solid var(--line);
+  transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease-bounce),
+              background var(--dur) var(--ease);
+}
+.pg-post a:hover {
+  border-color: var(--line-gold);
+  background: rgba(248, 211, 152, .04);
+  transform: translateY(-4px);
+}
+.pg-post h3 {
+  font-size: clamp(18px, 15px + .7vw, 24px);
+  line-height: 1.25;
+  color: var(--text);
+  margin: 0;
+}
+.pg-post p {
+  flex: 1;
+  font-size: var(--fs-body-sm);
+  line-height: 1.6;
+  color: var(--text-soft);
+  margin: 0;
+}
+.pg-post .link-underline { align-self: start; margin-top: 4px; }
+
+.pg-empty { text-align: center; color: var(--text-soft); padding-block: var(--sp-8); }
+.pg-more { display: flex; justify-content: center; margin-top: clamp(32px, 20px + 1.6vw, 56px); }
+
+/* ==========================================================================
+   11. מאמר בודד
+   ========================================================================== */
+/* לדף המאמר אין כותרת דף עם תמונה, ולכן צריך לפנות מקום להדר הקבוע */
+.post-top { height: calc(var(--header-h) + var(--sp-5)); }
+
+.pg-post-title {
+  font-size: clamp(28px, 18px + 2.6vw, 56px);
+  line-height: 1.08;
+  letter-spacing: var(--ls-display);
+  text-align: center;
+  max-width: 22ch;
+  margin: 0 auto clamp(28px, 18px + 1.4vw, 48px);
+  text-wrap: balance;
+}
+.pg-prose { max-width: 68ch; }
+.pg-prose p { line-height: var(--lh-body); margin-bottom: var(--sp-4); }
+.pg-prose h2 {
+  font-size: var(--fs-h3);
+  color: var(--accent);
+  margin-top: var(--sp-7);
+  margin-bottom: var(--sp-4);
+}
+.pg-prose ul { margin-block: var(--sp-4); }
+
+/* ==========================================================================
+   12. מצבי נגישות
+   ========================================================================== */
+html.a11y-contrast .section--alt { background: #000 !important; }
+html.a11y-contrast .pg-card,
+html.a11y-contrast .pg-cta,
+html.a11y-contrast .pg-post a,
+html.a11y-contrast .pg-notes { border-color: #ffe600 !important; background: #000 !important; }
+html.a11y-contrast .pg-price-val b,
+html.a11y-contrast .pg-card-icon,
+html.a11y-contrast .pg-acc-btn:hover { color: #ffe600 !important; }
+
+html.a11y-light .section--alt { background: #eae3d8 !important; }
+html.a11y-light .pg-head h2,
+html.a11y-light .pg-post h3,
+html.a11y-light .pg-card h3,
+html.a11y-light .pg-cta h3,
+html.a11y-light .pg-price-name,
+html.a11y-light .pg-acc-btn { color: #14100e !important; }
+html.a11y-light .pg-head p,
+html.a11y-light .pg-card p,
+html.a11y-light .pg-post p,
+html.a11y-light .pg-notes li,
+html.a11y-light .pg-acc-panel p { color: #4a443d !important; }
+html.a11y-light .pg-price-val b,
+html.a11y-light .pg-sub,
+html.a11y-light .pg-gift b { color: var(--brand-red) !important; }
+html.a11y-light .pg-price-row,
+html.a11y-light .pg-acc-item,
+html.a11y-light .pg-extra { border-bottom-color: rgba(0, 0, 0, .14) !important; }
+html.a11y-light .menu-dots { border-bottom-color: rgba(0, 0, 0, .3); }
+html.a11y-no-motion .pg-card:hover,
+html.a11y-no-motion .pg-post a:hover { transform: none !important; }

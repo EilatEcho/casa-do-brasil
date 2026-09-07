@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>הטבות | קאזה דו ברזיל</title>
+<meta name="description" content="הטבות בלעדיות לאורחי קאזה דו ברזיל, כרטיסי מתנה, כרטיסי אשראי מיוחדים ועוד.">
+<meta name="theme-color" content="#1C2123">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="קאזה דו ברזיל">
+<meta property="og:title" content="הטבות | קאזה דו ברזיל">
+<meta property="og:description" content="הטבות בלעדיות לאורחי קאזה דו ברזיל, כרטיסי מתנה, כרטיסי אשראי מיוחדים ועוד.">
+<meta property="og:image" content="assets/img/logo-1200.png">
+
+<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/logo-400.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/inner.css">
+<link rel="stylesheet" href="assets/css/pages.css">
+</head>
+
+<body data-page="benefits">
+<a class="skip-link" href="#main" data-i18n="skip">דילוג לתוכן הראשי</a>
+
+<div data-partial="header"></div>
+
+<main id="main">
+
+  <!-- כותרת הדף. הטקסט מוזרק מ-SITE.benefits ב-config.js -->
+  <section class="page-hero" aria-labelledby="pageTitle">
+    <div class="page-hero-media">
+      <img src="assets/img/gallery/07-bar.webp" alt="" aria-hidden="true" width="720" height="405">
+    </div>
+    <div class="container page-hero-inner">
+      <nav class="breadcrumbs" aria-label="מיקום בתוך האתר">
+        <ol>
+          <li><a href="index.html" data-i18n-nav="home">בית</a></li>
+          <li aria-current="page"><span data-page-title>הטבות</span></li>
+        </ol>
+      </nav>
+      <h1 id="pageTitle" data-page-title>הטבות</h1>
+      <p data-page-desc>הטבות בלעדיות לאורחי קאזה דו ברזיל, כרטיסי מתנה, כרטיסי אשראי מיוחדים ועוד.</p>
+      <p class="page-hero-actions">
+        <a class="btn btn--gold" href="https://tabitisrael.co.il/online-reservations/create-reservation?step=search&amp;orgId=619bae58c6a7c716a41bdc73"
+           target="_blank" rel="noopener noreferrer" data-i18n="header.reserve">הזמנת שולחן</a>
+        <a class="btn btn--ghost" href="menu.html" data-i18n="pg.toMenu">לתפריט המלא</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- כל תוכן הדף נבנה כאן על ידי assets/js/pages.js מתוך config.js -->
+  <div id="benefitsRoot"></div>
+
+</main>
+
+<div data-partial="footer"></div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/icons.js"></script>
+<script src="assets/js/partials.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/pages.js"></script>
+<script src="assets/js/cookies.js"></script>
+<script src="assets/js/accessibility.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

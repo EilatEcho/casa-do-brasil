@@ -1,0 +1,703 @@
+/* ==========================================================================
+   home.css - סקשני דף הבית
+   ========================================================================== */
+
+/* ==========================================================================
+   1. הירו - וידאו עם שטיפת אדום, כותרת ענק
+   ========================================================================== */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid; align-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--brand-red);
+}
+
+.hero-media { position: absolute; inset: 0; z-index: -2; }
+.hero-media video, .hero-media img { width: 100%; height: 100%; object-fit: cover; }
+
+/* שטיפת אדום מרוסנת + כהות לקריאוּת.
+   האיזון כאן קריטי: מספיק אדום כדי שהמותג יקרא, מספיק שקוף כדי שהצילום יישאר צילום. */
+.hero-media::after {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to bottom,
+      rgba(12,14,15,.58) 0%,
+      rgba(12,14,15,.26) 30%,
+      rgba(18,21,23,.62) 70%,
+      rgba(28,33,35,.97) 100%),
+    radial-gradient(ellipse 120% 92% at 50% 46%, rgba(125,25,23,.40), rgba(66,14,13,.62) 82%);
+  mix-blend-mode: multiply;
+}
+/* ויניטה עדינה - מרכזת את המבט בכותרת */
+.hero-media::before {
+  content: "";
+  position: absolute; inset: 0; z-index: 1;
+  background: radial-gradient(ellipse 92% 74% at 50% 48%, transparent 42%, rgba(12,14,15,.5));
+}
+
+.hero-inner {
+  position: relative;
+  text-align: center;
+  padding-block: calc(var(--header-h) + var(--sp-8)) var(--sp-9);
+}
+
+.hero-eyebrow {
+  display: inline-block;
+  font-size: clamp(13px, 11px + .35vw, 16px);
+  font-weight: 700;
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--brand-gold);
+  margin-bottom: var(--sp-5);
+  padding-bottom: var(--sp-3);
+  border-bottom: 3px solid transparent;
+  border-image: var(--carnival-bar) 1;
+}
+html[lang="he"] .hero-eyebrow { letter-spacing: .1em; font-size: clamp(15px, 12px + .5vw, 19px); }
+
+.hero h1 {
+  font-size: var(--fs-h1);
+  line-height: .96;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: var(--sp-5);
+  max-width: 16ch;
+  margin-inline: auto;
+}
+
+.hero-sub {
+  font-size: var(--fs-body-lg);
+  line-height: 1.75;
+  color: rgba(255,255,255,.82);
+  max-width: 50ch;
+  margin-inline: auto;
+  margin-bottom: var(--sp-6);
+  text-wrap: balance;
+}
+
+.hero-actions { display: flex; flex-wrap: wrap; gap: var(--sp-3); justify-content: center; }
+.hero-actions .btn--ghost { --btn-bd: rgba(255,255,255,.45); }
+
+/* ==========================================================================
+   2. מסלולי הצ'ורסקריה - כרטיסים בהירים על רקע כהה
+   --------------------------------------------------------------------------
+   ההיפוך הזה הוא כל הרעיון: אחרי סקשן כהה, שני כרטיסי קרם בהירים
+   קופצים מהדף, והטקסט הכהה עליהם קריא לאין שיעור מאפור-על-כהה.
+   ========================================================================== */
+/* המסלולים כבר לא צמודים להירו - ריפוד סקשן רגיל */
+.tracks-head { padding-block: var(--section-y) 0; }
+
+.tracks-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-6);
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  margin-top: var(--sp-8);
+  padding-inline: var(--gutter);
+  align-items: stretch;
+}
+@media (min-width: 960px) {
+  /* הפרימיום ראשון (בעברית - מימין) ורחב יותר */
+  .tracks-grid { grid-template-columns: 1.16fr 1fr; gap: var(--sp-7); }
+}
+
+.track {
+  /* container query - הכותרת נמדדת מול רוחב הכרטיס שלה, לא מול המסך.
+     זה מה שמאפשר לה להישאר בשורה אחת בשתי העמודות, שרוחבן שונה. */
+  container-type: inline-size;
+
+  --card-bg:     #fbf7ef;
+  --card-ink:    #1e1815;
+  --card-muted:  #5f554d;
+  --card-line:   rgba(30, 24, 21, .12);
+  --card-accent: var(--brand-red);
+
+  position: relative;
+  display: flex; flex-direction: column;
+  background: var(--card-bg);
+  color: var(--card-ink);
+  border: 0;
+  overflow: hidden;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, .34);
+}
+
+/* --- הווריאנט המודגש --- */
+.track--featured {
+  --card-bg: linear-gradient(170deg, #fffaf0 0%, #fdf2dc 62%, #fbead0 100%);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, .5);
+  z-index: 2;
+}
+/* פס הקרנבל בראש הכרטיס */
+.track--featured::before {
+  content: "";
+  position: absolute; inset-inline: 0; top: 0;
+  height: 7px;
+  background: var(--carnival-bar);
+  z-index: 3;
+}
+
+/* --- התמונה --- */
+.track-figure {
+  position: relative;
+  margin: 0;
+  flex: 0 0 auto;
+  overflow: hidden;
+  background: var(--ink-900);
+}
+/* גובה קבוע ולא aspect-ratio: העמודות ברוחב שונה, ויחס־גובה־רוחב היה
+   נותן לפרימיום תמונה גבוהה יותר. גובה מפורש משווה את השתיים. */
+.track-figure img,
+.track-figure video {
+  width: 100%;
+  height: clamp(190px, 19vw, 310px);
+  object-fit: cover;
+  display: block;
+}
+
+/* תג "הכי מבוקש" - על התמונה */
+.track-badge {
+  position: absolute;
+  top: var(--sp-4);
+  inset-inline-end: var(--sp-4);
+  z-index: 2;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px;
+  background: var(--brand-red);
+  color: #fff;
+  font-size: var(--fs-label);
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .35);
+}
+.track-badge svg { width: 15px; height: 15px; color: var(--carnival-yellow); }
+
+/* --- גוף הכרטיס ---
+   הכותרות, המחיר והכפתורים ממורכזים. רשימת הנתחים נשארת מיושרת להתחלה -
+   שורות קצרות ממורכזות יוצרות "קצה משונן" וקשות לסריקה. */
+.track-body {
+  flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--sp-6) var(--sp-5);
+}
+.track-kicker, .track-title { width: 100%; }
+.track-tagline { max-width: 44ch; }
+@media (min-width: 960px) {
+  .track-body { padding: var(--sp-7) var(--sp-6); }
+  .track--featured .track-body { padding: var(--sp-8) var(--sp-7); }
+}
+
+.track-kicker {
+  font-size: var(--fs-label);
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--card-accent);
+  margin-bottom: 10px;
+}
+
+/* שורה אחת תמיד. הגדלים מכוילים לשם המסלול הארוך ביותר בשתי השפות
+   ("צ׳ורסקריה קאזה דו ברזיל" / "Casa do Brasil Churrascaria"). */
+.track-title {
+  font-size: clamp(18px, 2.3vw, 33px);
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -.025em;
+  color: var(--card-ink);
+  margin-bottom: 12px;
+  white-space: nowrap;
+  max-width: 100%;
+}
+.track--featured .track-title {
+  font-size: clamp(22px, 3.2vw, 46px);
+  color: var(--brand-red);
+}
+
+/* גרסת container query - מדויקת יותר, ומשמשת בכל דפדפן שתומך */
+@container (min-width: 0px) {
+  .track-title           { font-size: clamp(18px, 5.9cqw, 33px); }
+  .track--featured .track-title { font-size: clamp(22px, 7.8cqw, 46px); }
+}
+
+.track-tagline {
+  font-size: var(--fs-body-lg);
+  line-height: 1.5;
+  color: var(--card-muted);
+  margin-bottom: var(--sp-5);
+}
+
+/* --- המחיר: בלוק צבע גדול --- */
+.track-price {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-3) var(--sp-5);
+  justify-content: center;
+  padding: var(--sp-4) var(--sp-6);
+  margin-bottom: var(--sp-5);
+  background: var(--brand-red);
+  color: #fff;
+}
+.track--featured .track-price {
+  background: var(--brand-gold);
+  color: #2a1c06;
+}
+.track-price .amount {
+  font-size: clamp(42px, 24px + 2.6vw, 68px);
+  font-weight: 800;
+  line-height: .88;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+}
+.track--featured .track-price .amount { font-size: clamp(50px, 27px + 3.4vw, 84px); }
+.track-price .currency { font-size: .44em; font-weight: 700; opacity: .85; }
+.track-price .note {
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  opacity: .85;
+}
+/* המחיר עצמו ממורכז בעמודה משלו, החותמת לצידו */
+.price-main {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+}
+
+/* --- החותמת העגולה המסתובבת --- */
+.track-seal {
+  position: relative;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: clamp(78px, 17cqw, 108px);
+  aspect-ratio: 1;
+  color: currentColor;
+}
+.track-seal svg {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+}
+/* רק הטבעת מסתובבת - הטקסט במרכז נשאר יציב וקריא */
+.seal-spin {
+  transform-origin: 50px 50px;
+  animation: sealSpin 16s linear infinite;
+}
+@keyframes sealSpin { to { transform: rotate(360deg); } }
+
+.seal-text {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  line-height: 1;
+  text-align: center;
+}
+.seal-text b {
+  font-size: clamp(24px, 5.4cqw, 34px);
+  font-weight: 800;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+}
+.seal-text i {
+  font-style: normal;
+  font-size: clamp(9px, 1.9cqw, 12px);
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  opacity: .8;
+  margin-top: 3px;
+}
+
+html.a11y-no-motion .seal-spin { animation: none !important; }
+@media (prefers-reduced-motion: reduce) { .seal-spin { animation: none; } }
+
+/* --- רשימת הנתחים: וי ירוק, בלי קווים --- */
+/* עמודה אחת: בשתי עמודות שמות כמו "פרגיות במרינדת דבש, סויה ויין לבן"
+   נשברו לשתי שורות. עמודה אחת נותנת לכל נתח שורה משלו. */
+.track-cuts {
+  display: grid;
+  gap: 7px;
+  margin-bottom: var(--sp-6);
+  font-size: var(--fs-body);
+  width: 100%;
+  text-align: start;
+  /* minmax(0,1fr) ולא 1fr: פריט ברשת מקבל min-width:auto, ושורה עם nowrap
+     הייתה מרחיבה את העמודה מעבר לרוחב הכרטיס - ואז נחתכת ב-overflow. */
+  grid-template-columns: minmax(0, 1fr);
+}
+/* גודל יחסי לרוחב הכרטיס. הערכים שמרניים בכוונה - מכוילים לשם הארוך
+   ביותר בעברית ("פרגיות במרינדת דבש, סויה ויין לבן") ברוחב הכרטיס הצר ביותר. */
+@container (min-width: 0px) {
+  .track-cuts { font-size: clamp(12px, 2.75cqw, 15px); }
+}
+@media (min-width: 520px) { .track-cuts { grid-template-columns: 1fr 1fr; } }
+.track-cuts li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;          /* מאפשר לפריט להצטמצם במקום להרחיב את העמודה */
+  color: var(--card-muted);
+  line-height: 1.35;
+  white-space: nowrap;   /* שורה אחת לכל נתח */
+}
+.track-cuts li > span { min-width: 0; }
+.track-cuts li svg {
+  width: 16px; height: 16px;
+  flex: 0 0 auto;
+  color: var(--carnival-green);
+  stroke-width: 3;
+}
+.track-cuts li.is-highlight {
+  color: var(--brand-red);
+  font-weight: 800;
+  font-size: 1.08em;
+  margin-bottom: 4px;
+}
+.track-cuts li.is-highlight svg { color: var(--brand-red); }
+
+/* margin-top:auto דוחף אותם לתחתית; שתי הקוביות באותו גובה, אז הם מיושרים
+   באותו קו בשני הכרטיסים. */
+.track-actions {
+  margin-top: auto;
+  width: 100%;
+  display: flex; flex-wrap: wrap; gap: var(--sp-4);
+  align-items: center;
+  justify-content: center;
+}
+/* כפתורים על רקע בהיר */
+.track .btn--ghost { --btn-fg: var(--card-ink); --btn-bd: rgba(30, 24, 21, .3); }
+.track .btn--ghost:hover { --btn-bg: var(--brand-red); --btn-fg: #fff; --btn-bd: var(--brand-red); }
+.track .btn--gold { --btn-bg: var(--brand-red); --btn-fg: #fff; --btn-bd: var(--brand-red); }
+.track .btn--gold:hover { --btn-bg: #2a1c06; --btn-fg: var(--brand-gold); --btn-bd: #2a1c06; }
+.track .link-underline { color: var(--brand-red); border-bottom-color: rgba(125, 25, 23, .4); }
+.track .link-underline:hover { color: var(--card-ink); border-bottom-color: var(--card-ink); }
+
+/* ==========================================================================
+   2א. הנפשת המסלולים
+   ========================================================================== */
+.track {
+  opacity: 0;
+  transform: translateY(40px) scale(.98);
+  transition: opacity .8s var(--ease-out), transform .8s var(--ease-bounce), box-shadow var(--dur) var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.track.is-visible { opacity: 1; transform: none; }
+.track.is-visible:hover { transform: translateY(-8px); }
+.track--featured.is-visible:hover { box-shadow: 0 40px 88px rgba(0, 0, 0, .58); }
+
+/* התמונה נחשפת מלמעלה ויוצאת מזום */
+.track-figure {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path .95s var(--ease-out);
+  transition-delay: calc(var(--reveal-delay, 0ms) + 120ms);
+}
+.track.is-visible .track-figure { clip-path: inset(0 0 0 0); }
+.track-figure img,
+.track-figure video {
+  transform: scale(1.14);
+  transition: transform 1.5s var(--ease-out);
+  transition-delay: calc(var(--reveal-delay, 0ms) + 120ms);
+}
+.track.is-visible .track-figure img,
+.track.is-visible .track-figure video { transform: scale(1); }
+.track.is-visible:hover .track-figure img,
+.track.is-visible:hover .track-figure video { transform: scale(1.05); transition-duration: .9s; transition-delay: 0ms; }
+
+/* תוכן מדורג. סדר הילדים: 1 קיקר · 2 כותרת · 3 תיאור · 4 מחיר · 5 נתחים · 6 כפתורים */
+.track-body > *:not(.track-cuts) {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .6s var(--ease-out), transform .6s var(--ease-bounce);
+}
+.track.is-visible .track-body > *:not(.track-cuts) { opacity: 1; transform: none; }
+.track.is-visible .track-body > *:nth-child(1) { transition-delay: .38s; }
+.track.is-visible .track-body > *:nth-child(2) { transition-delay: .45s; }
+.track.is-visible .track-body > *:nth-child(3) { transition-delay: .52s; }
+.track.is-visible .track-body > *:nth-child(4) { transition-delay: .60s; }
+.track.is-visible .track-body > *:nth-child(6) { transition-delay: 1.3s; }
+
+/* שורות הנתחים מתגלגלות */
+.track-cuts li {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .45s var(--ease-out), transform .45s var(--ease-bounce);
+}
+.track.is-visible .track-cuts li {
+  opacity: 1; transform: none;
+  transition-delay: calc(.7s + var(--i, 0) * 45ms);
+}
+
+/* פס הקרנבל נמתח פנימה */
+.track--featured::before {
+  transform: scaleX(0);
+  transform-origin: inline-start;
+  transition: transform .85s var(--ease-out);
+  transition-delay: .15s;
+}
+.track--featured.is-visible::before { transform: scaleX(1); }
+
+/* התג צונח פנימה */
+.track-badge {
+  opacity: 0;
+  transform: translateY(-12px) scale(.85);
+  transition: opacity .45s var(--ease-out), transform .5s var(--ease-bounce);
+}
+.track.is-visible .track-badge { opacity: 1; transform: none; transition-delay: .95s; }
+
+/* --- כיבוד העדפת הפחתת תנועה --- */
+html.a11y-no-motion .track,
+html.a11y-no-motion .track-body > *,
+html.a11y-no-motion .track-cuts li,
+html.a11y-no-motion .track-badge {
+  opacity: 1 !important;
+  transform: none !important;
+}
+html.a11y-no-motion .track-figure { clip-path: none !important; }
+html.a11y-no-motion .track--featured::before { transform: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .track, .track-body > *, .track-cuts li, .track-badge {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .track-figure { clip-path: none !important; transition: none !important; }
+  .track-figure img, .track-figure video { transform: none !important; transition: none !important; }
+  .track--featured::before { transform: none !important; transition: none !important; }
+}
+
+.tracks-note {
+  text-align: center;
+  font-size: var(--fs-body);
+  color: var(--text-faint);
+  max-width: 66ch;
+  margin-inline: auto;
+  padding-block: var(--sp-7) var(--section-y);
+}
+
+/* ==========================================================================
+   3. מנות פתיחה - פאנל מפוצל מקצה לקצה
+   ========================================================================== */
+.split {
+  display: grid;
+  grid-template-columns: 1fr;
+  background: var(--bg-alt);
+}
+@media (min-width: 940px) { .split { grid-template-columns: 1fr 1fr; } }
+
+.split-figure { position: relative; min-height: 340px; }
+.split-figure img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 939px) { .split-figure { min-height: 260px; } }
+
+.split-body {
+  padding: var(--section-y) var(--gutter);
+  display: flex; flex-direction: column; justify-content: center;
+}
+@media (min-width: 940px) {
+  .split-body { padding-inline: clamp(40px, 4.5vw, 84px); }
+}
+
+.starters-list { margin-block: var(--sp-5); }
+.starters-list li {
+  display: flex; align-items: center; gap: 12px;
+  padding-block: 13px;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--fs-body);
+  color: #d0d0d0;
+}
+.starters-list li svg { width: 14px; height: 14px; color: var(--accent); flex: 0 0 auto; }
+
+.starters-note {
+  font-size: var(--fs-body-sm);
+  color: var(--text-faint);
+  padding: var(--sp-3) var(--sp-4);
+  border-inline-start: 2px solid var(--brand-red);
+  background: rgba(125, 25, 23, .16);
+}
+
+/* ==========================================================================
+   3א. וריאנט אדום - הצבע האדום של המותג כרקע מלא לחצי הפאנל.
+   נותן פעימה של צבע באמצע רצף כהה, ומדגיש את מנות הפתיחה.
+   ========================================================================== */
+.split--red .split-body {
+  background: var(--brand-red);
+  position: relative;
+}
+/* טקסטורה עדינה - קרני אור מהמרכז, כמו ההירו האדום ברפרנס */
+.split--red .split-body::before {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 40%, rgba(180,44,40,.55), transparent 70%),
+    linear-gradient(to bottom, rgba(0,0,0,.06), rgba(0,0,0,.22));
+  pointer-events: none;
+}
+.split--red .split-body > * { position: relative; z-index: 1; }
+
+.split--red .eyebrow      { color: var(--gold-200); }
+.split--red h2            { color: #fff; }
+.split--red .hairline     { background: var(--gold-200); }
+.split--red .lead         { color: rgba(255,255,255,.86); }
+
+.split--red .starters-list li {
+  color: #fff;
+  border-bottom-color: rgba(255,255,255,.26);
+}
+.split--red .starters-list li svg { color: var(--gold-200); }
+
+.split--red .starters-note {
+  color: rgba(255,255,255,.8);
+  background: rgba(0,0,0,.24);
+  border-inline-start-color: var(--gold-200);
+}
+
+/* מצבי נגישות */
+html.a11y-contrast .split--red .split-body { background: #000 !important; }
+html.a11y-contrast .split--red .split-body::before { display: none; }
+html.a11y-light .split--red .split-body { background: var(--brand-red) !important; }
+html.a11y-light .split--red h2 { color: #fff; }
+
+/* ==========================================================================
+   4. אודות
+   ========================================================================== */
+/* ==========================================================================
+   הסיפור שלנו - הסקשן הראשון אחרי ההירו, בקרם.
+   ההיפוך מהכהות של ההירו הוא מה שנותן לו נוכחות.
+   ========================================================================== */
+.about {
+  --cream-bg: #f7f2e9;
+  background: var(--cream-bg);
+  /* אוויר אחרי הירו בגובה מלא - זה המעבר החד ביותר בדף */
+  padding-block: clamp(72px, 40px + 6vw, 158px) var(--section-y);
+}
+.about .sechead-title { color: var(--brand-red); }
+.about .sechead-side  { color: #8d8177; }
+.about .sechead-side::after {
+  background: linear-gradient(to var(--rule-to, left), rgba(0,0,0,.22), transparent);
+}
+.about .link-underline { color: var(--brand-red); border-bottom-color: rgba(125,25,23,.4); }
+.about .link-underline:hover { color: #1e1815; border-bottom-color: #1e1815; }
+.about-statement {
+  max-width: 22ch;
+  margin-inline: auto;
+  text-align: center;
+  font-size: var(--fs-h2);
+  line-height: 1.02;
+  margin-bottom: var(--sp-6);
+  color: #1e1815;
+  text-wrap: balance;
+}
+/* ממורכז. כדי שלא תיווצר מילה בודדת בשורה אחרונה, כל פסקה מקבלת
+   text-wrap: balance - הדפדפן מחלק את השורות באורך אחיד במקום למלא
+   כל שורה עד הסוף ולהשאיר שארית. זה בדיוק המקרה שהוא נועד לו. */
+.about-text {
+  max-width: 62ch;
+  margin-inline: auto;
+  text-align: center;
+  font-size: var(--fs-body-lg);
+  line-height: 1.9;
+  color: #4a423c;
+}
+.about-text p { text-wrap: balance; }
+.about-text p + p { margin-top: var(--sp-4); }
+/* שני כפתורים על רקע הקרם.
+   ⚠️ וריאנטי הכפתורים הגלובליים מיועדים לרקע כהה: --btn-fg שלהם לבן,
+   ולכן ghost היה נעלם כאן לגמרי. הצבעים נדרסים מקומית לגרסה כהה על קרם. */
+.about-cta {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  margin-top: var(--sp-6);
+}
+.about-cta .btn--red:hover {
+  --btn-bg: transparent; --btn-fg: var(--brand-red); --btn-bd: var(--brand-red);
+}
+.about-cta .btn--ghost {
+  --btn-fg: #1e1815; --btn-bd: rgba(30, 24, 21, .34);
+}
+.about-cta .btn--ghost:hover {
+  --btn-bg: #1e1815; --btn-fg: var(--cream-bg); --btn-bd: #1e1815;
+}
+
+/* מונים - בלוק צר וממורכז, לא פרוס על כל רוחב הקונטיינר */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  max-width: 820px;
+  margin-inline: auto;
+  margin-top: var(--sp-8);
+  border-top: 1px solid rgba(0,0,0,.14);
+  border-bottom: 1px solid rgba(0,0,0,.14);
+}
+@media (max-width: 560px) {
+  .stats { grid-template-columns: 1fr; max-width: 320px; }
+}
+.stat {
+  text-align: center;
+  padding: var(--sp-6) var(--sp-3);
+}
+.stat + .stat { border-inline-start: 1px solid rgba(0,0,0,.14); }
+@media (max-width: 560px) {
+  .stat + .stat { border-inline-start: 0; border-top: 1px solid rgba(0,0,0,.14); }
+}
+.stat .value {
+  display: block;
+  font-size: clamp(34px, 18px + 2.9vw, 66px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: var(--ls-display);
+  margin-bottom: 10px;
+  /* ספרות ברוחב אחיד - אחרת המספר "קופץ" בזמן הספירה */
+  font-variant-numeric: tabular-nums;
+}
+/* כל מונה בצבע קרנבל משלו */
+/* על רקע קרם - גוונים כהים מספיק לניגודיות תקנית */
+.stat:nth-child(1) .value { color: var(--brand-red); }
+.stat:nth-child(2) .value { color: #14833f; }
+.stat:nth-child(3) .value { color: #c2521a; }
+
+/* קפיצה קלה בכניסה */
+.stats.is-visible .stat .value {
+  animation: statPop .6s var(--ease-bounce) backwards;
+}
+.stats.is-visible .stat:nth-child(1) .value { animation-delay: .34s; }
+.stats.is-visible .stat:nth-child(2) .value { animation-delay: .47s; }
+.stats.is-visible .stat:nth-child(3) .value { animation-delay: .60s; }
+@keyframes statPop {
+  from { opacity: 0; transform: scale(.6) translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+html.a11y-no-motion .stats .stat .value { animation: none !important; }
+@media (prefers-reduced-motion: reduce) { .stats .stat .value { animation: none !important; } }
+.stat .label {
+  font-size: var(--fs-micro);
+  font-weight: 700;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: #6b6058;
+}
+html[lang="he"] .stat .label { letter-spacing: .05em; font-size: var(--fs-label); }
+.stat a { color: inherit; }
+.stat a:hover .label { color: var(--brand-red); }
+
+/* --- מצבי נגישות עבור סקשן האודות הבהיר --- */
+html.a11y-contrast .about { background: #000 !important; }
+html.a11y-contrast .about-statement,
+html.a11y-contrast .about-text p,
+html.a11y-contrast .about .sechead-title,
+html.a11y-contrast .stat .value,
+html.a11y-contrast .stat .label { color: #ffe600 !important; }
+/* בניגודיות גבוהה האזור הופך שחור, ולכן הכפתור ה"רפאים" הכהה נעלם */
+html.a11y-contrast .about-cta .btn--ghost { --btn-fg: #ffe600; --btn-bd: #ffe600; }
+html.a11y-contrast .about-cta .btn--red   { --btn-bg: #ffe600; --btn-fg: #000; --btn-bd: #ffe600; }
+
+html.a11y-light .about { background: #f2ede5 !important; }

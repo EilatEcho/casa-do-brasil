@@ -1,0 +1,440 @@
+/* ==========================================================================
+   components.css - כפתורים, קרוסלה, קוקיז, תוסף נגישות
+   הכל שטוח: בלי פינות מעוגלות, בלי צללים.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. כפתורים - מלבניים, uppercase, tracking רחב
+   ========================================================================== */
+.btn {
+  --btn-bg: transparent;
+  --btn-fg: var(--text);
+  --btn-bd: var(--line-strong);
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 9px;
+  padding: 15px 34px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border: 1px solid var(--btn-bd);
+  font-size: var(--fs-micro);
+  font-weight: 700;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  text-align: center;
+  transition: background var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease),
+              border-color var(--dur-fast) var(--ease),
+              transform var(--dur) var(--ease-bounce);
+}
+.btn:hover  { transform: translateY(-3px) scale(1.02); }
+.btn:active { transform: translateY(0) scale(.99); }
+html[lang="he"] .btn { font-size: var(--fs-label); letter-spacing: .04em; }
+.btn svg { width: 15px; height: 15px; flex: 0 0 auto; }
+
+.btn--gold  { --btn-bg: var(--brand-gold); --btn-fg: var(--text-on-gold); --btn-bd: var(--brand-gold); }
+.btn--gold:hover { --btn-bg: transparent; --btn-fg: var(--brand-gold); }
+
+.btn--red   { --btn-bg: var(--brand-red); --btn-fg: #fff; --btn-bd: var(--brand-red); }
+.btn--red:hover { --btn-bg: transparent; --btn-fg: var(--brand-gold); --btn-bd: var(--brand-gold); }
+
+.btn--ghost { --btn-bg: transparent; --btn-fg: var(--text); --btn-bd: var(--line-strong); }
+.btn--ghost:hover { --btn-bd: var(--brand-gold); --btn-fg: var(--brand-gold); }
+
+.btn--solid { --btn-bg: var(--text); --btn-fg: var(--ink-900); --btn-bd: var(--text); }
+.btn--solid:hover { --btn-bg: var(--brand-gold); --btn-bd: var(--brand-gold); }
+
+.btn--lg { padding: 19px 44px; }
+.btn--sm { padding: 11px 22px; }
+.btn--block { width: 100%; }
+
+/* קישור עם קו תחתון זהב */
+.link-underline {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-size: var(--fs-micro);
+  font-weight: 700;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--line-gold);
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+html[lang="he"] .link-underline { font-size: var(--fs-label); letter-spacing: .04em; }
+.link-underline:hover { color: #fff; border-bottom-color: #fff; }
+.link-underline svg { width: 14px; height: 14px; transition: transform var(--dur-fast) var(--ease); }
+html[dir="rtl"] .link-underline svg { transform: scaleX(-1); }
+.link-underline:hover svg { transform: scaleX(-1) translateX(4px); }
+html[dir="ltr"] .link-underline:hover svg { transform: translateX(4px); }
+
+/* ==========================================================================
+   2. קרוסלת המלצות
+   ========================================================================== */
+/* סקשן ההמלצות בהיר במכוון - פעימת אור באמצע דף כהה,
+   וגם מה שגורם לחמישה הכוכבים באמת לקפוץ. */
+.reviews {
+  --cream-bg: #f7f2e9;
+  background: var(--cream-bg);
+  overflow: hidden;
+}
+.reviews .sechead-title { color: var(--brand-red); }
+.reviews .sechead-side  { color: #8d8177; }
+.reviews .sechead-side::after { background: linear-gradient(to var(--rule-to, left), rgba(0,0,0,.2), transparent); }
+.reviews .carousel-btn { border-color: rgba(0,0,0,.18); color: #4a423c; }
+.reviews .carousel-btn:hover:not(:disabled) { border-color: var(--brand-red); color: var(--brand-red); }
+.reviews .carousel-dots button { background: rgba(0,0,0,.2); }
+.reviews .btn--ghost { --btn-fg: #2a2320; --btn-bd: rgba(0,0,0,.28); }
+.reviews .btn--ghost:hover { --btn-bg: var(--brand-red); --btn-fg: #fff; --btn-bd: var(--brand-red); }
+
+.carousel-viewport {
+  overflow: hidden;
+  padding-block: var(--sp-2) var(--sp-5);
+  cursor: grab;
+}
+.carousel-viewport.is-dragging { cursor: grabbing; user-select: none; }
+
+.carousel-track {
+  display: flex;
+  gap: var(--sp-5);
+  transition: transform .6s var(--ease-out);
+  will-change: transform;
+}
+.carousel-viewport.is-dragging .carousel-track { transition: none; }
+
+.review-card {
+  flex: 0 0 auto;
+  width: 100%;
+  display: flex; flex-direction: column;
+  gap: var(--sp-4);
+  padding: var(--sp-6) var(--sp-5);
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.09);
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease),
+              transform var(--dur) var(--ease-bounce);
+}
+.review-card:hover {
+  border-color: rgba(125,25,23,.3);
+  box-shadow: 0 18px 44px rgba(74,40,20,.14);
+  transform: translateY(-6px) rotate(-.6deg);
+}
+
+@media (min-width: 720px)  { .review-card { width: calc((100% - var(--sp-5)) / 2); } }
+@media (min-width: 1100px) { .review-card { width: calc((100% - var(--sp-5) * 2) / 3); } }
+
+.review-stars { display: flex; gap: 3px; color: var(--carnival-yellow); }
+.review-stars svg { width: 19px; height: 19px; }
+
+.review-text {
+  font-size: var(--fs-body-lg);
+  line-height: 1.7;
+  color: #3a322d;
+  flex: 1;
+  margin: 0;
+}
+.review-meta {
+  display: flex; align-items: center; gap: 12px;
+  padding-top: var(--sp-4);
+  border-top: 1px solid rgba(0,0,0,.09);
+}
+.review-avatar {
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  background: var(--brand-red);
+  color: #fff;
+  font-size: 17px; font-weight: 700;
+  flex: 0 0 auto;
+  border-radius: 50%;
+}
+/* כל כרטיס מקבל צבע קרנבל אחר */
+.review-card:nth-child(6n+1) .review-avatar { background: var(--carnival-green); }
+.review-card:nth-child(6n+2) .review-avatar { background: var(--carnival-orange); }
+.review-card:nth-child(6n+3) .review-avatar { background: var(--brand-red); }
+.review-card:nth-child(6n+4) .review-avatar { background: var(--carnival-lime); color: #14301f; }
+.review-card:nth-child(6n+5) .review-avatar { background: var(--carnival-yellow); color: #3a2a06; }
+.review-card:nth-child(6n+6) .review-avatar { background: var(--carnival-red); }
+.review-name {
+  display: block;
+  font-size: var(--fs-body-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: #1c1613;
+}
+html[lang="he"] .review-name { letter-spacing: 0; }
+.review-source { display: flex; align-items: center; gap: 5px; font-size: 13px; color: #857a70; }
+.review-source svg { width: 12px; height: 12px; }
+
+.carousel-controls {
+  display: flex; align-items: center; justify-content: center;
+  gap: var(--sp-4);
+  margin-top: var(--sp-5);
+}
+.carousel-btn {
+  display: grid; place-items: center;
+  width: 44px; height: 44px;
+  border: 1px solid var(--line);
+  color: var(--text-soft);
+  transition: all var(--dur-fast) var(--ease);
+}
+.carousel-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.carousel-btn svg { width: 15px; height: 15px; }
+html[dir="rtl"] .carousel-btn svg { transform: scaleX(-1); }
+
+.carousel-dots { display: flex; gap: 6px; }
+.carousel-dots button {
+  width: 24px; height: 2px;
+  background: var(--line-strong);
+  transition: background var(--dur-fast) var(--ease);
+}
+.carousel-dots button[aria-current="true"] { background: var(--carnival-bar); }
+
+/* ==========================================================================
+   3. התראת קוקיז
+   ========================================================================== */
+.cookie-banner {
+  position: fixed;
+  inset-inline: var(--gutter);
+  bottom: var(--gutter);
+  z-index: var(--z-cookie);
+  max-width: 540px;
+  margin-inline: auto;
+  padding: var(--sp-5);
+  background: var(--ink-900);
+  border: 1px solid var(--line-strong);
+  transform: translateY(calc(100% + var(--gutter) + 32px));
+  transition: transform .5s var(--ease-out);
+}
+.cookie-banner.is-visible { transform: none; }
+.cookie-banner h2 {
+  font-size: var(--fs-h4);
+  margin-bottom: var(--sp-3);
+  display: flex; align-items: center; gap: 10px;
+}
+.cookie-banner h2 svg { width: 19px; height: 19px; color: var(--accent); flex: 0 0 auto; }
+.cookie-banner p { font-size: var(--fs-body-sm); color: var(--text-soft); margin-bottom: var(--sp-4); line-height: 1.7; }
+.cookie-actions { display: flex; flex-wrap: wrap; gap: var(--sp-3); }
+.cookie-actions .btn { flex: 1 1 auto; padding-inline: var(--sp-4); }
+
+@media (max-width: 760px) { .cookie-banner { bottom: calc(var(--gutter) + 50px); } }
+
+/* ==========================================================================
+   4. תוסף נגישות
+   ========================================================================== */
+.a11y-fab {
+  position: fixed;
+  inset-inline-start: var(--gutter);
+  bottom: var(--gutter);
+  z-index: var(--z-a11y);
+  width: 50px; height: 50px;
+  display: grid; place-items: center;
+  background: var(--brand-red);
+  color: #fff;
+  border: 1px solid var(--brand-red);
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.a11y-fab:hover { background: var(--brand-gold); color: var(--text-on-gold); border-color: var(--brand-gold); }
+.a11y-fab svg { width: 26px; height: 26px; }
+@media (max-width: 760px) { .a11y-fab { bottom: calc(var(--gutter) + 50px); width: 46px; height: 46px; } }
+
+.a11y-panel {
+  position: fixed;
+  inset-inline-start: var(--gutter);
+  bottom: calc(var(--gutter) + 60px);
+  z-index: var(--z-a11y);
+  width: min(330px, calc(100vw - var(--gutter) * 2));
+  max-height: min(74vh, 640px);
+  overflow-y: auto;
+  background: var(--ink-900);
+  border: 1px solid var(--line-strong);
+  padding: var(--sp-5);
+  opacity: 0; visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease-out), visibility var(--dur);
+}
+.a11y-panel.is-open { opacity: 1; visibility: visible; transform: none; }
+.a11y-panel[hidden] { display: none; }
+@media (max-width: 760px) { .a11y-panel { bottom: calc(var(--gutter) + 110px); } }
+
+.a11y-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--sp-3);
+  padding-bottom: var(--sp-3);
+  margin-bottom: var(--sp-4);
+  border-bottom: 1px solid var(--line);
+}
+.a11y-head h2 { font-size: var(--fs-h4); margin: 0; }
+.a11y-close {
+  width: 32px; height: 32px;
+  display: grid; place-items: center;
+  border: 1px solid var(--line);
+  color: var(--text-soft);
+}
+.a11y-close:hover { border-color: var(--accent); color: var(--accent); }
+.a11y-close svg { width: 14px; height: 14px; }
+
+.a11y-group { margin-bottom: var(--sp-5); }
+.a11y-group > h3 {
+  font-size: var(--fs-micro);
+  font-weight: 700;
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--sp-3);
+}
+html[lang="he"] .a11y-group > h3 { letter-spacing: .06em; }
+
+.a11y-fontsize { display: flex; align-items: center; gap: var(--sp-3); }
+.a11y-fontsize button {
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  border: 1px solid var(--line);
+  color: var(--text);
+}
+.a11y-fontsize button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.a11y-fontsize button:disabled { opacity: .35; cursor: not-allowed; }
+.a11y-fontsize output {
+  flex: 1; text-align: center;
+  font-size: var(--fs-body-sm); font-weight: 700;
+  color: var(--text-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.a11y-options { display: grid; }
+.a11y-opt {
+  display: flex; align-items: center; gap: 11px;
+  width: 100%;
+  padding: 11px 8px;
+  border-bottom: 1px solid var(--line);
+  text-align: start;
+  font-size: var(--fs-body-sm);
+  color: var(--text-soft);
+  transition: color var(--dur-fast) var(--ease);
+}
+.a11y-opt:hover { color: var(--text); }
+.a11y-opt svg { width: 17px; height: 17px; flex: 0 0 auto; }
+.a11y-opt span:not(.a11y-switch) { flex: 1; }
+.a11y-switch {
+  width: 34px; height: 18px;
+  background: var(--line-strong);
+  position: relative; flex: 0 0 auto;
+  transition: background var(--dur-fast) var(--ease);
+}
+.a11y-switch::after {
+  content: "";
+  position: absolute; top: 3px; inset-inline-start: 3px;
+  width: 12px; height: 12px;
+  background: var(--ink-900);
+  transition: transform var(--dur-fast) var(--ease);
+}
+.a11y-opt[aria-pressed="true"] { color: var(--accent); }
+.a11y-opt[aria-pressed="true"] .a11y-switch { background: var(--brand-gold); }
+.a11y-opt[aria-pressed="true"] .a11y-switch::after { transform: translateX(16px); }
+html[dir="rtl"] .a11y-opt[aria-pressed="true"] .a11y-switch::after { transform: translateX(-16px); }
+
+.a11y-foot { display: grid; gap: var(--sp-3); padding-top: var(--sp-4); }
+.a11y-foot a {
+  font-size: 12px; text-align: center;
+  color: var(--text-faint);
+  text-transform: uppercase; letter-spacing: .1em;
+}
+.a11y-foot a:hover { color: var(--accent); }
+
+.a11y-guide-bar {
+  position: fixed; inset-inline: 0;
+  height: 42px;
+  z-index: var(--z-top);
+  pointer-events: none;
+  border-block: 2px solid var(--brand-gold);
+  background: rgba(248, 211, 152, .1);
+  display: none;
+}
+html.a11y-guide .a11y-guide-bar { display: block; }
+
+/* ==========================================================================
+   5. מצבי נגישות גלובליים
+   ========================================================================== */
+html.a11y-links a {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px !important;
+  color: var(--gold-200) !important;
+}
+html.a11y-links.a11y-light a { color: var(--red-800) !important; }
+
+html.a11y-readable, html.a11y-readable body,
+html.a11y-readable h1, html.a11y-readable h2, html.a11y-readable h3,
+html.a11y-readable h4, html.a11y-readable .nav-list a, html.a11y-readable .review-text {
+  font-family: Arial, "Segoe UI", Tahoma, sans-serif !important;
+  letter-spacing: normal !important;
+}
+
+html.a11y-spacing body {
+  letter-spacing: .08em !important;
+  word-spacing: .16em !important;
+  line-height: 2 !important;
+}
+
+html.a11y-grayscale body { filter: grayscale(1); }
+
+html.a11y-cursor, html.a11y-cursor * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38' viewBox='0 0 38 38'%3E%3Cpath d='M6 2l24 15-11 2 6 12-5 3-6-12-8 7z' fill='%23fff' stroke='%23000' stroke-width='2.2' stroke-linejoin='round'/%3E%3C/svg%3E") 4 2, auto !important;
+}
+
+/* ניגודיות גבוהה */
+html.a11y-contrast {
+  --bg: #000; --bg-alt: #000; --bg-deep: #000; --bg-panel: #000;
+  --text: #fff; --text-soft: #fff; --text-faint: #ffe600;
+  --accent: #ffe600; --accent-deep: #ffe600;
+  --line: #ffe600; --line-strong: #ffe600; --line-gold: #ffe600;
+  --brand-red: #000;
+}
+html.a11y-contrast body,
+html.a11y-contrast .section--alt, html.a11y-contrast .section--deep,
+html.a11y-contrast .section--red, html.a11y-contrast .review-card,
+html.a11y-contrast .reviews, html.a11y-contrast .review-card,
+html.a11y-contrast .track, html.a11y-contrast .track--featured,
+html.a11y-contrast .cookie-banner,
+html.a11y-contrast .a11y-panel, html.a11y-contrast .nav-overlay,
+html.a11y-contrast .site-header.is-stuck, html.a11y-contrast .site-footer,
+html.a11y-contrast .social-bar { background: #000 !important; }
+html.a11y-contrast .hero-media, html.a11y-contrast .track-figure,
+html.a11y-contrast .split-figure, html.a11y-contrast .about-strip { display: none !important; }
+html.a11y-contrast .review-text, html.a11y-contrast .review-name,
+html.a11y-contrast .reviews .sechead-title { color: #ffe600 !important; }
+html.a11y-contrast .btn { background: #000 !important; color: #ffe600 !important; border-color: #ffe600 !important; }
+/* במצב ניגודיות גבוהה הצל מיותר - ההיררכיה נשענת על מסגרת בלבד */
+html.a11y-contrast .track--featured { box-shadow: 0 0 0 2px #ffe600 !important; }
+html.a11y-light .track--featured { box-shadow: 0 18px 44px rgba(125,25,23,.22) !important; }
+html.a11y-contrast .header-cta { background: #000 !important; color: #ffe600 !important; }
+
+/* רקע בהיר */
+html.a11y-light {
+  --bg: #fff; --bg-alt: #f2ede5; --bg-deep: #e8e1d6; --bg-panel: #fff;
+  --text: #16191b; --text-soft: #3d3d3d; --text-faint: #5c5c5c;
+  --accent: #7d1917; --accent-deep: #7d1917;
+  --line: rgba(0,0,0,.16); --line-strong: rgba(0,0,0,.3); --line-gold: rgba(125,25,23,.5);
+  --text-on-gold: #fff;
+  --brand-gold: #7d1917;
+}
+html.a11y-light body { background: #fff !important; color: #3d3d3d; }
+html.a11y-light .site-header.is-stuck { background: #fff !important; }
+html.a11y-light .site-header { background: rgba(255,255,255,.94); }
+html.a11y-light .header-logo img, html.a11y-light .footer-brand img {
+  filter: brightness(0) saturate(100%) invert(13%) sepia(52%) saturate(2600%) hue-rotate(342deg);
+}
+html.a11y-light .burger span { background: #7d1917; }
+html.a11y-light .nav-overlay, html.a11y-light .site-footer,
+html.a11y-light .reviews, html.a11y-light .cookie-banner,
+html.a11y-light .a11y-panel, html.a11y-light .social-bar,
+html.a11y-light .review-card { background: #f2ede5 !important; }
+html.a11y-light .nav-list a, html.a11y-light h1, html.a11y-light h2,
+html.a11y-light h3, html.a11y-light h4 { color: #16191b; }
+html.a11y-light .review-text { color: #3d3d3d; }
+html.a11y-light .hero-media, html.a11y-light .track-figure { filter: brightness(.92); }
+
+/* כרטיסי המסלולים בהירים - במצב ניגודיות גבוהה הופכים לשחור/צהוב */
+html.a11y-contrast .track { background: #000 !important; color: #fff !important; box-shadow: 0 0 0 2px #ffe600 !important; }
+html.a11y-contrast .track-title, html.a11y-contrast .track-kicker,
+html.a11y-contrast .track-tagline, html.a11y-contrast .track-cuts li { color: #ffe600 !important; }
+html.a11y-contrast .track-price { background: #000 !important; color: #ffe600 !important; box-shadow: 0 0 0 2px #ffe600; }
+html.a11y-contrast .track-badge { background: #000 !important; color: #ffe600 !important; box-shadow: 0 0 0 2px #ffe600 !important; }
+html.a11y-contrast .track-cuts li svg { color: #ffe600 !important; }

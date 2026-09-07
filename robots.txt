@@ -1,0 +1,10 @@
+# ⚠️ בזמן הבדיקה בכתובת github.io - חוסמים סריקה כדי שלא ייווצר
+# תוכן כפול מול casadobrasil.co.il ולא ייפגע הדירוג של האתר החי.
+#
+# ביום העלייה לאוויר, אחרי שהדומיין מופנה לכאן:
+#   1. למחוק את שתי השורות שמתחת ל-Disallow ולהשאיר "Allow: /"
+#   2. לוודא שה-sitemap למטה מצביע על הדומיין הנכון
+User-agent: *
+Disallow: /
+
+Sitemap: https://www.casadobrasil.co.il/sitemap.xml

@@ -1,0 +1,113 @@
+/* ==========================================================================
+   peek.css - ראש הפרה מהלוגו, מבצבץ מקצוות סקשנים
+   --------------------------------------------------------------------------
+   הגרסה הראשונה נשענה על מחלקת .reveal לכניסה בגלילה, והתנגשה איתה על
+   transform ו-opacity. כאן אין תלות בשום מערכת אחרת: הראשים גלויים מיד,
+   במיקום המנוחה שלהם, ומתנדנדים בעדינות. פחות חלקים נעים, פחות מה שיישבר.
+
+   שימוש:
+     <span class="peek peek--bottom-end" aria-hidden="true">
+       <picture>…</picture>
+     </span>
+   הסקשן המארח מקבל position:relative + overflow:hidden למטה בקובץ.
+   ========================================================================== */
+
+.peek {
+  position: absolute;
+  z-index: 1;
+  display: block;
+  width: var(--peek-w, clamp(120px, 13vw, 210px));
+  pointer-events: none;
+  opacity: var(--peek-opacity, 1);
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, .35));
+}
+.peek picture { display: block; }
+.peek img { display: block; width: 100%; height: auto; }
+
+/* נדנוד עדין - מספיק כדי שהעין תתפוס אותו, לא מספיק כדי להסיח */
+.peek {
+  animation: peekBob 5.5s ease-in-out infinite;
+  animation-delay: var(--peek-delay, 0s);
+}
+@keyframes peekBob {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -8px; }
+}
+
+/* ==========================================================================
+   מיקומים
+   --------------------------------------------------------------------------
+   כל ראש יושב חלקית מחוץ לגבול הסקשן; ה-overflow:hidden חותך אותו,
+   וכך זה נקרא כהצצה מאחורי הקצה ולא כתמונה מרחפת.
+   משתמשים ב-rotate/translate הנפרדים (ולא ב-transform), כדי שהאנימציה
+   שלמעלה תוכל להשתמש ב-translate בלי לדרוס אותם.
+   ========================================================================== */
+
+/* מציץ מלמעלה, בצד ההתחלה (בעברית - ימין) */
+.peek--top-start {
+  top: 0;
+  inset-inline-start: clamp(16px, 6vw, 110px);
+  margin-top: -32%;
+  rotate: -8deg;
+}
+
+/* מציץ מלמטה, בצד הסיום (בעברית - שמאל) */
+.peek--bottom-end {
+  bottom: 0;
+  inset-inline-end: clamp(16px, 7vw, 130px);
+  margin-bottom: -34%;
+  rotate: 10deg;
+}
+
+/* מציץ מהצד, באמצע הגובה */
+.peek--side-end {
+  top: 40%;
+  inset-inline-end: 0;
+  margin-inline-end: -30%;
+  rotate: -14deg;
+}
+
+/* מציץ מלמטה במרכז */
+.peek--bottom-center {
+  bottom: 0;
+  inset-inline-start: 50%;
+  translate: 50% 0;
+  margin-bottom: -36%;
+  rotate: -4deg;
+  animation-name: peekBobCenter;
+}
+html[dir="ltr"] .peek--bottom-center { translate: -50% 0; }
+@keyframes peekBobCenter {
+  0%, 100% { translate: 50% 0; }
+  50%      { translate: 50% -8px; }
+}
+html[dir="ltr"] .peek--bottom-center { animation-name: peekBobCenterLtr; }
+@keyframes peekBobCenterLtr {
+  0%, 100% { translate: -50% 0; }
+  50%      { translate: -50% -8px; }
+}
+
+/* ==========================================================================
+   וריאנט מונמך - לרקעים כהים, כדי לא להתחרות בתוכן
+   ========================================================================== */
+.peek--ghost { --peek-opacity: .5; }
+
+@media (max-width: 720px) {
+  .peek { --peek-w: clamp(92px, 22vw, 130px); }
+  .peek--side-end { display: none; }   /* אין שוליים לבצבץ מהם */
+}
+
+/* ==========================================================================
+   הסקשנים המארחים - עוגן מיקום, וחיתוך של מה שגולש
+   ========================================================================== */
+.about,
+.split--red,
+.gallery { position: relative; overflow: hidden; }
+/* .tracks כבר מוגדר כך ב-carnival.css */
+
+/* ==========================================================================
+   נגישות: קישוט בלבד
+   ========================================================================== */
+html.a11y-no-motion .peek { animation: none !important; }
+html.a11y-contrast .peek { display: none; }
+@media (prefers-reduced-motion: reduce) { .peek { animation: none; } }

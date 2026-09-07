@@ -1,0 +1,13 @@
+# קבצי תצוגה מקדימה - נבנים מקומית ולא חלק מהאתר
+preview*.html
+_artifact*.html
+
+# מערכת הפעלה ועורכים
+Thumbs.db
+Desktop.ini
+.DS_Store
+.vscode/
+.idea/
+
+# תלויות, אם יתווספו בעתיד
+node_modules/

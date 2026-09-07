@@ -1,0 +1,155 @@
+/* ==========================================================================
+   carnival.css - הקישוטים הנעים של סקשן המסלולים: רקדנית הסמבה והקונפטי
+   --------------------------------------------------------------------------
+   בקובץ נפרד בכוונה. שני האלמנטים האלה הם רקע לסקשן המסלולים, וכשהם ישבו
+   בתוך home.css הם נמחקו בטעות בעריכה של הכרטיסים. כאן הם מבודדים.
+   ========================================================================== */
+
+/* הסקשן צריך להיות עוגן מיקום, וחותך את מה שגולש */
+.tracks {
+  position: relative;
+  overflow: hidden;
+}
+/* התוכן תמיד מעל הקישוטים */
+.tracks-head,
+.tracks-grid,
+.tracks-note { position: relative; z-index: 1; }
+
+/* ==========================================================================
+   1. קונפטי
+   ========================================================================== */
+.tracks-confetti {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.confetti-bit {
+  position: absolute;
+  top: -6%;
+  width: var(--size, 7px);
+  height: calc(var(--size, 7px) * 1.6);
+  background: var(--c, var(--brand-gold));
+  opacity: .5;
+  animation-name: confettiFall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+@keyframes confettiFall {
+  0%   { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
+  8%   { opacity: .55; }
+  50%  { transform: translateY(52vh) rotate(320deg) translateX(22px); }
+  92%  { opacity: .45; }
+  100% { transform: translateY(105vh) rotate(680deg) translateX(-14px); opacity: 0; }
+}
+
+/* ==========================================================================
+   2. רקדנית הסמבה
+   --------------------------------------------------------------------------
+   --beat  = פעימת הריקוד (‏~96BPM).  --cross = זמן חציית המסך.
+   שני המשתנים האלה שולטים בכל התנועה.
+   ========================================================================== */
+.tracks-dancer {
+  --beat: .62s;
+  --cross: 34s;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.dancer-cross {
+  position: absolute;
+  bottom: 0;
+  /* עוגן פיזי - כדי ש-translateX יתנהג זהה בעברית ובאנגלית */
+  left: 0;
+  right: auto;
+  animation: dancerCross var(--cross) linear infinite;
+  /* מתחילה באמצע המחזור, כך שהיא כבר על המסך בכניסה לסקשן */
+  animation-delay: calc(var(--cross) / -2);
+  will-change: transform;
+}
+@keyframes dancerCross {
+  from { transform: translateX(100vw); }
+  to   { transform: translateX(-34vw); }
+}
+html[dir="ltr"] .dancer-cross { animation-name: dancerCrossLtr; }
+@keyframes dancerCrossLtr {
+  from { transform: translateX(-34vw); }
+  to   { transform: translateX(100vw); }
+}
+
+/* ⚠️ בלי הגבלת הרוחב הזו ה-SVG נמתח לרוחב המיכל כולו. */
+.dancer {
+  display: block;
+  width: clamp(240px, 30vw, 470px);
+  height: auto;
+  opacity: .2;   /* המילוי עצמו הוא גרדיאנט הקרנבל, מוגדר ב-SVG */
+}
+
+/* --- הפעימה ---
+   כל מפרק סובב סביב הציר האנטומי שלו, והפרקים הרחוקים (אמה, שוק, נוצות)
+   רצים בפאזה מושהית - כך נוצרת תנועה שרשרתית ולא סיבוב של גוש אחד. */
+.d-bob   { animation: dBob   var(--beat) ease-in-out infinite; }
+.d-body  { animation: dSway  calc(var(--beat) * 2) ease-in-out infinite; transform-origin: 120px 284px; }
+.d-hips  { animation: dHips  calc(var(--beat) * 2) ease-in-out infinite; transform-origin: 120px 284px; }
+.d-wings { animation: dWings calc(var(--beat) * 4) ease-in-out infinite; transform-origin: 120px 232px; opacity: .55; }
+
+.d-feathers > * {
+  animation: dFeath calc(var(--beat) * 2) ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 38ms);
+  transform-origin: 120px 102px;
+  transform-box: view-box;
+}
+
+.d-arm-a     { animation: dArmA  calc(var(--beat) * 2) ease-in-out infinite; transform-origin: 106px 152px; }
+.d-arm-b     { animation: dArmB  calc(var(--beat) * 2) ease-in-out infinite; transform-origin: 134px 152px; }
+.d-forearm-a { animation: dForeA calc(var(--beat) * 2) ease-in-out infinite; animation-delay: calc(var(--beat) * .18); transform-origin: 80px 134px; }
+.d-forearm-b { animation: dForeB calc(var(--beat) * 2) ease-in-out infinite; animation-delay: calc(var(--beat) * .18); transform-origin: 166px 148px; }
+
+.d-leg-a  { animation: dLegA  var(--beat) ease-in-out infinite; transform-origin: 110px 282px; }
+.d-leg-b  { animation: dLegB  var(--beat) ease-in-out infinite; transform-origin: 130px 282px; }
+.d-shin-a { animation: dShinA var(--beat) ease-in-out infinite; animation-delay: calc(var(--beat) * .16); transform-origin: 105px 356px; }
+.d-shin-b { animation: dShinB var(--beat) ease-in-out infinite; animation-delay: calc(var(--beat) * .16); transform-origin: 140px 356px; }
+
+.d-fringe > * {
+  animation: dFringe var(--beat) ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 26ms);
+  transform-origin: 120px 278px;
+  transform-box: view-box;
+}
+
+@keyframes dBob    { 0%, 100% { transform: translateY(0) scaleY(1); }            50% { transform: translateY(-10px) scaleY(1.012); } }
+@keyframes dSway   { 0%, 100% { transform: rotate(-4deg) translateX(3px); }      50% { transform: rotate(4deg) translateX(-3px); } }
+@keyframes dHips   { 0%, 100% { transform: rotate(3deg) translateX(-4px); }      50% { transform: rotate(-3deg) translateX(4px); } }
+@keyframes dWings  { 0%, 100% { transform: rotate(-2.5deg) scale(1); }           50% { transform: rotate(2.5deg) scale(1.03); } }
+@keyframes dFeath  { 0%, 100% { transform: rotate(6deg); }                       50% { transform: rotate(-6deg); } }
+@keyframes dFringe { 0%, 100% { transform: rotate(9deg) skewX(4deg); }           50% { transform: rotate(-9deg) skewX(-4deg); } }
+
+@keyframes dArmA  { 0%, 100% { transform: rotate(-20deg); } 50% { transform: rotate(14deg);  } }
+@keyframes dArmB  { 0%, 100% { transform: rotate(18deg);  } 50% { transform: rotate(-16deg); } }
+@keyframes dForeA { 0%, 100% { transform: rotate(16deg);  } 50% { transform: rotate(-14deg); } }
+@keyframes dForeB { 0%, 100% { transform: rotate(-16deg); } 50% { transform: rotate(14deg);  } }
+
+@keyframes dLegA  { 0%, 100% { transform: rotate(8deg);   } 50% { transform: rotate(-6deg);  } }
+@keyframes dLegB  { 0%, 100% { transform: rotate(-7deg);  } 50% { transform: rotate(9deg);   } }
+@keyframes dShinA { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(4deg);   } }
+@keyframes dShinB { 0%, 100% { transform: rotate(5deg);   } 50% { transform: rotate(-11deg); } }
+
+/* ==========================================================================
+   3. קישוט בלבד - יורד לגמרי כשמבקשים פחות תנועה
+   ========================================================================== */
+html.a11y-no-motion .tracks-dancer,
+html.a11y-no-motion .tracks-confetti,
+html.a11y-contrast  .tracks-dancer,
+html.a11y-contrast  .tracks-confetti { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tracks-dancer, .tracks-confetti { display: none; }
+}
+
+html.a11y-light .dancer { opacity: .16; }
+@media (max-width: 620px) { .dancer { opacity: .14; } }

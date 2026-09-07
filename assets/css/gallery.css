@@ -1,0 +1,170 @@
+/* ==========================================================================
+   gallery.css - רשת הגלריה בתחתית הדף והלייטבוקס
+   ========================================================================== */
+
+.gallery { background: var(--bg-alt); }
+
+/* ==========================================================================
+   1. הרשת - זרימת עמודות
+   --------------------------------------------------------------------------
+   רשת קשיחה עם aspect-ratio קבוע הייתה חותכת כל תמונה לרוחב לפרופורציה
+   לאורך. זרימת עמודות נותנת לכל תמונה לשמור על היחס הטבעי שלה, כך שגם
+   צילומי חלל רחבים וגם צילומים לאורך יושבים באותה גלריה בלי חיתוך.
+   ========================================================================== */
+.gallery-grid {
+  column-count: 2;
+  column-gap: var(--sp-3);
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  margin-top: var(--sp-7);
+  padding-inline: var(--gutter);
+  list-style: none;
+}
+@media (min-width: 700px)  { .gallery-grid { column-count: 3; column-gap: var(--sp-4); } }
+@media (min-width: 1100px) { .gallery-grid { column-count: 4; column-gap: var(--sp-4); } }
+
+.gallery-item {
+  break-inside: avoid;          /* תמונה לא נחתכת בין שתי עמודות */
+  margin-bottom: var(--sp-3);
+}
+@media (min-width: 700px) { .gallery-item { margin-bottom: var(--sp-4); } }
+
+.gallery-btn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: var(--ink-900);
+  overflow: hidden;
+  cursor: zoom-in;
+  position: relative;
+}
+/* בלי aspect-ratio - היחס נקבע מהמידות הטבעיות שב-config */
+.gallery-btn img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform .8s var(--ease-out);
+}
+.gallery-btn:hover img,
+.gallery-btn:focus-visible img { transform: scale(1.06); }
+
+/* שכבת אדום עדינה בריחוף */
+.gallery-btn::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(125, 25, 23, .5), transparent 55%);
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+  pointer-events: none;
+}
+.gallery-btn:hover::after,
+.gallery-btn:focus-visible::after { opacity: 1; }
+
+/* ==========================================================================
+   2. לייטבוקס
+   ========================================================================== */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-top);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--gutter);
+  background: rgba(9, 11, 12, .95);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+.lightbox.is-open { opacity: 1; }
+
+/* ⚠️ קריטי: display:grid למעלה גובר על כלל ברירת המחדל של הדפדפן ל-[hidden].
+   בלי השורה הזו הלייטבוקס נשאר פרוס על כל המסך ב-opacity:0 ובולע כל קליק בדף. */
+.lightbox[hidden] { display: none; }
+
+.lightbox-stage {
+  margin: 0;
+  display: grid;
+  justify-items: center;
+  gap: var(--sp-4);
+  min-width: 0;
+}
+.lightbox-stage img {
+  max-width: 100%;
+  max-height: 78vh;
+  width: auto;
+  object-fit: contain;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .6);
+}
+.lightbox-stage figcaption {
+  font-size: var(--fs-body-sm);
+  color: var(--text-soft);
+  text-align: center;
+  max-width: 60ch;
+}
+
+/* --- פקדים --- */
+.lightbox-nav,
+.lightbox-close {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 52px; height: 52px;
+  border: 1px solid var(--line-strong);
+  color: #fff;
+  background: transparent;
+  transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+  flex: 0 0 auto;
+}
+.lightbox-nav:hover,
+.lightbox-close:hover { background: var(--brand-red); border-color: var(--brand-red); }
+
+/* חיצים ו-X מצוירים ב-CSS, בלי תלות באייקונים */
+.lightbox-nav::before {
+  content: "";
+  width: 14px; height: 14px;
+  border-inline-start: 2px solid currentColor;
+  border-block-start: 2px solid currentColor;
+}
+.lightbox-prev::before { transform: rotate(-45deg); margin-inline-start: 5px; }
+.lightbox-next::before { transform: rotate(135deg); margin-inline-end: 5px; }
+
+.lightbox-close {
+  position: absolute;
+  top: var(--gutter);
+  inset-inline-end: var(--gutter);
+  z-index: 2;
+}
+.lightbox-close::before,
+.lightbox-close::after {
+  content: "";
+  position: absolute;
+  width: 20px; height: 2px;
+  background: currentColor;
+}
+.lightbox-close::before { transform: rotate(45deg); }
+.lightbox-close::after  { transform: rotate(-45deg); }
+
+@media (max-width: 640px) {
+  .lightbox { grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
+  .lightbox-stage { grid-row: 1; }
+  .lightbox-nav { grid-row: 2; }
+  .lightbox-prev { justify-self: start; }
+  .lightbox-next { justify-self: end; }
+  .lightbox-stage img { max-height: 66vh; }
+}
+
+/* ==========================================================================
+   3. מצבי נגישות
+   ========================================================================== */
+html.a11y-no-motion .gallery-btn img { transition: none !important; transform: none !important; }
+@media (prefers-reduced-motion: reduce) { .gallery-btn img { transition: none; } }
+html.a11y-contrast .gallery { background: #000 !important; }
+html.a11y-contrast .gallery-btn { box-shadow: 0 0 0 2px #ffe600; }
+html.a11y-contrast .lightbox { background: #000 !important; }
+html.a11y-light .gallery { background: #f2ede5 !important; }
+html.a11y-light .lightbox-stage figcaption { color: #3d3d3d; }

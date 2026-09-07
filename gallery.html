@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>גלריה | קאזה דו ברזיל</title>
+<meta name="description" content="צלילים, ניחוחות וצבעים - הצצה אל הנשמה של קאזה דו ברזיל.">
+<meta name="theme-color" content="#1C2123">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="קאזה דו ברזיל">
+<meta property="og:title" content="גלריה | קאזה דו ברזיל">
+<meta property="og:description" content="צלילים, ניחוחות וצבעים - הצצה אל הנשמה של קאזה דו ברזיל.">
+<meta property="og:image" content="assets/img/logo-1200.png">
+
+<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/logo-400.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/inner.css">
+<link rel="stylesheet" href="assets/css/pages.css">
+<link rel="stylesheet" href="assets/css/gallery.css">
+</head>
+
+<body data-page="galleryPage">
+<a class="skip-link" href="#main" data-i18n="skip">דילוג לתוכן הראשי</a>
+
+<div data-partial="header"></div>
+
+<main id="main">
+
+  <!-- כותרת הדף. הטקסט מוזרק מ-SITE.gallery ב-config.js -->
+  <section class="page-hero" aria-labelledby="pageTitle">
+    <div class="page-hero-media">
+      <img src="assets/img/gallery/03-passadores.webp" alt="" aria-hidden="true" width="560" height="995">
+    </div>
+    <div class="container page-hero-inner">
+      <nav class="breadcrumbs" aria-label="מיקום בתוך האתר">
+        <ol>
+          <li><a href="index.html" data-i18n-nav="home">בית</a></li>
+          <li aria-current="page"><span data-page-title>גלריה</span></li>
+        </ol>
+      </nav>
+      <h1 id="pageTitle" data-page-title>גלריה</h1>
+      <p data-page-desc>צלילים, ניחוחות וצבעים - הצצה אל הנשמה של קאזה דו ברזיל.</p>
+      <p class="page-hero-actions">
+        <a class="btn btn--gold" href="https://tabitisrael.co.il/online-reservations/create-reservation?step=search&amp;orgId=619bae58c6a7c716a41bdc73"
+           target="_blank" rel="noopener noreferrer" data-i18n="header.reserve">הזמנת שולחן</a>
+        <a class="btn btn--ghost" href="menu.html" data-i18n="pg.toMenu">לתפריט המלא</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section gallery" aria-labelledby="galTitle">
+    <div class="container">
+      <header class="pg-head reveal">
+        <h2 id="galTitle" data-i18n="gallery.section">הגלריה</h2>
+        <p data-i18n="gallery.intro">רגע לפני שהשיפוד מגיע אליכם.</p>
+      </header>
+    </div>
+    <ul class="gallery-grid" id="galleryGrid"></ul>
+  </section>
+
+</main>
+
+<!-- לייטבוקס הגלריה - נפתח בלחיצה על תמונה -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true"
+     data-i18n-aria-label="gallery.section" aria-label="הגלריה" hidden>
+  <button type="button" class="lightbox-close" id="lightboxClose"
+          data-i18n-aria-label="gallery.close" aria-label="סגירת התמונה"></button>
+  <button type="button" class="lightbox-nav lightbox-prev" id="lightboxPrev"
+          data-i18n-aria-label="gallery.prev" aria-label="התמונה הקודמת"></button>
+  <figure class="lightbox-stage">
+    <img id="lightboxImg" src="" alt="">
+    <figcaption id="lightboxCaption"></figcaption>
+  </figure>
+  <button type="button" class="lightbox-nav lightbox-next" id="lightboxNext"
+          data-i18n-aria-label="gallery.next" aria-label="התמונה הבאה"></button>
+</div>
+
+<div data-partial="footer"></div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/icons.js"></script>
+<script src="assets/js/partials.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/gallery.js"></script>
+<script src="assets/js/pages.js"></script>
+<script src="assets/js/cookies.js"></script>
+<script src="assets/js/accessibility.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

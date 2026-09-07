@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-i18n-title="menu.metaTitle">תפריט | קאזה דו ברזיל</title>
+<meta name="description" data-i18n-content="menu.lead" content="התפריט המלא של קאזה דו ברזיל - מסלולי הצ׳ורסקריה, עיקריות מקצביית הבית, מנות ללא בשר, תפריט ילדים, קינוחים ומשקאות.">
+<meta name="theme-color" content="#1C2123">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="קאזה דו ברזיל">
+<meta property="og:title" content="תפריט | קאזה דו ברזיל">
+<meta property="og:description" content="התפריט המלא של קאזה דו ברזיל - מסלולי הצ׳ורסקריה, עיקריות מקצביית הבית, מנות ללא בשר, תפריט ילדים, קינוחים ומשקאות.">
+<meta property="og:image" content="assets/img/logo-1200.png">
+
+<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/logo-400.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/inner.css">
+<link rel="stylesheet" href="assets/css/menu.css">
+</head>
+
+<body>
+<a class="skip-link" href="#main" data-i18n="skip">דילוג לתוכן הראשי</a>
+
+<div data-partial="header"></div>
+
+<main id="main">
+
+  <!-- כותרת הדף -->
+  <section class="page-hero" aria-labelledby="pageTitle">
+    <div class="page-hero-media">
+      <img src="assets/img/gallery/06-dining.webp" alt="" aria-hidden="true" width="720" height="540">
+    </div>
+    <div class="container page-hero-inner">
+      <nav class="breadcrumbs" aria-label="מיקום בתוך האתר">
+        <ol>
+          <li><a href="index.html" data-i18n-nav="home">בית</a></li>
+          <li aria-current="page"><span data-i18n="menu.title">תפריט</span></li>
+        </ol>
+      </nav>
+      <h1 id="pageTitle" data-i18n="menu.title">תפריט</h1>
+      <p data-i18n="menu.lead">התפריט המלא של קאזה דו ברזיל - מסלולי הצ׳ורסקריה, עיקריות מקצביית הבית, מנות ללא בשר, תפריט ילדים, קינוחים ומשקאות.</p>
+      <p class="page-hero-actions">
+        <a class="btn btn--gold" href="https://tabitisrael.co.il/online-reservations/create-reservation?step=search&amp;orgId=619bae58c6a7c716a41bdc73"
+           target="_blank" rel="noopener noreferrer" data-i18n="header.reserve">הזמנת שולחן</a>
+        <a class="btn btn--ghost" href="assets/docs/casa-do-brasil-menu-2026.pdf"
+           target="_blank" rel="noopener noreferrer" data-i18n="menu.download">התפריט המודפס (PDF)</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================================================================
+       כל התפריט נבנה כאן על ידי assets/js/menu.js מתוך SITE.menu.
+       לעריכת מנות, מחירים או קטגוריות - assets/js/config.js בלבד.
+       ================================================================== -->
+  <div id="menuRoot"></div>
+
+</main>
+
+<div data-partial="footer"></div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/icons.js"></script>
+<script src="assets/js/partials.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/menu.js"></script>
+<script src="assets/js/cookies.js"></script>
+<script src="assets/js/accessibility.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

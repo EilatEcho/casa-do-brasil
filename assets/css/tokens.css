@@ -1,0 +1,135 @@
+/* ==========================================================================
+   tokens.css - מערכת העיצוב
+   --------------------------------------------------------------------------
+   שפה עיצובית לפי הרפרנס (Grand Restaurant v6 / demo9):
+   • משפחת גופנים אחת - Rubik. משקל 700/800 לכותרות, 400 לגוף.
+   • כותרות ענק, uppercase, רווח שורות 1.0, tracking שלילי קל.
+   • שטוח לחלוטין: בלי פינות מעוגלות, בלי צללים, בלי זכוכית.
+   • קווי הפרדה של 1px, פאנלים מקצה לקצה.
+   ========================================================================== */
+
+:root {
+  /* ---- צבעי מותג ---- */
+  --brand-red:  #7d1917;
+  --brand-gold: #f8d398;
+  --brand-ink:  #1C2123;
+
+  /* ---- פלטת קרנבל ----
+     הצבעים של ברזיל, כשכבה שנייה מעל צבעי המותג. הם לא מחליפים אותם -
+     הם מופיעים בהדגשות, במונים, בקונפטי ובפס הקרנבל החוזר. */
+  --carnival-green:  #18a95c;
+  --carnival-lime:   #63c23f;
+  --carnival-yellow: #ffcb2e;
+  --carnival-orange: #ef6c2a;
+  --carnival-red:    #c8352c;
+
+  --carnival-bar: linear-gradient(90deg,
+      var(--carnival-green) 0%,
+      var(--carnival-lime) 18%,
+      var(--carnival-yellow) 38%,
+      var(--brand-gold) 54%,
+      var(--carnival-orange) 76%,
+      var(--carnival-red) 100%);
+
+  /* ---- גוונים ---- */
+  --red-900: #4a0f0e;
+  --red-800: #611311;
+  --red-700: #7d1917;
+  --red-600: #96201d;
+
+  --gold-100: #fdf3e2;
+  --gold-200: #f8d398;
+  --gold-300: #e8bd79;
+  --gold-400: #cfa05c;
+
+  --ink-950: #0f1213;
+  --ink-900: #16191b;
+  --ink-800: #1C2123;
+  --ink-700: #23292b;
+  --ink-600: #2e3538;
+
+  /* ---- תפקידי צבע ---- */
+  --bg:          var(--ink-800);
+  --bg-alt:      var(--ink-900);
+  --bg-deep:     var(--ink-950);
+  --bg-panel:    var(--ink-700);
+
+  --text:        #ffffff;
+  /* אפור עם נטייה חמה - קריא יותר וידידותי יותר מאפור ניטרלי */
+  --text-soft:   #b3aca4;
+  --text-faint:  #8a827a;
+  --accent:      var(--gold-200);
+  --accent-deep: var(--gold-400);
+  --text-on-gold: #1a1a1a;
+
+  --line:        rgba(255, 255, 255, .13);
+  --line-strong: rgba(255, 255, 255, .28);
+  --line-gold:   rgba(248, 211, 152, .55);
+
+  --focus-ring:  var(--brand-gold);
+
+  /* ---- טיפוגרפיה - משפחה אחת, כמו ברפרנס ---- */
+  --font: "Rubik", "Assistant", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  /* סקאלה - נדיבה. הכל עלה מדרגה: גוף 17px, כותרות ענק. */
+  --fs-micro:   12px;               /* תוויות uppercase */
+  --fs-label:   14px;
+  --fs-body-sm: 15px;
+  --fs-body:    17px;
+  --fs-body-lg: clamp(18px, 16px + .45vw, 23px);
+
+  --fs-h4:      clamp(19px, 16px + .6vw, 26px);
+  --fs-h3:      clamp(25px, 20px + 1.3vw, 36px);
+  --fs-h2:      clamp(38px, 22px + 4.1vw, 78px);
+  --fs-h1:      clamp(50px, 18px + 8.4vw, 122px);
+  --fs-section: clamp(23px, 19px + 1vw, 32px);   /* כותרת הסקשן התלת-חלקית */
+
+  /* רווח שורות - הדוק בכותרות, נושם בגוף */
+  --lh-display: 1.0;
+  --lh-tight:   1.08;
+  --lh-snug:    1.35;
+  --lh-body:    1.8;
+
+  --ls-display: -.02em;
+  --ls-label:   .14em;
+  --ls-wide:    .22em;
+
+  /* ---- מרווחים ---- */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 72px;
+  --sp-9: 104px; --sp-10: 150px;
+
+  --section-y: clamp(64px, 34px + 7vw, 140px);
+  --gutter:    clamp(20px, 8px + 3vw, 60px);
+  --container: 1300px;
+  --container-narrow: 800px;
+
+  /* ---- גיאומטריה: שטוח ---- */
+  --radius: 0;
+  --radius-pill: 0;
+
+  /* יוצא דופן יחיד: צל להרמת מסלול הפרימיום מעל השאר */
+  --shadow-featured:       0 26px 64px rgba(0,0,0,.6), 0 6px 18px rgba(0,0,0,.4);
+  --shadow-featured-hover: 0 34px 80px rgba(0,0,0,.68), 0 8px 22px rgba(0,0,0,.45);
+
+  /* ---- שכבות ---- */
+  --z-sticky: 100;  --z-rail: 200;  --z-nav: 300;
+  --z-header: 400;  --z-cookie: 500; --z-a11y: 600; --z-top: 900;
+
+  /* ---- תנועה ----
+     ease-bounce ו-ease-pop חורגים מעבר ליעד וחוזרים. זה מה שהופך
+     כניסה מ"נכונה" ל"שמחה", והם ברירת המחדל לכניסות באתר. */
+  --ease:        cubic-bezier(.22, .61, .36, 1);
+  --ease-out:    cubic-bezier(.16, 1, .3, 1);
+  --ease-bounce: cubic-bezier(.34, 1.56, .64, 1);
+  --ease-pop:    cubic-bezier(.22, 1.42, .36, 1);
+  --dur-fast: .18s;
+  --dur:      .32s;
+  --dur-slow: .8s;
+
+  --header-h: 92px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur-fast: .01ms; --dur: .01ms; --dur-slow: .01ms; }
+}
