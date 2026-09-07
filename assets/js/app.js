@@ -97,23 +97,47 @@
     const items = document.querySelectorAll('.reveal');
     if (!items.length) return;
 
+    const show = el => {
+      if (el.classList.contains('is-visible')) return;
+      el.classList.add('is-visible');
+      /* מחירי המסלולים והמונים - ספירה עולה */
+      if (el.matches('.track, .stats')) countUp(el);
+    };
+
     if (!('IntersectionObserver' in window)) {
-      items.forEach(el => el.classList.add('is-visible'));
+      items.forEach(show);
       return;
     }
 
     const io = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          /* מחירי המסלולים והמונים - ספירה עולה */
-          if (entry.target.matches('.track, .stats')) countUp(entry.target);
+        /* ⚠️ שני תנאים, לא אחד.
+           isIntersecting לבדו נכשל בגלילה מהירה ובקפיצה לעוגן: אם האלמנט
+           חצה את החלון בין שתי דגימות של ה-observer, הוא מדווח רק כשהוא
+           כבר מעל הצג - ואז הוא נשאר ב-opacity:0 לנצח.
+           boundingClientRect.top < 0 אומר "כבר חלפנו אותו", ולכן להציג. */
+        if (entry.isIntersecting || entry.boundingClientRect.top < 0) {
+          show(entry.target);
           obs.unobserve(entry.target);
         }
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
 
     items.forEach(el => io.observe(el));
+
+    /* רשת ביטחון אחרונה: אחרי כל גלילה, כל מה שכבר נכנס לתחום החלון
+       נחשף - גם אם ה-observer פספס אותו לגמרי. */
+    const sweep = () => {
+      document.querySelectorAll('.reveal:not(.is-visible)').forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight * 0.92) {
+          show(el);
+          io.unobserve(el);
+        }
+      });
+    };
+    window.addEventListener('scroll', debounce(sweep, 180), { passive: true });
+    window.addEventListener('hashchange', () => setTimeout(sweep, 500));
+    setTimeout(sweep, 800);
   }
 
   /* ---- ספירה עולה ----
