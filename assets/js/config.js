@@ -641,8 +641,9 @@ window.I18N = {
 
     'gallery.sideL':     'מאחורי הקלעים',
     'gallery.sideR':     'ועל השולחן',
-    'gallery.section':   'הגלריה',
+    'gallery.section':   'סיבוב בקאזה',
     'gallery.intro':     'רגע לפני שהשיפוד מגיע אליכם.',
+    'gallery.dialog':    'תמונה מוגדלת',
     'gallery.open':      'הגדלת התמונה',
     'gallery.close':     'סגירת התמונה',
     'gallery.prev':      'התמונה הקודמת',
@@ -797,8 +798,9 @@ window.I18N = {
 
     'gallery.sideL':     'Behind the scenes',
     'gallery.sideR':     'And at the table',
-    'gallery.section':   'Gallery',
+    'gallery.section':   'Around the Casa',
     'gallery.intro':     'A moment before the skewer reaches you.',
+    'gallery.dialog':    'Enlarged image',
     'gallery.open':      'Enlarge image',
     'gallery.close':     'Close image',
     'gallery.prev':      'Previous image',
