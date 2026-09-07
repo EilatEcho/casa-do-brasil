@@ -656,9 +656,45 @@ html.a11y-light .split--red h2 { color: #fff; }
   .stats { grid-template-columns: 1fr; max-width: 320px; }
 }
 .stat {
+  position: relative;   /* עוגן לשכבת הקונפטי */
   text-align: center;
   padding: var(--sp-6) var(--sp-3);
 }
+
+/* ==========================================================================
+   פיצוץ הקונפטי מאחורי המונה
+   --------------------------------------------------------------------------
+   נוצר ב-app.js ברגע שהספירה נחתה, ונמחק בסוף האנימציה.
+   overflow נשאר גלוי בכוונה - הפיסות אמורות לחרוג מגבולות המונה.
+   ========================================================================== */
+.stat-burst {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+/* המספר והתווית מעל הקונפטי, לא מתחתיו */
+.stat .value, .stat .label { position: relative; z-index: 1; }
+
+.burst-bit {
+  position: absolute;
+  top: 34%; left: 50%;
+  width: var(--size); height: var(--size);
+  background: var(--c);
+  border-radius: var(--round);
+  opacity: 0;
+  animation: statBurst 1.05s cubic-bezier(.2, .7, .3, 1) forwards;
+}
+/* שלושה שלבים: זינוק מהמרכז, שיא, ואז נפילה קלה עם דעיכה */
+@keyframes statBurst {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(.3) rotate(0deg); }
+  14%  { opacity: 1; }
+  58%  { transform: translate(calc(-50% + var(--dx) * .82), calc(-50% + var(--dy))) scale(1) rotate(calc(var(--rot) * .6)); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy) + 30px)) scale(.85) rotate(var(--rot)); }
+}
+
+html.a11y-no-motion .stat-burst { display: none !important; }
+@media (prefers-reduced-motion: reduce) { .stat-burst { display: none; } }
 .stat + .stat { border-inline-start: 1px solid rgba(0,0,0,.14); }
 @media (max-width: 560px) {
   .stat + .stat { border-inline-start: 0; border-top: 1px solid rgba(0,0,0,.14); }

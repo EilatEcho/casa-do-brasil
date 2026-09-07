@@ -172,12 +172,54 @@
         const eased = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
         el.textContent = fmt(Math.round(target * eased));
         if (p < 1) requestAnimationFrame(step);
-        else el.textContent = fmt(target);
+        else { el.textContent = fmt(target); burst(el); }
       };
 
       el.textContent = fmt(0);
       setTimeout(() => requestAnimationFrame(step), delay);
     });
+  }
+
+  /* ---- פיצוץ קונפטי מאחורי מונה שסיים לספור ----
+     נורה מתוך countUp ברגע שהספירה נחתה. רק במוני הסטטיסטיקה: מחירי
+     המסלולים משתמשים באותו countUp, ושם פיצוץ היה רועש מדי.
+
+     הזוויות מחושבות ולא אקראיות - פיזור אחיד סביב המעגל עם הסטה קטנה
+     לכל פיסה, כך שהפיצוץ נראה טבעי אבל זהה בכל טעינה וניתן לבדיקה.
+     השכבה נמחקת בסוף האנימציה כדי לא לצבור אלמנטים ב-DOM. */
+  const BURST_BITS = 20;
+
+  function burst(el) {
+    const host = el.closest('.stat');
+    if (!host || reducedMotion()) return;
+
+    const old = host.querySelector('.stat-burst');
+    if (old) old.remove();
+
+    const colors = ['--carnival-green', '--carnival-lime', '--carnival-yellow',
+                    '--brand-gold', '--carnival-orange', '--carnival-red'];
+
+    const layer = document.createElement('span');
+    layer.className = 'stat-burst';
+    layer.setAttribute('aria-hidden', 'true');
+    layer.innerHTML = Array.from({ length: BURST_BITS }, (_, i) => {
+      const angle = (i / BURST_BITS) * Math.PI * 2 + (i % 3) * 0.22;
+      const dist  = 58 + (i % 5) * 16;
+      const dx    = Math.round(Math.cos(angle) * dist);
+      const dy    = Math.round(Math.sin(angle) * dist * 0.78);
+      const size  = 5 + (i % 4) * 2;
+      return `<i class="burst-bit" style="
+        --c: var(${colors[i % colors.length]});
+        --dx: ${dx}px; --dy: ${dy}px;
+        --rot: ${(i % 2 ? 1 : -1) * (180 + i * 24)}deg;
+        --size: ${size}px;
+        --round: ${i % 3 === 0 ? '50%' : '1px'};
+        animation-delay: ${i * 12}ms;
+      "></i>`;
+    }).join('');
+
+    host.appendChild(layer);
+    setTimeout(() => layer.remove(), 1500);
   }
 
   function reducedMotion() {
@@ -424,8 +466,24 @@
   /* ======================================================================
      אתחול
      ====================================================================== */
+  /* ⚠️ langchange נורה גם כשהשפה לא באמת השתנתה: כל קריאה ל-I18n.apply()
+     יורה אותו, ובאתחול הוא נורה פעמיים. רינדור מחדש מחליף את הצמתים של
+     המונים, והספירה שכבר רצה נשארת תקועה על צומת מנותק - המספר קופץ
+     לערך הסופי בלי אנימציה, והקונפטי נוחת מחוץ למסמך.
+     כאן נשמרת השפה האחרונה שרונדרה, ורינדור מחדש קורה רק כשהיא מתחלפת. */
+  let lastLang = null;
+
+  function onLangChange(e) {
+    const next = (e && e.detail && e.detail.lang) ||
+                 (window.I18n ? window.I18n.get() : 'he');
+    if (next === lastLang) return;
+    lastLang = next;
+    renderDynamic();
+  }
+
   function boot() {
     window.I18n.init();          /* קודם שפה - כדי שכל הרינדור יהיה בשפה הנכונה */
+    lastLang = window.I18n.get();
     renderDynamic();
     initHeader();
     initNav();
@@ -443,11 +501,11 @@
     /* בהחלפת שפה - רינדור מחדש של התוכן הדינמי בלבד.
        אין לקרוא כאן ל-I18n.apply(): היא זו שיורה את האירוע ותיווצר לולאה.
        הרנדררים ממילא בונים את התוכן בשפה העדכנית. */
-    document.addEventListener('langchange', renderDynamic);
+    document.addEventListener('langchange', onLangChange);
   }
 
   /* חשיפה לשימוש חיצוני (למשל הפעלה ידנית של הספירה בסביבת תצוגה מקדימה) */
-  window.CasaAnim = { countUp, reveal: initReveal };
+  window.CasaAnim = { countUp, reveal: initReveal, burst };
 
   document.readyState === 'loading'
     ? document.addEventListener('DOMContentLoaded', boot)
