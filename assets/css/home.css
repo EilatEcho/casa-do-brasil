@@ -189,9 +189,13 @@ html[lang="he"] .hero-eyebrow { letter-spacing: .1em; font-size: clamp(15px, 12p
 }
 .track-kicker, .track-title { width: 100%; }
 .track-tagline { max-width: 44ch; }
+/* ⚠️ הריפוד התחתון זהה בשני הכרטיסים בכוונה.
+   הכרטיס המודגש מקבל יותר אוויר למעלה ובצדדים, אבל אם גם למטה -
+   שורת הכפתורים שלו (margin-top:auto) יורדת ב-24px ביחס לשכנה,
+   ושתי השורות כבר לא על אותו קו. */
 @media (min-width: 960px) {
   .track-body { padding: var(--sp-7) var(--sp-6); }
-  .track--featured .track-body { padding: var(--sp-8) var(--sp-7); }
+  .track--featured .track-body { padding: var(--sp-8) var(--sp-7) var(--sp-7); }
 }
 
 .track-kicker {

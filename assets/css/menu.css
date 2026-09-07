@@ -108,20 +108,26 @@
 .menu-feature .menu-cat-head h2::after { background: var(--brand-gold); }
 .menu-feature .menu-cat-head p { color: rgba(255, 255, 255, .84); }
 
+/* stretch ולא start: שני הכרטיסים באותו גובה, וכל אחד הוא עמודת flex
+   שדוחפת את הכפתור לתחתית. כך שורת הכפתורים נשארת על קו אחד גם אם
+   למסלול אחד יתווסף נתח ולשני לא. */
 .mtracks {
   display: grid;
   gap: clamp(20px, 12px + 1.6vw, 40px);
-  align-items: start;
+  align-items: stretch;
 }
 @media (min-width: 860px) { .mtracks { grid-template-columns: 1.06fr 1fr; } }
 
 .mtrack {
   position: relative;
+  display: flex;
+  flex-direction: column;
   background: #fdfaf4;
   color: #22201e;
   padding: clamp(26px, 16px + 1.8vw, 44px);
   border: 1px solid rgba(0, 0, 0, .1);
 }
+.mtrack .btn { margin-top: auto; }
 .mtrack--featured {
   background: var(--gold-100);
   border: 2px solid var(--brand-gold);
