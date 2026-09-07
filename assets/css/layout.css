@@ -125,9 +125,9 @@ html[lang="he"] .header-cta { letter-spacing: .04em; font-size: var(--fs-label);
 
 .nav-panel {
   width: min(100%, var(--container));
-  padding: calc(var(--header-h) + 32px) var(--gutter) var(--sp-7);
+  padding: calc(var(--header-h) + var(--sp-4)) var(--gutter) var(--sp-6);
   max-height: 100dvh; overflow-y: auto;
-  display: grid; gap: var(--sp-7);
+  display: grid; gap: var(--sp-6);
   align-content: center;
   text-align: center;
 }
@@ -149,9 +149,13 @@ html.a11y-no-motion .nav-overlay.is-open .nav-list li { opacity: 1 !important; t
   .nav-overlay.is-open .nav-list li { animation: none; }
 }
 
+/* ⚠️ הגודל מוגבל גם בגובה החלון, לא רק ברוחבו.
+   עשרה פריטי ניווט על מסך רחב אבל נמוך גלשו מהחלון והופיע פס גלילה.
+   min() לוקח את הקטן מבין המידה לפי הרוחב לבין 4.6vh - ולכן הרשימה
+   מתכווצת מעצמה כשהחלון נמוך, במקום לגלוש. */
 .nav-list a {
   display: inline-block;
-  font-size: clamp(26px, 12px + 3.4vw, 56px);
+  font-size: clamp(22px, min(12px + 3.4vw, 4.6vh), 56px);
   font-weight: 800;
   line-height: 1.2;
   letter-spacing: var(--ls-display);
