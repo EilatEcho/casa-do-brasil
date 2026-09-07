@@ -163,12 +163,18 @@ html[lang="he"] .sechead-side  { letter-spacing: .06em; font-size: var(--fs-body
 /* גרסה פשוטה: תווית + כותרת גדולה */
 .eyebrow {
   display: block;
-  font-size: var(--fs-micro);
+  font-size: clamp(13px, 11px + .35vw, 16px);
   font-weight: 700;
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;
   color: var(--accent);
   margin-bottom: var(--sp-4);
+}
+/* בעברית אין אותיות גדולות, ו-tracking רחב רק מפרק את המילה.
+   פחות ריווח, יותר גודל - בדיוק כמו ב-.hero-eyebrow. */
+html[lang="he"] .eyebrow {
+  font-size: clamp(16px, 13px + .55vw, 21px);
+  letter-spacing: .08em;
 }
 .lead { font-size: var(--fs-body-lg); color: var(--text-soft); line-height: var(--lh-body); text-wrap: pretty; }
 .text-center { text-align: center; }
