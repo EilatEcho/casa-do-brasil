@@ -5,7 +5,7 @@
    לכידת מיקוד, החזרת המיקוד לתמונה שממנה נפתח, וגרירה במגע.
    ========================================================================== */
 window.Gallery = (function () {
-  const DIR = 'assets/img/gallery/';
+  const DIR = (window.ROOT || '') + 'assets/img/gallery/';
   let index = 0, lastFocus = null;
 
   const items = () => window.SITE.gallery || [];

@@ -8,6 +8,12 @@
    • מכבדת "עצירת אנימציות" מתוסף הנגישות ו-prefers-reduced-motion
    ========================================================================== */
 (function () {
+
+  /* בריחה מ-HTML. כרגע כל התוכן מגיע מ-config.js ונשלט על ידינו, אבל אם
+     בעתיד יוזרם לכאן תוכן חיצוני (למשל ביקורות מ-Google) - בלי זה זו
+     פרצת XSS. עדיף שהמעטפת תהיה בטוחה מראש. */
+  const esc = s => String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   const AUTOPLAY_MS = 5200;
 
   let track, viewport, dotsWrap, prevBtn, nextBtn, playBtn;
@@ -31,11 +37,11 @@
       <article class="review-card">
         <div class="review-stars" role="img"
              aria-label="${window.I18n ? window.I18n.t('reviews.starsLabel') : '5/5'}">${stars}</div>
-        <p class="review-text">${text}</p>
+        <p class="review-text">${esc(text)}</p>
         <div class="review-meta">
-          <span class="review-avatar" aria-hidden="true">${name.charAt(0)}</span>
+          <span class="review-avatar" aria-hidden="true">${esc(name.charAt(0))}</span>
           <span>
-            <span class="review-name">${name}</span>
+            <span class="review-name">${esc(name)}</span>
             <span class="review-source">${I.google} Google</span>
           </span>
         </div>

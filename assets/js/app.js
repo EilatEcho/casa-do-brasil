@@ -4,6 +4,12 @@
    ========================================================================== */
 (function () {
 
+  /* בריחה מ-HTML. כרגע כל התוכן מגיע מ-config.js ונשלט על ידינו, אבל אם
+     בעתיד יוזרם לכאן תוכן חיצוני (למשל ביקורות מ-Google) - בלי זה זו
+     פרצת XSS. עדיף שהמעטפת תהיה בטוחה מראש. */
+  const esc = s => String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
   /* ======================================================================
      1. הדר סטיקי - גלוי תמיד, מתכווץ בגלילה
      ====================================================================== */
@@ -284,7 +290,7 @@
              <source src="${clip.webm}" type="video/webm">
              ${clip.mp4 ? `<source src="${clip.mp4}" type="video/mp4">` : ''}
            </video>`
-        : `<img src="${clip ? clip.poster : img}" alt="${d.title}" loading="lazy" width="1080" height="540">`;
+        : `<img src="${clip ? clip.poster : img}" alt="${esc(d.title)}" loading="lazy" width="1080" height="540">`;
 
       /* "12 סוגי בשר" / "12 cuts of meat" → מספר גדול + תווית קטנה בחותמת */
       const sealMatch = String(d.count).match(/^(\d+)\s*(.*)$/);
@@ -293,7 +299,7 @@
 
       /* --i משמש להשהיית הכניסה של כל שורה בנפרד */
       const cuts = d.cuts.map((cut, ci) =>
-        `<li class="${d.highlight === ci ? 'is-highlight' : ''}" style="--i:${ci}">${I.check}<span>${cut}</span></li>`).join('');
+        `<li class="${d.highlight === ci ? 'is-highlight' : ''}" style="--i:${ci}">${I.check}<span>${esc(cut)}</span></li>`).join('');
 
       return `
       <article class="track ${track.featured ? 'track--featured' : ''} reveal"
@@ -304,15 +310,15 @@
         </figure>
 
         <div class="track-body">
-          <p class="track-kicker">${d.kicker}</p>
-          <h3 class="track-title">${d.title}</h3>
-          <p class="track-tagline">${d.tagline}</p>
+          <p class="track-kicker">${esc(d.kicker)}</p>
+          <h3 class="track-title">${esc(d.title)}</h3>
+          <p class="track-tagline">${esc(d.tagline)}</p>
 
           <!-- המחיר כבלוק צבע מלא, ולצידו חותמת עגולה מסתובבת עם מספר הנתחים -->
           <div class="track-price">
             <span class="price-main">
               <span class="amount"><span class="currency">₪</span><span class="num" data-count="${d.price}">${d.price}</span></span>
-              <span class="note">${d.priceNote}</span>
+              <span class="note">${esc(d.priceNote)}</span>
             </span>
 
             <span class="track-seal">
@@ -327,7 +333,7 @@
               <span class="seal-text" aria-hidden="true">
                 <b>${sealNum}</b><i>${sealLabel}</i>
               </span>
-              <span class="sr-only">${d.count}</span>
+              <span class="sr-only">${esc(d.count)}</span>
             </span>
           </div>
 
@@ -338,7 +344,7 @@
                href="${S.links.reserve}" target="_blank" rel="noopener noreferrer">
               ${I.calendar}<span>${t('tracks.cta')}</span>
             </a>
-            <a class="link-underline" href="menu.html">${t('tracks.menuLink')}${I.arrow}</a>
+            <a class="link-underline" href="${window.ROOT || ''}menu.html">${t('tracks.menuLink')}${I.arrow}</a>
           </div>
         </div>
       </article>`;
@@ -350,7 +356,7 @@
     if (!host) return;
     const lang = window.I18n ? window.I18n.get() : 'he';
     host.innerHTML = (window.SITE.starters[lang] || window.SITE.starters.he)
-      .map(item => `<li>${window.ICON.check}<span>${item}</span></li>`).join('');
+      .map(item => `<li>${window.ICON.check}<span>${esc(item)}</span></li>`).join('');
   }
 
   function renderStats() {
@@ -370,7 +376,7 @@
         ? `<span class="value">${s.value}</span>`
         : `<span class="value" data-count="${num}" data-suffix="${suffix}" data-grouped="${grouped ? 1 : 0}">${s.value}</span>`;
 
-      const inner = `${value}<span class="label">${label}</span>`;
+      const inner = `${value}<span class="label">${esc(label)}</span>`;
       return i === 2
         ? `<div class="stat"><a href="${window.SITE.links.reviews}" target="_blank" rel="noopener noreferrer">${inner}</a></div>`
         : `<div class="stat">${inner}</div>`;

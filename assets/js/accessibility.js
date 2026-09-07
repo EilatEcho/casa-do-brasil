@@ -32,6 +32,10 @@
     try {
       const raw = localStorage.getItem(KEY);
       if (raw) state = Object.assign({ font: 100 }, JSON.parse(raw));
+      /* ⚠️ הערך הזה נכתב ישירות ל-style.fontSize. אם התוכן באחסון נפגם
+         או נערך ידנית, כאן הוא נעצר: רק מספר בטווח מותר עובר הלאה. */
+      const n = Number(state.font);
+      state.font = (Number.isFinite(n) && n >= 80 && n <= 160) ? Math.round(n) : 100;
     } catch (e) { /* גלישה פרטית או אחסון חסום - ממשיכים עם ברירת מחדל */ }
   };
   const save = () => {

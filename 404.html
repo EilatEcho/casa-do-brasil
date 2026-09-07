@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>הדף לא נמצא | קאזה דו ברזיל</title>
+<meta name="description" content="הדף שחיפשתם לא נמצא. חזרו לדף הבית של קאזה דו ברזיל או עברו לתפריט.">
+<meta name="theme-color" content="#1C2123">
+<meta name="robots" content="noindex,follow">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
+<link rel="icon" href="/assets/img/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/img/logo-400.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700;800;900&display=swap" rel="stylesheet">
+
+<!-- ⚠️ נתיבים מוחלטים בכוונה. דף 404 מוגש בכל כתובת שגויה, גם עמוק
+     בתוך תיקייה (למשל /post/משהו-שלא-קיים), ונתיב יחסי היה נשבר שם. -->
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/base.css">
+<link rel="stylesheet" href="/assets/css/components.css">
+<style>
+  .nf {
+    min-height: 100svh;
+    display: grid; place-items: center;
+    text-align: center;
+    padding: var(--gutter);
+    background:
+      radial-gradient(ellipse 90% 70% at 50% 30%, rgba(125, 25, 23, .45), transparent 70%),
+      var(--bg-deep);
+  }
+  .nf-inner { max-width: 60ch; }
+  .nf img { height: clamp(84px, 9vw, 130px); width: auto; margin-bottom: var(--sp-6); }
+  .nf-code {
+    font-size: clamp(64px, 30px + 8vw, 150px);
+    font-weight: 900; line-height: .9;
+    color: var(--brand-gold);
+    letter-spacing: -.04em;
+    margin-bottom: var(--sp-4);
+  }
+  .nf-code::after {
+    content: ""; display: block;
+    width: 86px; height: 4px; margin: var(--sp-5) auto 0;
+    background: var(--carnival-bar);
+  }
+  .nf h1 { font-size: clamp(24px, 16px + 1.8vw, 40px); margin-bottom: var(--sp-4); }
+  .nf p { color: var(--text-soft); margin-bottom: var(--sp-6); }
+  .nf-actions { display: flex; flex-wrap: wrap; gap: var(--sp-3); justify-content: center; }
+</style>
+</head>
+
+<body>
+<main class="nf">
+  <div class="nf-inner">
+    <img src="/assets/img/logo.svg" alt="קאזה דו ברזיל"
+         onerror="this.onerror=null;this.src='/assets/img/logo-800.png'">
+    <p class="nf-code">404</p>
+    <h1>הדף הזה לא על השיפוד</h1>
+    <p>הכתובת שהגעתם אליה לא קיימת, או שהדף עבר מקום. אתם מוזמנים לחזור לדף הבית, או לקפוץ ישר לתפריט.</p>
+    <div class="nf-actions">
+      <a class="btn btn--gold" href="/">לדף הבית</a>
+      <a class="btn btn--ghost" href="/menu">לתפריט המלא</a>
+      <a class="btn btn--ghost" href="/blog">לבלוג</a>
+    </div>
+  </div>
+</main>
+</body>
+</html>

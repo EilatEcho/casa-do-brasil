@@ -5,6 +5,14 @@
    אין צורך לגעת ב-HTML כדי לעדכן טקסט.
    ========================================================================== */
 
+/* ==========================================================================
+   ROOT - קידומת לנתיבים פנימיים.
+   דף בשורש: '' . דף בתת-תיקייה (post/<slug>.html): '../'
+   נקבע מ-<body data-root="../">. כל קישור פנימי שנבנה ב-JS חייב לעבור דרכו,
+   אחרת הוא יישבר בדפי הבלוג הסטטיים.
+   ========================================================================== */
+window.ROOT = (document.body && document.body.dataset.root) || '';
+
 window.SITE = {
 
   /* ---------- פרטי העסק ---------- */
@@ -564,6 +572,25 @@ window.SITE = {
       he: 'תנאי המועדון וההטבות עשויים להשתנות. אין כפל מבצעים או הטבות. ההטבות אישיות ואינן ניתנות להעברה.',
       en: 'Club terms and benefits may change. Offers and benefits cannot be combined. Benefits are personal and non-transferable.'
     }
+  },
+
+
+  /* כותרות הדפים המשפטיים ודף צור קשר */
+  contactPage: {
+    he: ['צור קשר', 'פרטי התקשרות, מיקום ושעות פעילות של קאזה דו ברזיל אילת.'],
+    en: ['Contact', 'Contact details, location and opening hours for Casa do Brasil Eilat.']
+  },
+  privacyPage: {
+    he: ['מדיניות פרטיות', 'מדיניות הפרטיות של אתר קאזה דו ברזיל.'],
+    en: ['Privacy Policy', 'The privacy policy of the Casa do Brasil website.']
+  },
+  accessibilityPage: {
+    he: ['הצהרת נגישות', 'הצהרת הנגישות של אתר קאזה דו ברזיל.'],
+    en: ['Accessibility Statement', 'The accessibility statement of the Casa do Brasil website.']
+  },
+  termsPage: {
+    he: ['תנאי שימוש', 'תנאי השימוש באתר קאזה דו ברזיל.'],
+    en: ['Terms of Use', 'The terms of use of the Casa do Brasil website.']
   },
 
   /* כותרת דף הגלריה. התמונות עצמן ב-SITE.gallery למעלה. */

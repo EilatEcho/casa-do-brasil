@@ -5,7 +5,7 @@
    ההזרקה מתבצעת מוקדם ככל האפשר (סקריפט defer בראש ה-body).
    ========================================================================== */
 (function () {
-  const S = window.SITE, I = window.ICON;
+  const S = window.SITE, I = window.ICON, R = window.ROOT || '';
 
   /* ---- זיהוי הדף הנוכחי לצורך aria-current ---- */
   const currentFile = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
@@ -13,7 +13,7 @@
   const navItems = S.nav.map((item, i) => {
     const isCurrent = item.href.toLowerCase() === currentFile;
     return `<li style="--i:${i}">
-      <a href="${item.href}" data-i18n-nav="${item.key}"${isCurrent ? ' aria-current="page"' : ''}>${item.he}</a>
+      <a href="${R}${item.href}" data-i18n-nav="${item.key}"${isCurrent ? ' aria-current="page"' : ''}>${item.he}</a>
     </li>`;
   }).join('');
 
@@ -37,9 +37,9 @@
         <a class="header-link header-phone" href="${S.business.phoneHref}">${I.phone}<span>${S.business.phone}</span></a>
       </div>
 
-      <a class="header-logo" href="index.html" data-i18n-aria-label="header.home" aria-label="לדף הבית">
-        <img src="assets/img/logo.svg" alt="קאזה דו ברזיל" width="200" height="144"
-             onerror="this.onerror=null;this.src='assets/img/logo-800.png'">
+      <a class="header-logo" href="${R}index.html" data-i18n-aria-label="header.home" aria-label="לדף הבית">
+        <img src="${R}assets/img/logo.svg" alt="קאזה דו ברזיל" width="200" height="144"
+             onerror="this.onerror=null;this.src=\'${R}assets/img/logo-800.png\'">
       </a>
 
       <div class="header-end">
@@ -85,15 +85,15 @@
      2. פוטר
      ====================================================================== */
   const footerNav = S.nav.map(item =>
-    `<li><a href="${item.href}" data-i18n-nav="${item.key}">${item.he}</a></li>`).join('');
+    `<li><a href="${R}${item.href}" data-i18n-nav="${item.key}">${item.he}</a></li>`).join('');
 
   const footer = `
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <img src="assets/img/logo.svg" alt="קאזה דו ברזיל" width="160" height="115" loading="lazy"
-               onerror="this.onerror=null;this.src='assets/img/logo-800.png'">
+          <img src="${R}assets/img/logo.svg" alt="קאזה דו ברזיל" width="160" height="115" loading="lazy"
+               onerror="this.onerror=null;this.src=\'${R}assets/img/logo-800.png\'">
           <p data-i18n="footer.about">צ׳ורסקריה ברזילאית באילת - גריל, מוסיקה ואווירה, מאז 1999.</p>
           <div class="footer-social">${socialLinks}</div>
         </div>
@@ -127,9 +127,9 @@
       <div class="footer-bottom">
         <p>© <span id="footerYear">2026</span> ${S.business.name} · <span data-i18n="footer.rights">כל הזכויות שמורות</span></p>
         <nav aria-label="קישורי מדיניות">
-          <a href="privacy.html" data-i18n="footer.privacy">מדיניות פרטיות</a>
-          <a href="accessibility.html" data-i18n="footer.accessibility">הצהרת נגישות</a>
-          <a href="terms.html" data-i18n="footer.terms">תנאי שימוש</a>
+          <a href="${R}privacy.html" data-i18n="footer.privacy">מדיניות פרטיות</a>
+          <a href="${R}accessibility.html" data-i18n="footer.accessibility">הצהרת נגישות</a>
+          <a href="${R}terms.html" data-i18n="footer.terms">תנאי שימוש</a>
         </nav>
       </div>
     </div>
@@ -158,7 +158,7 @@
     <h2 id="cookieTitle">${I.cookie}<span data-i18n="cookies.title">האתר עושה שימוש בעוגיות</span></h2>
     <p id="cookieText">
       <span data-i18n="cookies.text">אנו משתמשים בעוגיות כדי לשפר את חוויית הגלישה ולנתח את השימוש באתר. לחיצה על ״אישור״ מהווה הסכמה לשימוש בעוגיות כמפורט במדיניות הפרטיות.</span>
-      <a href="privacy.html" data-i18n="cookies.policy">מדיניות הפרטיות</a>
+      <a href="${R}privacy.html" data-i18n="cookies.policy">מדיניות הפרטיות</a>
     </p>
     <div class="cookie-actions">
       <button type="button" class="btn btn--gold" id="cookieAccept" data-i18n="cookies.accept">אישור</button>
@@ -214,7 +214,7 @@
       <button type="button" class="btn btn--ghost btn--sm btn--block" id="a11yReset">
         ${I.reset}<span data-i18n="a11y.reset">איפוס הגדרות</span>
       </button>
-      <a href="accessibility.html" data-i18n="a11y.statement">הצהרת נגישות</a>
+      <a href="${R}accessibility.html" data-i18n="a11y.statement">הצהרת נגישות</a>
     </div>
   </div>
   <div class="a11y-guide-bar" id="a11yGuideBar" aria-hidden="true"></div>`;

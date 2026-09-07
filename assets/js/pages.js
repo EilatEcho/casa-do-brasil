@@ -21,6 +21,7 @@ window.Pages = (function () {
   const t    = k => (window.I18n ? window.I18n.t(k) : k);
   const L    = o => (o ? (o[lang()] || o.he) : null);
   const S    = () => window.SITE;
+  const R    = () => (window.ROOT || '');
   const I    = () => window.ICON;
 
   /* כותרת סקשן אחידה לכל הדפים הפנימיים */
@@ -390,7 +391,7 @@ window.Pages = (function () {
 
     list.insertAdjacentHTML('beforeend', next.map((p, i) => `
       <li class="pg-post reveal" style="--reveal-delay:${(i % 3) * 70}ms">
-        <a href="post.html?p=${encodeURIComponent(p.slug)}">
+        <a href="${R()}post/${encodeURIComponent(p.slug)}.html">
           <h3>${esc(p.title)}</h3>
           <p>${esc(p.desc)}</p>
           <span class="link-underline">${esc(t('pg.readMore'))}${I().arrow}</span>
@@ -422,7 +423,7 @@ window.Pages = (function () {
           <div class="pg-cta reveal">
             <h3>${esc(t('page.soon'))}</h3>
             <p>${esc(t('pg.searchNone'))}</p>
-            <a class="btn btn--gold" href="blog.html"><span>${esc(t('pg.backToBlog'))}</span></a>
+            <a class="btn btn--gold" href="${R()}blog.html"><span>${esc(t('pg.backToBlog'))}</span></a>
           </div>
         </div>
       </section>`;
@@ -444,8 +445,8 @@ window.Pages = (function () {
       <div class="container container--narrow">
         <nav class="breadcrumbs reveal" aria-label="${esc(t('pg.backToBlog'))}">
           <ol>
-            <li><a href="index.html" data-i18n-nav="home">${esc(S().nav[0][lang()])}</a></li>
-            <li><a href="blog.html" data-i18n-nav="blog">${esc(S().nav.find(n => n.key === 'blog')[lang()])}</a></li>
+            <li><a href="${R()}index.html" data-i18n-nav="home">${esc(S().nav[0][lang()])}</a></li>
+            <li><a href="${R()}blog.html" data-i18n-nav="blog">${esc(S().nav.find(n => n.key === 'blog')[lang()])}</a></li>
           </ol>
         </nav>
 
@@ -453,7 +454,7 @@ window.Pages = (function () {
         <div class="prose pg-prose reveal">${body}</div>
 
         <div class="pg-actions reveal">
-          <a class="btn btn--ghost" href="blog.html"><span>${esc(t('pg.backToBlog'))}</span></a>
+          <a class="btn btn--ghost" href="${R()}blog.html"><span>${esc(t('pg.backToBlog'))}</span></a>
           <a class="btn btn--gold" href="${S().links.reserve}" target="_blank" rel="noopener noreferrer">
             ${I().calendar}<span>${esc(t('pg.reserve'))}</span>
           </a>
@@ -467,7 +468,7 @@ window.Pages = (function () {
         <ul class="pg-posts">
           ${more.map((m, i) => `
           <li class="pg-post reveal" style="--reveal-delay:${i * 70}ms">
-            <a href="post.html?p=${encodeURIComponent(m.slug)}">
+            <a href="${R()}post/${encodeURIComponent(m.slug)}.html">
               <h3>${esc(m.title)}</h3>
               <p>${esc(m.desc)}</p>
               <span class="link-underline">${esc(t('pg.readMore'))}${I().arrow}</span>
