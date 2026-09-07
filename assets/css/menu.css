@@ -128,6 +128,16 @@
   border: 1px solid rgba(0, 0, 0, .1);
 }
 .mtrack .btn { margin-top: auto; }
+
+/* ⚠️ כפתורים על כרטיס בהיר.
+   הווריאנטים הגלובליים ב-components.css מיועדים לרקע כהה:
+   btn--gold עובר ב-hover לרקע שקוף עם טקסט זהב, ו-btn--ghost צובע את
+   הטקסט בלבן. שניהם נעלמים לחלוטין על הקרם של הכרטיס.
+   כאן הם נדרסים לגרסה כהה, בדיוק כמו ב-.track בדף הבית. */
+.mtrack .btn--gold        { --btn-bg: var(--brand-red); --btn-fg: #fff; --btn-bd: var(--brand-red); }
+.mtrack .btn--gold:hover  { --btn-bg: #2a1c06; --btn-fg: var(--brand-gold); --btn-bd: #2a1c06; }
+.mtrack .btn--ghost       { --btn-bg: transparent; --btn-fg: #1e1815; --btn-bd: rgba(30, 24, 21, .3); }
+.mtrack .btn--ghost:hover { --btn-bg: var(--brand-red); --btn-fg: #fff; --btn-bd: var(--brand-red); }
 .mtrack--featured {
   background: var(--gold-100);
   border: 2px solid var(--brand-gold);
