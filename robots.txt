@@ -7,4 +7,4 @@
 User-agent: *
 Disallow: /
 
-Sitemap: https://www.casadobrasil.co.il/sitemap.xml
+Sitemap: https://casadobrasil.co.il/sitemap.xml
