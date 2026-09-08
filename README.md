@@ -88,8 +88,9 @@ assets/docs/        התפריט המודפס (PDF)
 2. [ ] **להשוות כתובות.** כל 47 המאמרים נשמרו ב-`/post/<slug>` הזהה לישן,
        וכל דפי הליבה (`/menu`, `/butcher`, `/vip`, `/faq`, `/benefits`,
        `/gallery`, `/blog`, `/privacy`, `/accessibility`) נשארו באותה כתובת.
-       פתוחים: 10 כתובות `/en/*` שאין להן מקבילה — צריך להחליט אם ליצור להן
-       דפי הפניה (GitHub Pages לא תומך ב-301 אמיתי, רק `meta refresh`).
+       9 כתובות `/en/*` שאין להן מקבילה מכוסות בדפי הפניה בתיקיית `en/`
+       (`_tools/build_redirects.py`) — canonical לעברית ו-`meta refresh`
+       ל-`?lang=en`. GitHub Pages לא תומך ב-301 אמיתי, רק בזה.
 3. [ ] **DNS.** קובץ `CNAME` בשורש עם `casadobrasil.co.il`, ואצל רושם הדומיין
        רשומות `A` ל-IP של GitHub Pages (דומיין שורש לא יכול להיות `CNAME`),
        ורשומת `CNAME` ל-`www` שתפנה למאגר — GitHub יפנה אותה לשורש.
