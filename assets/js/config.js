@@ -581,12 +581,12 @@ window.SITE = {
     en: ['Contact', 'Contact details, location and opening hours for Casa do Brasil Eilat.']
   },
   privacyPage: {
-    he: ['מדיניות פרטיות', 'מדיניות הפרטיות של אתר קאזה דו ברזיל.'],
+    he: ['מדיניות פרטיות', 'כיצד נאסף המידע באתר, למה הוא משמש, ומהן הזכויות שלכם לגביו.'],
     en: ['Privacy Policy', 'The privacy policy of the Casa do Brasil website.']
   },
   accessibilityPage: {
-    he: ['הצהרת נגישות', 'הצהרת הנגישות של אתר קאזה דו ברזיל.'],
-    en: ['Accessibility Statement', 'The accessibility statement of the Casa do Brasil website.']
+    he: ['הצהרת נגישות', 'אנו מחויבים לגישה שווה לכל באי המסעדה ומשתמשי האתר.'],
+    en: ['Accessibility Statement', 'We are committed to equal access for every guest of the restaurant and every visitor to the site.']
   },
   termsPage: {
     he: ['תנאי שימוש', 'תנאי השימוש באתר קאזה דו ברזיל.'],
