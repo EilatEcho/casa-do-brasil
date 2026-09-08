@@ -5,7 +5,10 @@
 .page-hero {
   position: relative;
   min-height: clamp(320px, 44vh, 520px);
-  display: grid; align-items: center;
+  display: grid;
+  /* אותה מלכודת כמו בהירו: עמודה ברוחב auto נמתחת לפי התוכן הרחב ביותר */
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
   overflow: hidden;
   isolation: isolate;
   background: var(--bg-deep);

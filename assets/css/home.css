@@ -8,7 +8,14 @@
 .hero {
   position: relative;
   min-height: 100svh;
-  display: grid; align-items: center;
+  display: grid;
+  /* ⚠️ minmax(0, 1fr) ולא ברירת המחדל.
+     עמודת grid ברוחב auto נמדדת לפי התוכן הרחב ביותר שבתוכה. הכותרת
+     הרצה רחבה פי כמה מהמסך, וכתוצאה מכך העמודה - ואיתה כל תוכן ההירו -
+     נמתחה ל-1300px גם במסך של 800px, ונדחפה הצידה מחוץ למרכז.
+     minmax(0, 1fr) מאפס את המינימום ומצמיד את העמודה לרוחב ההירו. */
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
   overflow: hidden;
   isolation: isolate;
   background: var(--brand-red);
@@ -79,7 +86,7 @@ html.a11y-no-motion .hero h1 { text-align: center; }
 
 /* מובייל: הכותרת חוזרת לתוך הקונטיינר, ממורכזת, בלי פריצה ובלי דעיכת קצוות.
    על מסך צר ריצה של המשפט מציגה מילה אחת בכל רגע ונראית כמו טקסט שברח. */
-@media (max-width: 760px) {
+@media (max-width: 1000px) {
   .hero h1 {
     margin-inline: auto;
     max-width: 15ch;
