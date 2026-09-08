@@ -152,7 +152,9 @@ html.a11y-no-motion .hero h1 { text-align: center; }
   background: var(--card-bg);
   color: var(--card-ink);
   border: 0;
-  overflow: hidden;
+  /* ⚠️ בלי overflow:hidden בכוונה - סרט המחיר (.track-price) חורג מהכרטיס
+     לשני הצדדים, וחיתוך כאן היה מבטל את אפקט העטיפה.
+     החיתוך שהתמונה צריכה יושב על .track-figure בנפרד. */
   box-shadow: 0 18px 44px rgba(0, 0, 0, .34);
 }
 
@@ -276,41 +278,56 @@ html.a11y-no-motion .hero h1 { text-align: center; }
 
 /* --- המחיר: בלוק צבע גדול --- */
 /* ==========================================================================
-   המחיר כסרט (ribbon) שחוצה את הכרטיס מקצה לקצה
+   המחיר כסרט שעוטף את הכרטיס
    --------------------------------------------------------------------------
-   הסרט נמתח על כל רוחב הכרטיס בעזרת שוליים שליליים בגודל הריפוד של הגוף
-   (--card-pad-x, מוגדר לכל נקודת שבירה), ושני קצותיו נחתכים בזנב סנונית.
-   שיפוע כהה בכל קצה נותן את תחושת הקיפול מתחת לסרט.
-   --ribbon-notch הוא עומק החיתוך; שינוי שלו מספיק כדי לשנות את הצורה.
+   הסרט חורג מהכרטיס לשני הצדדים (--ribbon-out), ומתחת לכל חריגה יושב
+   משולש כהה שנראה כמו המשך הסרט שנקפל אל מאחורי הכרטיס. יחד עם הצל
+   שמתחת לסרט, הוא נקרא כפס שהונח מעל המלבן ולא כחלק ממנו.
+
+   ⚠️ שתי תלויות:
+   1. ל-.track אין overflow:hidden - אחרת החריגה נחתכת והאפקט נעלם.
+      החיתוך שנדרש לתמונה יושב על .track-figure בנפרד.
+   2. --ribbon-out חייב להישאר קטן מה-gutter (20px במובייל) וקטן מחצי
+      המרווח בין הכרטיסים (48px/2 בדסקטופ), אחרת הסרט ייחתך בשולי המסך
+      או ייגע בסרט של הכרטיס השכן.
    ========================================================================== */
 .track-price {
-  --ribbon-notch: 26px;
+  --ribbon-out: clamp(12px, 1.4vw, 20px);
+  --ribbon-fold: #4a0f0e;
 
   position: relative;
+  z-index: 2;                          /* מעל הכרטיס, לא בתוכו */
   align-self: stretch;                 /* בלי זה הסרט מתכווץ לרוחב התוכן */
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: var(--sp-3) var(--sp-5);
   justify-content: center;
-  padding: var(--sp-4) calc(var(--ribbon-notch) + var(--sp-5));
-  margin-inline: calc(var(--card-pad-x) * -1);
-  margin-bottom: var(--sp-5);
+  padding: var(--sp-4) calc(var(--card-pad-x) + var(--ribbon-out));
+  margin-inline: calc((var(--card-pad-x) + var(--ribbon-out)) * -1);
+  margin-bottom: var(--sp-6);
 
   background-color: var(--brand-red);
-  /* הצללת הקיפול בשני הקצוות */
-  background-image:
-    linear-gradient(to right, rgba(0, 0, 0, .22), transparent var(--ribbon-notch)),
-    linear-gradient(to left,  rgba(0, 0, 0, .22), transparent var(--ribbon-notch));
   color: #fff;
-
-  clip-path: polygon(
-    0 0, 100% 0,
-    calc(100% - var(--ribbon-notch)) 50%, 100% 100%,
-    0 100%, var(--ribbon-notch) 50%
-  );
+  box-shadow: 0 7px 18px rgba(0, 0, 0, .3);
 }
+
+/* הקיפולים - משולש מתחת לכל קצה חורג, בגוון כהה מהסרט */
+.track-price::before,
+.track-price::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  width: var(--ribbon-out);
+  height: clamp(9px, 1.1vw, 15px);
+  background: var(--ribbon-fold);
+  z-index: -1;
+}
+.track-price::before { left: 0;  clip-path: polygon(0 0, 100% 0, 100% 100%); }
+.track-price::after  { right: 0; clip-path: polygon(0 0, 100% 0, 0 100%); }
+
 .track--featured .track-price {
+  --ribbon-fold: #8a6524;
   background-color: var(--brand-gold);
   color: #2a1c06;
 }
