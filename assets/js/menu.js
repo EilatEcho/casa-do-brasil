@@ -132,11 +132,16 @@ window.Menu = (function () {
 
     const items = cat.items.map(itemHtml).join('');
 
+    /* השורה השנייה יורדת לשורה משלה (flex-basis:100% ב-CSS).
+       callout.phone מוסיף לה את מספר הטלפון כקישור חיוג. */
+    const B = window.SITE.business;
+    const calloutTel = cat.callout && cat.callout.phone
+      ? ` &middot; <a href="${esc(B.phoneHref)}" dir="ltr">${esc(B.phone)}</a>` : '';
     const callout = cat.callout ? `
       <p class="menu-callout reveal">
         ${I.flame}
         <strong>${esc(L(cat.callout)[0])}</strong>
-        <span>${esc(L(cat.callout)[1])}</span>
+        <span>${esc(L(cat.callout)[1])}${calloutTel}</span>
       </p>` : '';
 
     /* מסלול הילדים - כרטיס נפרד בסוף הקטגוריה */

@@ -254,7 +254,10 @@ window.SITE = {
                              { price: '14', he: 'גבינה טבעונית', en: 'Vegan cheese' }
                            ] }
         ],
-        callout: { he: ['בשר טרי במשקל', 'שאל את המלצר!'], en: ['Fresh meat by weight', 'Ask your waiter!'] }
+        /* phone: true → menu.js מוסיף את מספר הטלפון כקישור חיוג בסוף השורה השנייה */
+        callout: { phone: true,
+                   he: ['החוויה של הקאזה - גם בבית', 'בשר טרי במשקל'],
+                   en: ['The Casa experience - at home too', 'Fresh meat by weight'] }
       },
 
       /* ===================== לא רק בשר ===================== */

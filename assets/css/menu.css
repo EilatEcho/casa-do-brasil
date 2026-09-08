@@ -398,7 +398,19 @@
   font-size: clamp(19px, 16px + .7vw, 27px);
   color: var(--accent);
 }
-.menu-callout span { color: var(--text-soft); }
+/* flex-basis:100% - השורה השנייה תמיד יורדת מתחת לכותרת, גם כשיש מקום לצדה */
+.menu-callout span {
+  flex-basis: 100%;
+  margin-top: -4px;
+  color: var(--text-soft);
+}
+.menu-callout span a {
+  color: var(--accent);
+  font-weight: 700;
+  border-bottom: 1px solid rgba(248, 211, 152, .45);
+  transition: border-color var(--dur) var(--ease);
+}
+.menu-callout span a:hover { border-bottom-color: var(--accent); }
 
 .menu-kidstrack {
   margin: clamp(32px, 20px + 1.6vw, 56px) auto 0;
