@@ -47,6 +47,39 @@ html[lang="he"] .btn { font-size: var(--fs-label); letter-spacing: .04em; }
 .btn--sm { padding: 11px 22px; }
 .btn--block { width: 100%; }
 
+/* ==========================================================================
+   כפתורים במצבי הנגישות
+   --------------------------------------------------------------------------
+   ⚠️ כאן נדרסים גם המצב הרגיל וגם ה-hover. דריסה של המצב הרגיל בלבד
+   משאירה את ה-hover של הווריאנט המקורי - וכך נוצר כפתור שנעלם לגמרי
+   ברגע שעוברים עליו: שחור על שחור בניגודיות גבוהה, זהב על בהיר במצב
+   הרקע הבהיר. זה קרה בפועל ל"להזמנת מקום".
+
+   הסלקטור הוא .btn.btn--x בכוונה: הוא חייב לגבור על דריסות מקומיות כמו
+   .about-cta .btn--red:hover ו-.mtrack .btn--gold:hover, שנטענות
+   בקבצים מאוחרים יותר.
+   ========================================================================== */
+
+/* --- ניגודיות גבוהה: צהוב על שחור, והיפוך ב-hover --- */
+html.a11y-contrast .btn.btn--gold,
+html.a11y-contrast .btn.btn--red,
+html.a11y-contrast .btn.btn--solid   { --btn-bg: #ffe600; --btn-fg: #000; --btn-bd: #ffe600; }
+html.a11y-contrast .btn.btn--gold:hover,
+html.a11y-contrast .btn.btn--red:hover,
+html.a11y-contrast .btn.btn--solid:hover { --btn-bg: #000; --btn-fg: #ffe600; --btn-bd: #ffe600; }
+
+html.a11y-contrast .btn.btn--ghost       { --btn-bg: transparent; --btn-fg: #ffe600; --btn-bd: #ffe600; }
+html.a11y-contrast .btn.btn--ghost:hover { --btn-bg: #ffe600; --btn-fg: #000; --btn-bd: #ffe600; }
+
+/* --- רקע בהיר: אדום המותג נושא את הכפתורים --- */
+html.a11y-light .btn.btn--gold,
+html.a11y-light .btn.btn--red        { --btn-bg: var(--brand-red); --btn-fg: #fff; --btn-bd: var(--brand-red); }
+html.a11y-light .btn.btn--gold:hover,
+html.a11y-light .btn.btn--red:hover  { --btn-bg: #2a1c06; --btn-fg: #f8d398; --btn-bd: #2a1c06; }
+
+html.a11y-light .btn.btn--ghost       { --btn-bg: transparent; --btn-fg: #1e1815; --btn-bd: rgba(30, 24, 21, .38); }
+html.a11y-light .btn.btn--ghost:hover { --btn-bg: #1e1815; --btn-fg: #fff; --btn-bd: #1e1815; }
+
 /* קישור עם קו תחתון זהב */
 .link-underline {
   display: inline-flex; align-items: center; gap: 9px;
