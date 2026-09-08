@@ -436,11 +436,9 @@ html.a11y-no-motion .seal-spin { animation: none !important; }
   align-items: center;
   justify-content: center;
 }
-/* כפתורים על רקע בהיר */
+/* כפתורים על רקע בהיר - מצב מנוחה בלבד */
 .track .btn--ghost { --btn-fg: var(--card-ink); --btn-bd: rgba(30, 24, 21, .3); }
-.track .btn--ghost:hover { --btn-bg: var(--brand-red); --btn-fg: #fff; --btn-bd: var(--brand-red); }
 .track .btn--gold { --btn-bg: var(--brand-red); --btn-fg: #fff; --btn-bd: var(--brand-red); }
-.track .btn--gold:hover { --btn-bg: #2a1c06; --btn-fg: var(--brand-gold); --btn-bd: #2a1c06; }
 .track .link-underline { color: var(--brand-red); border-bottom-color: rgba(125, 25, 23, .4); }
 .track .link-underline:hover { color: var(--card-ink); border-bottom-color: var(--card-ink); }
 
@@ -672,9 +670,8 @@ html.a11y-light .split--red h2 { color: #fff; }
 }
 .about-text p { text-wrap: balance; }
 .about-text p + p { margin-top: var(--sp-4); }
-/* שני כפתורים על רקע הקרם.
-   ⚠️ וריאנטי הכפתורים הגלובליים מיועדים לרקע כהה: --btn-fg שלהם לבן,
-   ולכן ghost היה נעלם כאן לגמרי. הצבעים נדרסים מקומית לגרסה כהה על קרם. */
+/* שני כפתורים על רקע הקרם. רק מצב המנוחה נקבע כאן -
+   ה-hover גלובלי ותמיד אטום, ולכן קריא גם על קרם. */
 .about-cta {
   display: flex;
   justify-content: center;
@@ -682,14 +679,8 @@ html.a11y-light .split--red h2 { color: #fff; }
   gap: var(--sp-3);
   margin-top: var(--sp-6);
 }
-.about-cta .btn--red:hover {
-  --btn-bg: transparent; --btn-fg: var(--brand-red); --btn-bd: var(--brand-red);
-}
 .about-cta .btn--ghost {
   --btn-fg: #1e1815; --btn-bd: rgba(30, 24, 21, .34);
-}
-.about-cta .btn--ghost:hover {
-  --btn-bg: #1e1815; --btn-fg: var(--cream-bg); --btn-bd: #1e1815;
 }
 
 /* מונים - בלוק צר וממורכז, לא פרוס על כל רוחב הקונטיינר */
@@ -798,7 +789,6 @@ html.a11y-contrast .about .sechead-title,
 html.a11y-contrast .stat .value,
 html.a11y-contrast .stat .label { color: #ffe600 !important; }
 /* בניגודיות גבוהה האזור הופך שחור, ולכן הכפתור ה"רפאים" הכהה נעלם */
-html.a11y-contrast .about-cta .btn--ghost { --btn-fg: #ffe600; --btn-bd: #ffe600; }
 html.a11y-contrast .about-cta .btn--red   { --btn-bg: #ffe600; --btn-fg: #000; --btn-bd: #ffe600; }
 
 html.a11y-light .about { background: #f2ede5 !important; }

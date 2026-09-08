@@ -31,17 +31,25 @@
 html[lang="he"] .btn { font-size: var(--fs-label); letter-spacing: .04em; }
 .btn svg { width: 15px; height: 15px; flex: 0 0 auto; }
 
+/* ⚠️ כלל ברזל: ב-hover הכפתור נצבע במילוי אטום, לעולם לא בשקוף.
+   הגרסה הקודמת רוקנה את הרקע והשאירה טקסט בהיר - כלומר הקריאוּת שלו
+   הייתה תלויה במה שמאחוריו. על רקע כהה זה עבד, על קרם הכפתור נעלם.
+   זה חזר ונשבר באזור הסיפור, בפס ההמלצות, בכרטיסי התפריט ובמצבי
+   הנגישות. מילוי אטום נושא איתו גם את צבע הטקסט, ולכן הוא קריא בכל
+   הקשר - ואין יותר צורך בדריסה לכל רקע בנפרד. */
 .btn--gold  { --btn-bg: var(--brand-gold); --btn-fg: var(--text-on-gold); --btn-bd: var(--brand-gold); }
-.btn--gold:hover { --btn-bg: transparent; --btn-fg: var(--brand-gold); }
+.btn--gold:hover { --btn-bg: #2a1c06; --btn-fg: var(--brand-gold); --btn-bd: #2a1c06; }
 
 .btn--red   { --btn-bg: var(--brand-red); --btn-fg: #fff; --btn-bd: var(--brand-red); }
-.btn--red:hover { --btn-bg: transparent; --btn-fg: var(--brand-gold); --btn-bd: var(--brand-gold); }
+.btn--red:hover { --btn-bg: #4a0f0e; --btn-fg: var(--brand-gold); --btn-bd: #4a0f0e; }
 
+/* ghost הוא היחיד ששקוף במנוחה, ולכן צבע הטקסט שלו כן תלוי הקשר.
+   ב-hover גם הוא מתמלא, ומאותו רגע הוא קריא בכל מקום. */
 .btn--ghost { --btn-bg: transparent; --btn-fg: var(--text); --btn-bd: var(--line-strong); }
-.btn--ghost:hover { --btn-bd: var(--brand-gold); --btn-fg: var(--brand-gold); }
+.btn--ghost:hover { --btn-bg: var(--brand-red); --btn-fg: #fff; --btn-bd: var(--brand-red); }
 
 .btn--solid { --btn-bg: var(--text); --btn-fg: var(--ink-900); --btn-bd: var(--text); }
-.btn--solid:hover { --btn-bg: var(--brand-gold); --btn-bd: var(--brand-gold); }
+.btn--solid:hover { --btn-bg: var(--brand-gold); --btn-fg: var(--text-on-gold); --btn-bd: var(--brand-gold); }
 
 .btn--lg { padding: 19px 44px; }
 .btn--sm { padding: 11px 22px; }
@@ -50,35 +58,23 @@ html[lang="he"] .btn { font-size: var(--fs-label); letter-spacing: .04em; }
 /* ==========================================================================
    כפתורים במצבי הנגישות
    --------------------------------------------------------------------------
-   ⚠️ כאן נדרסים גם המצב הרגיל וגם ה-hover. דריסה של המצב הרגיל בלבד
-   משאירה את ה-hover של הווריאנט המקורי - וכך נוצר כפתור שנעלם לגמרי
-   ברגע שעוברים עליו: שחור על שחור בניגודיות גבוהה, זהב על בהיר במצב
-   הרקע הבהיר. זה קרה בפועל ל"להזמנת מקום".
-
-   הסלקטור הוא .btn.btn--x בכוונה: הוא חייב לגבור על דריסות מקומיות כמו
-   .about-cta .btn--red:hover ו-.mtrack .btn--gold:hover, שנטענות
-   בקבצים מאוחרים יותר.
+   מצב המנוחה נקבע לכל וריאנט, וה-hover נקבע פעם אחת לכל הכפתורים -
+   מילוי אטום אחיד. הסלקטור html.a11y-x .btn:hover גובר על ה-hover
+   הגלובלי של הווריאנטים, ולכן אין צורך לחזור על כל אחד מהם בנפרד.
    ========================================================================== */
 
-/* --- ניגודיות גבוהה: צהוב על שחור, והיפוך ב-hover --- */
+/* --- ניגודיות גבוהה: צהוב על שחור --- */
 html.a11y-contrast .btn.btn--gold,
 html.a11y-contrast .btn.btn--red,
-html.a11y-contrast .btn.btn--solid   { --btn-bg: #ffe600; --btn-fg: #000; --btn-bd: #ffe600; }
-html.a11y-contrast .btn.btn--gold:hover,
-html.a11y-contrast .btn.btn--red:hover,
-html.a11y-contrast .btn.btn--solid:hover { --btn-bg: #000; --btn-fg: #ffe600; --btn-bd: #ffe600; }
-
-html.a11y-contrast .btn.btn--ghost       { --btn-bg: transparent; --btn-fg: #ffe600; --btn-bd: #ffe600; }
-html.a11y-contrast .btn.btn--ghost:hover { --btn-bg: #ffe600; --btn-fg: #000; --btn-bd: #ffe600; }
+html.a11y-contrast .btn.btn--solid { --btn-bg: #ffe600; --btn-fg: #000; --btn-bd: #ffe600; }
+html.a11y-contrast .btn.btn--ghost { --btn-bg: transparent; --btn-fg: #ffe600; --btn-bd: #ffe600; }
+html.a11y-contrast .btn:hover      { --btn-bg: #000; --btn-fg: #ffe600; --btn-bd: #ffe600; }
 
 /* --- רקע בהיר: אדום המותג נושא את הכפתורים --- */
 html.a11y-light .btn.btn--gold,
-html.a11y-light .btn.btn--red        { --btn-bg: var(--brand-red); --btn-fg: #fff; --btn-bd: var(--brand-red); }
-html.a11y-light .btn.btn--gold:hover,
-html.a11y-light .btn.btn--red:hover  { --btn-bg: #2a1c06; --btn-fg: #f8d398; --btn-bd: #2a1c06; }
-
-html.a11y-light .btn.btn--ghost       { --btn-bg: transparent; --btn-fg: #1e1815; --btn-bd: rgba(30, 24, 21, .38); }
-html.a11y-light .btn.btn--ghost:hover { --btn-bg: #1e1815; --btn-fg: #fff; --btn-bd: #1e1815; }
+html.a11y-light .btn.btn--red   { --btn-bg: var(--brand-red); --btn-fg: #fff; --btn-bd: var(--brand-red); }
+html.a11y-light .btn.btn--ghost { --btn-bg: transparent; --btn-fg: #1e1815; --btn-bd: rgba(30, 24, 21, .38); }
+html.a11y-light .btn:hover      { --btn-bg: #2a1c06; --btn-fg: #f8d398; --btn-bd: #2a1c06; }
 
 /* קישור עם קו תחתון זהב */
 .link-underline {
@@ -116,7 +112,6 @@ html[dir="ltr"] .link-underline:hover svg { transform: translateX(4px); }
 .reviews .carousel-btn:hover:not(:disabled) { border-color: var(--brand-red); color: var(--brand-red); }
 .reviews .carousel-dots button { background: rgba(0,0,0,.2); }
 .reviews .btn--ghost { --btn-fg: #2a2320; --btn-bd: rgba(0,0,0,.28); }
-.reviews .btn--ghost:hover { --btn-bg: var(--brand-red); --btn-fg: #fff; --btn-bd: var(--brand-red); }
 
 .carousel-viewport {
   overflow: hidden;
