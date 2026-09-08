@@ -55,7 +55,8 @@ window.SITE = {
        אין יותר שום תלות ב-CDN של האתר הישן. */
     premium:      'assets/img/gallery/02-picanha.webp',
     churrascaria: 'assets/img/gallery/03-passadores.webp',
-    starters:     'assets/img/gallery/04-table.webp',
+    /* מנות הפתיחה - תמונה ריבועית ייעודית, לא מהגלריה */
+    starters:     'assets/img/starters-1200.webp',
   },
 
   /* ---------- ניווט ראשי ---------- */

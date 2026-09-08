@@ -341,8 +341,16 @@
     </span>
 
     <figure class="split-figure" style="margin:0">
-      <img src="assets/img/gallery/04-table.webp"
-           alt="מנות פתיחה המוגשות למרכז השולחן" loading="lazy" width="900" height="675">
+      <!-- התמונה ריבועית ונחתכת ב-object-fit:cover לפי גובה הפאנל.
+           הסיר במרכז - לכן חיתוך מהמרכז שומר על הנושא בכל יחס. -->
+      <picture>
+        <source type="image/webp"
+                srcset="assets/img/starters-800.webp 800w, assets/img/starters-1200.webp 1200w"
+                sizes="(min-width: 940px) 50vw, 100vw">
+        <img src="assets/img/starters-1200.jpg"
+             alt="מנות הפתיחה של קאזה דו ברזיל - צ׳ילי קון קרנה, אורז לבן, תפוחי אדמה בתנור, סלט הבית וצ׳ימיצ׳ורי"
+             loading="lazy" width="1200" height="1200">
+      </picture>
     </figure>
 
     <div class="split-body reveal">
