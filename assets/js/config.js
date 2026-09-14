@@ -157,8 +157,13 @@ window.SITE = {
      w/h הם המידות הטבעיות של תמונת התצוגה - הן מונעות קפיצת פריסה בטעינה
      ומאפשרות לפריסה לכבד גם תמונות לאורך וגם לרוחב.
      לכל base קיימים ארבעה קבצים ב-assets/img/gallery:
-     <base>.webp/.jpg (מקור, ללייטבוקס) ו-<base>-thumb.webp/.jpg (לרשת). */
+     <base>.webp/.jpg (מקור, ללייטבוקס) ו-<base>-thumb.webp/.jpg (לרשת).
+     היוצא מן הכלל הוא פריט עם webpOnly:true - לו יש רק את שני ה-WebP. */
   gallery: [
+    /* webpOnly: קיימים רק קבצי WebP לפריט הזה, בלי גיבוי JPG. */
+    { base: '08-entrance',   w: 560, h: 746, webpOnly: true,
+                             he: 'חזית המסעדה בערב - שלט קאזה דו ברזיל המואר',
+                             en: 'The restaurant entrance at night - the illuminated Casa do Brasil sign' },
     { base: '01-team',       w: 560, h: 995, he: 'הצוות של קאזה דו ברזיל לפני פתיחת המשמרת',  en: 'The Casa do Brasil team before service' },
     { base: '02-picanha',    w: 560, h: 995, he: 'שיפוד פיקאניה יוצא מהגריל',                 en: 'A picanha skewer straight off the grill' },
     { base: '06-dining',     w: 720, h: 540, he: 'אולם המסעדה בערב עמוס',                     en: 'The dining room on a busy evening' },

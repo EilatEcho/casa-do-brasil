@@ -19,13 +19,17 @@ window.Gallery = (function () {
 
     host.innerHTML = items().map((item, i) => {
       const alt = item[lang()] || item.he;
+      /* ⚠️ ברירת המחדל היא גיבוי JPG. פריט עם webpOnly:true הוא פריט
+         שקיים רק כ-WebP, ואז ה-img מצביע גם הוא על ה-WebP - אחרת
+         דפדפן שלא בוחר את ה-source היה מנסה JPG שלא קיים ומציג שבור. */
+      const thumb = `${DIR}${item.base}-thumb.` + (item.webpOnly ? 'webp' : 'jpg');
       return `
       <li class="gallery-item reveal" style="--reveal-delay:${i * 80}ms">
         <button type="button" class="gallery-btn" data-index="${i}"
                 aria-label="${t('gallery.open')}: ${alt}">
           <picture>
             <source srcset="${DIR}${item.base}-thumb.webp" type="image/webp">
-            <img src="${DIR}${item.base}-thumb.jpg" alt="${alt}"
+            <img src="${thumb}" alt="${alt}"
                  loading="lazy" width="${item.w || 560}" height="${item.h || 995}">
           </picture>
         </button>
@@ -48,8 +52,9 @@ window.Gallery = (function () {
     const img = document.getElementById('lightboxImg');
     img.src = `${DIR}${item.base}.webp`;
     img.alt = alt;
-    /* אם WebP לא נתמך - נופלים ל-JPG */
-    img.onerror = () => { img.onerror = null; img.src = `${DIR}${item.base}.jpg`; };
+    /* אם WebP לא נתמך - נופלים ל-JPG. לפריט webpOnly אין למה ליפול. */
+    img.onerror = item.webpOnly ? null
+      : () => { img.onerror = null; img.src = `${DIR}${item.base}.jpg`; };
 
     document.getElementById('lightboxCaption').textContent =
       `${alt} · ${t('gallery.counter')} ${index + 1}/${list.length}`;
