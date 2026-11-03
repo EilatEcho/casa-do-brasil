@@ -43,11 +43,14 @@
 
 .ord-items { list-style: none; margin: 0; padding: 0; }
 
-/* שלוש עמודות: שם | מחיר | בורר כמות. במובייל השם תופס שורה שלמה. */
+/* ⚠️ במובייל השם תופס שורה משלו, והמחיר והבורר יושבים מתחתיו.
+   הפריסה הקודמת הושיבה את השם והמחיר באותה שורה, ועם שם ארוך
+   ("המבורגר BEYOND MEAT") המחיר דרס אותו. שתי שורות נפרדות מונעות
+   את ההתנגשות בכל אורך שם, בלי לקצץ טקסט. */
 .ord-item {
   display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-areas: "main price" "step step";
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "main main" "price step";
   gap: 10px var(--sp-4);
   align-items: center;
   padding: var(--sp-4) 0;
