@@ -1,0 +1,246 @@
+/* ==========================================================================
+   order.css - דף הזמנת בשר במשקל
+   ========================================================================== */
+
+.ord-wrap {
+  width: 100%;
+  max-width: 980px;
+  margin-inline: auto;
+  padding: var(--section-y) var(--gutter);
+}
+
+/* ---------- הודעות מצב ---------- */
+.ord-notice {
+  border: 1px solid var(--line-gold);
+  background: rgba(248, 211, 152, .06);
+  padding: clamp(20px, 14px + 1vw, 32px) var(--sp-5);
+  margin-bottom: var(--sp-6);
+  text-align: center;
+}
+.ord-notice h2 { font-size: clamp(21px, 17px + 1vw, 30px); margin-bottom: var(--sp-3); }
+.ord-notice p  { color: var(--text-soft); margin: 0; }
+.ord-notice--closed { border-color: rgba(125, 25, 23, .55); background: rgba(125, 25, 23, .12); }
+.ord-notice--info   { text-align: start; }
+
+.ord-callrow {
+  display: flex; flex-wrap: wrap; gap: var(--sp-3);
+  justify-content: center;
+  margin-top: var(--sp-5);
+}
+
+/* ---------- קטגוריות ופריטים ---------- */
+.ord-cat { margin-bottom: var(--sp-7); }
+.ord-cat h2 {
+  font-size: clamp(22px, 18px + 1.1vw, 32px);
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.ord-cat-sub {
+  color: var(--text-faint);
+  font-size: var(--fs-body-sm);
+  margin-bottom: var(--sp-4);
+}
+
+.ord-items { list-style: none; margin: 0; padding: 0; }
+
+/* שלוש עמודות: שם | מחיר | בורר כמות. במובייל השם תופס שורה שלמה. */
+.ord-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "main price" "step step";
+  gap: 10px var(--sp-4);
+  align-items: center;
+  padding: var(--sp-4) 0;
+  border-bottom: 1px solid var(--line);
+}
+@media (min-width: 620px) {
+  .ord-item {
+    grid-template-columns: 1fr auto auto;
+    grid-template-areas: "main price step";
+    gap: var(--sp-5);
+  }
+}
+.ord-item-main  { grid-area: main; min-width: 0; }
+.ord-item-price { grid-area: price; margin: 0; white-space: nowrap; }
+.ord-step       { grid-area: step; }
+.ord-item-off   { grid-area: step; margin: 0; color: var(--text-faint); font-size: var(--fs-body-sm); }
+
+.ord-item-name { font-weight: 700; margin: 0; }
+.ord-item-note {
+  margin: 3px 0 0;
+  font-size: var(--fs-body-sm);
+  color: var(--text-faint);
+  line-height: 1.4;
+}
+.ord-item-price span  { font-weight: 800; color: var(--accent); }
+.ord-item-price small { color: var(--text-faint); font-size: var(--fs-body-sm); }
+
+.ord-item.is-off { opacity: .5; }
+.ord-item.is-picked { background: rgba(248, 211, 152, .05); }
+
+/* ---------- בורר הכמות ---------- */
+.ord-step {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line-strong);
+}
+.ord-step-btn {
+  width: 42px; height: 42px;
+  flex: 0 0 auto;
+  display: grid; place-items: center;
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  font-size: 21px; line-height: 1;
+  cursor: pointer;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.ord-step-btn:hover:not(:disabled) { background: var(--brand-red); color: #fff; }
+.ord-step-btn:disabled { opacity: .3; cursor: not-allowed; }
+.ord-step-val {
+  min-width: 92px;
+  text-align: center;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  padding-inline: 6px;
+}
+
+/* ---------- הטופס והסיכום ---------- */
+.ord-form {
+  border: 1px solid var(--line-gold);
+  background: rgba(248, 211, 152, .04);
+  padding: clamp(20px, 14px + 1.2vw, 36px);
+  margin-top: var(--sp-7);
+}
+.ord-form > h2 {
+  font-size: clamp(22px, 18px + 1.1vw, 32px);
+  margin-bottom: var(--sp-5);
+}
+
+.ord-empty { color: var(--text-faint); margin: 0 0 var(--sp-5); }
+
+.ord-sum { list-style: none; margin: 0 0 var(--sp-4); padding: 0; }
+.ord-sum li {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: var(--sp-3);
+  padding-block: 7px;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--fs-body-sm);
+}
+.ord-sum-qty  { color: var(--text-faint); font-variant-numeric: tabular-nums; }
+.ord-sum-line { font-weight: 700; font-variant-numeric: tabular-nums; min-width: 72px; text-align: end; }
+
+.ord-tot { margin: 0 0 var(--sp-5); }
+.ord-tot > div {
+  display: flex; justify-content: space-between; gap: var(--sp-4);
+  padding-block: 5px;
+}
+.ord-tot dt { color: var(--text-soft); }
+.ord-tot dd { margin: 0; font-variant-numeric: tabular-nums; }
+.ord-tot-grand {
+  border-top: 1px solid var(--line-gold);
+  margin-top: 8px; padding-top: 10px !important;
+  font-size: clamp(18px, 15px + .7vw, 24px);
+  font-weight: 800;
+}
+.ord-tot-grand dt { color: var(--text) !important; }
+.ord-tot-grand dd { color: var(--accent); }
+
+.ord-promo {
+  margin: 0 0 var(--sp-5);
+  padding: 12px var(--sp-4);
+  border: 1px dashed var(--line-gold);
+  font-size: var(--fs-body-sm);
+  color: var(--text-soft);
+}
+.ord-promo.is-on {
+  border-style: solid;
+  border-color: var(--carnival-green);
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* ---------- שדות ---------- */
+.ord-fs { border: 0; padding: 0; margin: 0 0 var(--sp-5); }
+.ord-fs legend {
+  padding: 0; margin-bottom: var(--sp-3);
+  font-weight: 700;
+}
+.ord-methods { display: grid; gap: var(--sp-3); }
+@media (min-width: 620px) { .ord-methods { grid-template-columns: 1fr 1fr; } }
+
+.ord-radio {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: var(--sp-4);
+  border: 1px solid var(--line-strong);
+  cursor: pointer;
+  transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+.ord-radio:hover { border-color: var(--accent); }
+.ord-radio:has(input:checked) { border-color: var(--accent); background: rgba(248, 211, 152, .08); }
+.ord-radio input { margin-top: 3px; flex: 0 0 auto; accent-color: var(--brand-red); }
+.ord-radio span  { display: block; min-width: 0; }
+.ord-radio small { display: block; color: var(--text-faint); font-size: var(--fs-body-sm); margin-top: 2px; }
+
+.ord-field { margin-bottom: var(--sp-4); }
+.ord-field label { display: block; margin-bottom: 6px; font-weight: 600; }
+.ord-grid2 { display: grid; gap: 0 var(--sp-4); }
+@media (min-width: 620px) { .ord-grid2 { grid-template-columns: 1fr 1fr; } }
+
+.ord-field input,
+.ord-field textarea {
+  width: 100%;
+  padding: 12px var(--sp-4);
+  background: rgba(0, 0, 0, .25);
+  border: 1px solid var(--line-strong);
+  color: var(--text);
+  font: inherit;
+  border-radius: 0;
+}
+.ord-field input:focus-visible,
+.ord-field textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.ord-field textarea { resize: vertical; }
+
+.ord-pay {
+  font-size: var(--fs-body-sm);
+  color: var(--text-soft);
+  border-inline-start: 3px solid var(--accent);
+  padding: 8px var(--sp-4);
+  margin: 0 0 var(--sp-4);
+}
+
+.ord-msg { margin: 0 0 var(--sp-3); min-height: 1px; }
+.ord-msg.is-error { color: #ff9a92; font-weight: 700; }
+
+.ord-legal { font-size: var(--fs-body-sm); color: var(--text-faint); margin: var(--sp-4) 0 0; }
+
+#ordSubmit.is-busy { opacity: .6; pointer-events: none; }
+
+/* ---------- מסך תודה ---------- */
+.ord-done { text-align: center; padding-block: var(--sp-7); }
+.ord-done-mark {
+  width: 78px; height: 78px;
+  margin: 0 auto var(--sp-5);
+  display: grid; place-items: center;
+  border: 2px solid var(--carnival-green);
+  color: var(--carnival-green);
+  font-size: 38px; line-height: 1;
+}
+.ord-done h2 { font-size: clamp(25px, 20px + 1.3vw, 38px); margin-bottom: var(--sp-4); }
+.ord-done p  { color: var(--text-soft); max-width: 52ch; margin-inline: auto; }
+.ord-done-ref {
+  font-size: var(--fs-body-lg);
+  color: var(--text) !important;
+  margin-bottom: var(--sp-3) !important;
+}
+.ord-done-ref strong { color: var(--accent); font-variant-numeric: tabular-nums; }
+.ord-done-lead { margin-top: var(--sp-4) !important; font-size: var(--fs-body-sm); }
+
+/* ---------- מצבי נגישות ---------- */
+html.a11y-no-motion .ord-step-btn { transition: none !important; }
+html.a11y-contrast .ord-form,
+html.a11y-contrast .ord-notice { border-color: #ffe600 !important; background: #000 !important; }
+html.a11y-contrast .ord-step { border-color: #ffe600 !important; }
+html.a11y-contrast .ord-item-price span,
+html.a11y-contrast .ord-cat h2 { color: #ffe600 !important; }

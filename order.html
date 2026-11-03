@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-i18n-title="ord.metaTitle">הזמנת בשר במשקל | קאזה דו ברזיל</title>
+<meta name="description" data-i18n-content="ord.metaDesc"
+      content="קחו קצת קאזה הביתה - בשר טרי במשקל מקצביית הבית, מנות פתיחה ותוספות. איסוף עצמי או משלוח באילת.">
+<meta name="theme-color" content="#1C2123">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="קאזה דו ברזיל">
+<meta property="og:title" content="הזמנת בשר במשקל | קאזה דו ברזיל">
+<meta property="og:description" content="קחו קצת קאזה הביתה - בשר טרי במשקל מקצביית הבית. איסוף עצמי או משלוח באילת.">
+<meta property="og:image" content="assets/img/logo-1200.png">
+
+<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/logo-400.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/inner.css">
+<link rel="stylesheet" href="assets/css/order.css">
+<!-- head:auto -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' https://pslbnrzddmgtwqdbjkmj.supabase.co; form-action 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="canonical" href="https://casadobrasil.co.il/order">
+<link rel="alternate" hreflang="he" href="https://casadobrasil.co.il/order">
+<link rel="alternate" hreflang="en" href="https://casadobrasil.co.il/order?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://casadobrasil.co.il/order">
+<meta property="og:url" content="https://casadobrasil.co.il/order">
+<meta property="og:locale" content="he_IL">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<!-- head:auto --></head>
+
+<body data-page="order">
+<a class="skip-link" href="#main" data-i18n="skip">דילוג לתוכן הראשי</a>
+
+<div data-partial="header"></div>
+
+<main id="main">
+
+  <section class="page-hero" aria-labelledby="pageTitle">
+    <div class="page-hero-media">
+      <img src="assets/img/gallery/02-picanha.webp" alt="" aria-hidden="true" width="560" height="995">
+    </div>
+    <div class="container page-hero-inner">
+      <nav class="breadcrumbs" aria-label="מיקום בתוך האתר">
+        <ol>
+          <li><a href="index.html" data-i18n-nav="home">בית</a></li>
+          <li aria-current="page"><span data-i18n="ord.title">קחו קצת קאזה הביתה</span></li>
+        </ol>
+      </nav>
+      <h1 id="pageTitle" data-i18n="ord.title">קחו קצת קאזה הביתה</h1>
+      <p data-i18n="ord.lead">בשר טרי במשקל מקצביית הבית, מנות פתיחה והתוספות שאתם מכירים מהמסעדה. אוספים מהמסעדה או מקבלים עד הבית באילת.</p>
+      <p class="page-hero-actions">
+        <a class="btn btn--ghost" href="butcher.html" data-i18n="ord.toButcher">על הקצביה</a>
+        <a class="btn btn--ghost" href="menu.html" data-i18n="pg.toMenu">לתפריט המלא</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- המחירון, הזמינות ומצב המערכת נטענים מ-Supabase ב-order.js -->
+  <div class="ord-wrap">
+    <div id="ordMain">
+      <p class="ord-empty" data-i18n="ord.loading">טוען את המחירון…</p>
+    </div>
+  </div>
+
+</main>
+
+<div data-partial="footer"></div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/icons.js"></script>
+<script src="assets/js/partials.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/supa.js"></script>
+<script src="assets/js/order.js"></script>
+<script src="assets/js/cookies.js"></script>
+<script src="assets/js/accessibility.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
