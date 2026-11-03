@@ -28,10 +28,13 @@
   const money = n => '₪' + Number(n).toLocaleString('he-IL',
     { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
 
-  /* 0.75 → "750 גרם" | 1.5 → "1.5 ק\"ג" - קריא יותר מ-0.75 ק"ג */
+  /* 0.75 → "750 גרם" | 1.5 → "1.5 ק\"ג" - קריא יותר מ-0.75 ק"ג.
+     אפס מוצג כ-"0 ק״ג" ולא כקו מפריד: במובייל קו דק נקרא כשדה ריק
+     ולא היה ברור שאפשר ללחוץ. */
   function qtyLabel(q, unit) {
     if (unit !== 'kg') return q + ' ' + t('ord.units');
-    if (q < 1) return Math.round(q * 1000) + ' ' + t('ord.grams');
+    if (q === 0)       return '0 ' + t('ord.kg');
+    if (q < 1)         return Math.round(q * 1000) + ' ' + t('ord.grams');
     return q + ' ' + t('ord.kg');
   }
 
@@ -83,9 +86,9 @@
         (off
           ? '<p class="ord-item-off">' + esc(t('ord.soldOut')) + '</p>'
           : '<div class="ord-step" role="group" aria-label="' + esc(pname(p)) + '">' +
-              '<button type="button" class="ord-step-btn" data-act="dec" aria-label="' + esc(t('ord.less')) + '"' + (q ? '' : ' disabled') + '>&minus;</button>' +
-              '<span class="ord-step-val" aria-live="polite">' + (q ? esc(qtyLabel(q, p.unit)) : '&ndash;') + '</span>' +
-              '<button type="button" class="ord-step-btn" data-act="inc" aria-label="' + esc(t('ord.more')) + '">+</button>' +
+              '<button type="button" class="ord-step-btn ord-step-btn--dec" data-act="dec" aria-label="' + esc(t('ord.less')) + '"' + (q ? '' : ' disabled') + '>&minus;</button>' +
+              '<span class="ord-step-val" aria-live="polite">' + esc(qtyLabel(q, p.unit)) + '</span>' +
+              '<button type="button" class="ord-step-btn ord-step-btn--inc" data-act="inc" aria-label="' + esc(t('ord.more')) + '">+</button>' +
             '</div>') +
       '</li>';
   }

@@ -78,32 +78,56 @@
 .ord-item.is-off { opacity: .5; }
 .ord-item.is-picked { background: rgba(248, 211, 152, .05); }
 
-/* ---------- בורר הכמות ---------- */
+/* ---------- בורר הכמות ----------
+   ⚠️ במובייל הבורר נפרס לרוחב מלא. קודם הוא היה קומפקטי ומיושר להתחלה,
+      עם שני תווים בלי רקע ועם קו מפריד באמצע - ולא היה ברור שאלה כפתורים
+      ושאפשר להוסיף פריט. עכשיו: שטח נגיעה 48px (מעל המינימום של 44px),
+      "+" במילוי זהב כפעולה הראשית, ומסגרת סביב כל הפקד. */
 .ord-step {
-  display: inline-flex;
-  align-items: center;
+  display: flex;
+  align-items: stretch;
   border: 1px solid var(--line-strong);
+  background: rgba(0, 0, 0, .22);
+  width: 100%;
 }
+@media (min-width: 620px) {
+  .ord-step { width: auto; display: inline-flex; }
+}
+
 .ord-step-btn {
-  width: 42px; height: 42px;
+  width: 48px;
   flex: 0 0 auto;
   display: grid; place-items: center;
-  background: transparent;
   border: 0;
-  color: var(--text);
-  font-size: 21px; line-height: 1;
+  font-size: 23px; font-weight: 700; line-height: 1;
   cursor: pointer;
   transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
 }
-.ord-step-btn:hover:not(:disabled) { background: var(--brand-red); color: #fff; }
-.ord-step-btn:disabled { opacity: .3; cursor: not-allowed; }
+.ord-step-btn--inc {
+  background: var(--brand-gold);
+  color: var(--text-on-gold);
+}
+.ord-step-btn--inc:hover { background: #2a1c06; color: var(--brand-gold); }
+.ord-step-btn--dec {
+  background: transparent;
+  color: var(--text);
+  border-inline-end: 1px solid var(--line-strong);
+}
+.ord-step-btn--dec:hover:not(:disabled) { background: var(--brand-red); color: #fff; }
+.ord-step-btn:disabled { opacity: .35; cursor: not-allowed; }
+
 .ord-step-val {
-  min-width: 92px;
+  flex: 1 1 auto;
+  min-width: 96px;
+  display: grid; place-items: center;
+  min-height: 48px;
   text-align: center;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
-  padding-inline: 6px;
+  padding-inline: 8px;
 }
+/* כמות אפס בגוון עמום, כדי שפריט שנבחר יבלוט ברשימה */
+.ord-item:not(.is-picked) .ord-step-val { color: var(--text-faint); font-weight: 600; }
 
 /* ---------- הטופס והסיכום ---------- */
 .ord-form {
@@ -242,5 +266,7 @@ html.a11y-no-motion .ord-step-btn { transition: none !important; }
 html.a11y-contrast .ord-form,
 html.a11y-contrast .ord-notice { border-color: #ffe600 !important; background: #000 !important; }
 html.a11y-contrast .ord-step { border-color: #ffe600 !important; }
+html.a11y-contrast .ord-step-btn--inc { background: #ffe600 !important; color: #000 !important; }
+html.a11y-contrast .ord-step-btn--inc:hover { background: #000 !important; color: #ffe600 !important; }
 html.a11y-contrast .ord-item-price span,
 html.a11y-contrast .ord-cat h2 { color: #ffe600 !important; }
