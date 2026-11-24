@@ -125,6 +125,14 @@
 .adm-order dd { margin: 0; }
 .adm-order ul { list-style: none; margin: 0 0 var(--sp-3); padding: 0; font-size: var(--fs-body-sm); }
 .adm-order ul li { display: flex; justify-content: space-between; gap: var(--sp-4); padding-block: 3px; }
+/* בקשה מיוחדת של הלקוח - בולטת, הקצב צריך לראות אותה לפני השקילה */
+.adm-item-note {
+  display: block;
+  font-style: normal;
+  font-weight: 700;
+  color: var(--carnival-orange);
+  margin-top: 2px;
+}
 .adm-order-total { font-weight: 800; font-size: var(--fs-body-lg); }
 .adm-order-foot { display: flex; flex-wrap: wrap; gap: var(--sp-3); align-items: center; }
 .adm-order-foot select { width: auto; min-width: 150px; }

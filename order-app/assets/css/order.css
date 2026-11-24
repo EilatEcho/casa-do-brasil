@@ -50,7 +50,7 @@
 .ord-item {
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-areas: "main main" "price step";
+  grid-template-areas: "main main" "price step" "note note";
   gap: 10px var(--sp-4);
   align-items: center;
   padding: var(--sp-4) 0;
@@ -59,8 +59,8 @@
 @media (min-width: 620px) {
   .ord-item {
     grid-template-columns: 1fr auto auto;
-    grid-template-areas: "main price step";
-    gap: var(--sp-5);
+    grid-template-areas: "main price step" "note note note";
+    gap: var(--sp-4) var(--sp-5);
   }
 }
 .ord-item-main  { grid-area: main; min-width: 0; }
@@ -77,6 +77,49 @@
 }
 .ord-item-price span  { font-weight: 800; color: var(--accent); }
 .ord-item-price small { color: var(--text-faint); font-size: var(--fs-body-sm); }
+/* קפיצת המשקל יורדת לשורה משלה מתחת למחיר */
+.ord-item-step { display: block; margin-top: 2px; }
+
+/* ---------- בקשה מיוחדת לפריט ---------- */
+.ord-note { grid-area: note; }
+.ord-note-open {
+  background: none;
+  border: 0;
+  border-bottom: 1px dashed var(--line-gold);
+  color: var(--accent);
+  font: inherit;
+  font-size: var(--fs-body-sm);
+  padding: 2px 0;
+  cursor: pointer;
+}
+.ord-note-open:hover { border-bottom-style: solid; }
+.ord-note-lab {
+  display: block;
+  font-size: var(--fs-body-sm);
+  color: var(--text-faint);
+  margin-bottom: 4px;
+}
+.ord-note-in {
+  width: 100%;
+  padding: 10px var(--sp-3);
+  background: rgba(0, 0, 0, .25);
+  border: 1px solid var(--line-strong);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--fs-body-sm);
+  border-radius: 0;
+  resize: vertical;
+}
+.ord-note-in:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+/* ---------- שיטת מסירה יחידה ---------- */
+.ord-single-method {
+  border: 1px solid var(--line-strong);
+  padding: var(--sp-4);
+  margin-bottom: var(--sp-5);
+}
+.ord-single-method strong { display: block; }
+.ord-single-method small  { color: var(--text-faint); font-size: var(--fs-body-sm); }
 
 .ord-item.is-off { opacity: .5; }
 .ord-item.is-picked { background: rgba(248, 211, 152, .05); }
@@ -156,6 +199,13 @@
   font-size: var(--fs-body-sm);
 }
 .ord-sum-qty  { color: var(--text-faint); font-variant-numeric: tabular-nums; }
+.ord-sum-note {
+  display: block;
+  font-style: normal;
+  color: var(--accent);
+  font-size: var(--fs-body-sm);
+  margin-top: 2px;
+}
 .ord-sum-line { font-weight: 700; font-variant-numeric: tabular-nums; min-width: 72px; text-align: end; }
 
 .ord-tot { margin: 0 0 var(--sp-5); }

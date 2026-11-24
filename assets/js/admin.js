@@ -181,6 +181,12 @@
             (p.no_discount ? ' <span class="adm-unit">(ללא הנחה)</span>' : '') + '</td>' +
           '<td><input type="number" min="0" step="1" value="' + esc(p.price) + '" data-price></td>' +
           '<td class="adm-unit">' + (p.unit === 'kg' ? 'לק״ג' : 'ליחידה') + '</td>' +
+          /* קפיצת המשקל רלוונטית רק לפריטים שנמכרים במשקל */
+          '<td>' + (p.unit === 'kg'
+            ? '<select data-step>' + [50, 100, 250].map(g =>
+                '<option value="' + g + '"' + (Number(p.step_g) === g ? ' selected' : '') + '>' +
+                g + ' גרם</option>').join('') + '</select>'
+            : '<span class="adm-unit">—</span>') + '</td>' +
           '<td><label class="adm-check"><input type="checkbox" data-avail' +
             (p.available ? ' checked' : '') + '> במלאי</label></td>' +
         '</tr>').join('');
@@ -189,7 +195,7 @@
     $('panPrices').innerHTML =
       '<p class="adm-empty">שינוי מחיר או הורדת פריט מהמלאי משפיעים על דף ההזמנה מיד אחרי השמירה.</p>' +
       '<div class="adm-table-wrap"><table class="adm-table">' +
-        '<thead><tr><th>פריט</th><th>מחיר</th><th>יחידה</th><th>זמינות</th></tr></thead>' +
+        '<thead><tr><th>פריט</th><th>מחיר</th><th>יחידה</th><th>קפיצת משקל</th><th>זמינות</th></tr></thead>' +
         '<tbody>' + rows + '</tbody>' +
       '</table></div>' +
       '<div class="adm-bar">' +
@@ -212,9 +218,12 @@
       const p     = products.find(x => x.slug === slug);
       const price = Number(tr.querySelector('[data-price]').value);
       const avail = tr.querySelector('[data-avail]').checked;
+      const stepEl = tr.querySelector('[data-step]');
+      const step  = stepEl ? Number(stepEl.value) : null;
       if (!p) return;
-      if (Number(p.price) !== price || p.available !== avail) {
-        changed.push({ slug: slug, price: price, available: avail });
+      if (Number(p.price) !== price || p.available !== avail ||
+          (step !== null && Number(p.step_g) !== step)) {
+        changed.push({ slug: slug, price: price, available: avail, step_g: step });
       }
     });
 
@@ -224,10 +233,13 @@
       /* עדכון פר שורה. בכמות פריטים כזאת זה מיידי, ומונע את הסיכון
          של upsert שמוחק בטעות עמודות שלא נשלחו. */
       for (const c of changed) {
+        const body = { price: c.price, available: c.available };
+        if (c.step_g !== null) body.step_g = c.step_g;
         await window.Supa.rest('products?slug=eq.' + encodeURIComponent(c.slug),
-          { method: 'PATCH', body: { price: c.price, available: c.available } });
+          { method: 'PATCH', body: body });
         const p = products.find(x => x.slug === c.slug);
         p.price = c.price; p.available = c.available;
+        if (c.step_g !== null) p.step_g = c.step_g;
       }
       say(msg, changed.length + ' פריטים עודכנו.', 'ok');
     } catch (e) {
@@ -255,11 +267,14 @@
   function orderHtml(o) {
     const when = new Date(o.created_at).toLocaleString('he-IL',
       { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+    /* הערת לקוח לשורה - בקשה מיוחדת או משקל מיוחד. חייבת לבלוט:
+       זה מה שהקצב צריך לקרוא לפני שהוא שוקל. */
     const items = (o.items || []).map(i =>
       '<li><span>' + esc(i.name) + ' · ' +
         (i.unit === 'kg'
           ? (i.qty < 1 ? Math.round(i.qty * 1000) + ' גרם' : i.qty + ' ק״ג')
           : i.qty + ' יח׳') +
+        (i.note ? '<em class="adm-item-note">' + esc(i.note) + '</em>' : '') +
       '</span><span>' + money(i.line) + '</span></li>').join('');
 
     return '<article class="adm-order" data-status="' + esc(o.status) + '">' +
