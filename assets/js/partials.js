@@ -5,7 +5,17 @@
    ההזרקה מתבצעת מוקדם ככל האפשר (סקריפט defer בראש ה-body).
    ========================================================================== */
 (function () {
+  /* R  - קידומת לנכסים (תמונות). תמיד מקומית.
+     L  - קידומת לקישורים לדפי האתר. באתר עצמו היא זהה ל-R, ובאפליקציית
+          ההזמנות העצמאית (order-app) היא הכתובת המלאה של האתר הראשי,
+          כך שהניווט מחזיר לשם. ⚠️ הפרדה בין השתיים נחוצה: אם גם הנכסים
+          היו נטענים מהאתר הראשי, ה-CSP (img-src 'self') היה חוסם אותם. */
   const S = window.SITE, I = window.ICON, R = window.ROOT || '';
+  const L = window.LINK_ROOT || R;
+
+  /* פריט ניווט יכול להצביע לכתובת מלאה (מערכת ההזמנות יושבת בדומיין
+     משלה). במקרה כזה אסור להדביק לפניו קידומת. */
+  const abs = href => (/^(https?:)?\/\//.test(href) ? href : L + href);
 
   /* ---- זיהוי הדף הנוכחי לצורך aria-current ---- */
   const currentFile = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
@@ -13,7 +23,7 @@
   const navItems = S.nav.map((item, i) => {
     const isCurrent = item.href.toLowerCase() === currentFile;
     return `<li style="--i:${i}">
-      <a href="${R}${item.href}" data-i18n-nav="${item.key}"${isCurrent ? ' aria-current="page"' : ''}>${item.he}</a>
+      <a href="${abs(item.href)}" data-i18n-nav="${item.key}"${isCurrent ? ' aria-current="page"' : ''}>${item.he}</a>
     </li>`;
   }).join('');
 
@@ -37,7 +47,7 @@
         <a class="header-link header-phone" href="${S.business.phoneHref}">${I.phone}<span>${S.business.phone}</span></a>
       </div>
 
-      <a class="header-logo" href="${R}index.html" data-i18n-aria-label="header.home" aria-label="לדף הבית">
+      <a class="header-logo" href="${L}index.html" data-i18n-aria-label="header.home" aria-label="לדף הבית">
         <img src="${R}assets/img/logo.svg" alt="קאזה דו ברזיל" width="200" height="144"
              onerror="this.onerror=null;this.src=\'${R}assets/img/logo-800.png\'">
       </a>
@@ -85,7 +95,7 @@
      2. פוטר
      ====================================================================== */
   const footerNav = S.nav.map(item =>
-    `<li><a href="${R}${item.href}" data-i18n-nav="${item.key}">${item.he}</a></li>`).join('');
+    `<li><a href="${abs(item.href)}" data-i18n-nav="${item.key}">${item.he}</a></li>`).join('');
 
   const footer = `
   <footer class="site-footer">
@@ -127,9 +137,9 @@
       <div class="footer-bottom">
         <p>© <span id="footerYear">2026</span> ${S.business.name} · <span data-i18n="footer.rights">כל הזכויות שמורות</span></p>
         <nav aria-label="קישורי מדיניות">
-          <a href="${R}privacy.html" data-i18n="footer.privacy">מדיניות פרטיות</a>
-          <a href="${R}accessibility.html" data-i18n="footer.accessibility">הצהרת נגישות</a>
-          <a href="${R}terms.html" data-i18n="footer.terms">תנאי שימוש</a>
+          <a href="${L}privacy.html" data-i18n="footer.privacy">מדיניות פרטיות</a>
+          <a href="${L}accessibility.html" data-i18n="footer.accessibility">הצהרת נגישות</a>
+          <a href="${L}terms.html" data-i18n="footer.terms">תנאי שימוש</a>
         </nav>
       </div>
     </div>
@@ -158,7 +168,7 @@
     <h2 id="cookieTitle">${I.cookie}<span data-i18n="cookies.title">האתר עושה שימוש בעוגיות</span></h2>
     <p id="cookieText">
       <span data-i18n="cookies.text">אנו משתמשים בעוגיות כדי לשפר את חוויית הגלישה ולנתח את השימוש באתר. לחיצה על ״אישור״ מהווה הסכמה לשימוש בעוגיות כמפורט במדיניות הפרטיות.</span>
-      <a href="${R}privacy.html" data-i18n="cookies.policy">מדיניות הפרטיות</a>
+      <a href="${L}privacy.html" data-i18n="cookies.policy">מדיניות הפרטיות</a>
     </p>
     <div class="cookie-actions">
       <button type="button" class="btn btn--gold" id="cookieAccept" data-i18n="cookies.accept">אישור</button>
@@ -214,7 +224,7 @@
       <button type="button" class="btn btn--ghost btn--sm btn--block" id="a11yReset">
         ${I.reset}<span data-i18n="a11y.reset">איפוס הגדרות</span>
       </button>
-      <a href="${R}accessibility.html" data-i18n="a11y.statement">הצהרת נגישות</a>
+      <a href="${L}accessibility.html" data-i18n="a11y.statement">הצהרת נגישות</a>
     </div>
   </div>
   <div class="a11y-guide-bar" id="a11yGuideBar" aria-hidden="true"></div>`;

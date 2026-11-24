@@ -1,0 +1,6 @@
+# מערכת ההזמנות של קאזה דו ברזיל
+User-agent: *
+Allow: /
+Disallow: /admin
+
+Sitemap: https://eilatecho.github.io/casa-order/sitemap.xml

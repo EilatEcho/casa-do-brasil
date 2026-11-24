@@ -13,6 +13,12 @@
    ========================================================================== */
 window.ROOT = (document.body && document.body.dataset.root) || '';
 
+/* LINK_ROOT - קידומת לקישורים לדפי האתר בלבד (לא לנכסים).
+   באתר עצמו היא ריקה והקישורים יחסיים כרגיל. באפליקציית ההזמנות
+   העצמאית, שיושבת בדומיין משלה, <body data-link-root="https://..."/>
+   מחזיר את הניווט והפוטר לאתר הראשי. */
+window.LINK_ROOT = (document.body && document.body.dataset.linkRoot) || window.ROOT;
+
 window.SITE = {
 
   /* ---------- פרטי העסק ---------- */

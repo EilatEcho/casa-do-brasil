@@ -1,0 +1,150 @@
+/* ==========================================================================
+   admin.css - מערכת הניהול של הזמנות הבשר
+   --------------------------------------------------------------------------
+   מסך פנימי: עברית בלבד, בלי אנימציות, בלי קישוטים. העדיפות היא
+   שאפשר יהיה לשנות מחיר או לכבות את המערכת בשלוש שניות מהנייד.
+   ========================================================================== */
+
+.adm {
+  width: 100%;
+  max-width: 1080px;
+  margin-inline: auto;
+  padding: var(--sp-7) var(--gutter) var(--section-y);
+}
+
+.adm-head {
+  display: flex; flex-wrap: wrap; gap: var(--sp-4);
+  align-items: baseline; justify-content: space-between;
+  margin-bottom: var(--sp-6);
+}
+.adm-head h1 { font-size: clamp(24px, 19px + 1.4vw, 36px); margin: 0; }
+.adm-who { color: var(--text-faint); font-size: var(--fs-body-sm); margin: 0; }
+.adm-who button {
+  background: none; border: 0; color: var(--accent);
+  text-decoration: underline; cursor: pointer; font: inherit;
+  padding: 0; margin-inline-start: 10px;
+}
+
+/* ---------- התחברות ---------- */
+.adm-login {
+  max-width: 420px;
+  margin: var(--sp-8) auto;
+  border: 1px solid var(--line-gold);
+  padding: clamp(24px, 18px + 1.2vw, 40px);
+}
+.adm-login h1 { font-size: clamp(21px, 18px + .8vw, 28px); margin-bottom: var(--sp-5); }
+
+/* ---------- לשוניות ---------- */
+.adm-tabs {
+  display: flex; flex-wrap: wrap; gap: 2px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: var(--sp-6);
+}
+.adm-tab {
+  background: none; border: 0; border-bottom: 3px solid transparent;
+  color: var(--text-soft); font: inherit; font-weight: 700;
+  padding: 12px var(--sp-4); cursor: pointer;
+}
+.adm-tab[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+.adm-panel[hidden] { display: none !important; }
+
+/* ---------- שדות ---------- */
+.adm-field { margin-bottom: var(--sp-4); }
+.adm-field > label { display: block; margin-bottom: 6px; font-weight: 600; }
+.adm-field small { display: block; color: var(--text-faint); font-size: var(--fs-body-sm); margin-top: 4px; }
+
+.adm input[type="text"], .adm input[type="email"], .adm input[type="password"],
+.adm input[type="number"], .adm textarea, .adm select,
+.adm-login input {
+  width: 100%;
+  padding: 11px var(--sp-4);
+  background: rgba(0, 0, 0, .3);
+  border: 1px solid var(--line-strong);
+  color: var(--text);
+  font: inherit;
+  border-radius: 0;
+}
+.adm textarea { resize: vertical; }
+.adm input:focus-visible, .adm textarea:focus-visible, .adm select:focus-visible,
+.adm-login input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.adm-row2 { display: grid; gap: 0 var(--sp-4); }
+@media (min-width: 680px) { .adm-row2 { grid-template-columns: 1fr 1fr; } }
+
+/* ---------- מצב המערכת: שלוש אפשרויות גדולות ---------- */
+.adm-modes { display: grid; gap: var(--sp-3); margin-bottom: var(--sp-5); }
+@media (min-width: 680px) { .adm-modes { grid-template-columns: repeat(3, 1fr); } }
+.adm-mode {
+  display: block; cursor: pointer;
+  border: 2px solid var(--line-strong);
+  padding: var(--sp-4);
+}
+.adm-mode input { margin-inline-end: 8px; accent-color: var(--brand-red); }
+.adm-mode strong { font-size: var(--fs-body-lg); }
+.adm-mode small { display: block; color: var(--text-faint); font-size: var(--fs-body-sm); margin-top: 6px; }
+.adm-mode:has(input:checked) { border-color: var(--accent); background: rgba(248, 211, 152, .08); }
+.adm-mode--off:has(input:checked)   { border-color: #c2504c; background: rgba(194, 80, 76, .12); }
+.adm-mode--phone:has(input:checked) { border-color: var(--carnival-orange); background: rgba(230, 126, 34, .1); }
+
+.adm-check { display: flex; align-items: center; gap: 10px; margin-bottom: var(--sp-3); }
+.adm-check input { accent-color: var(--brand-red); width: 18px; height: 18px; }
+
+/* ---------- טבלת המחירון ---------- */
+.adm-table-wrap { overflow-x: auto; }
+.adm-table { width: 100%; border-collapse: collapse; min-width: 560px; }
+.adm-table th, .adm-table td {
+  padding: 10px var(--sp-3);
+  border-bottom: 1px solid var(--line);
+  text-align: start;
+  vertical-align: middle;
+}
+.adm-table th { color: var(--text-faint); font-size: var(--fs-body-sm); font-weight: 700; }
+.adm-table tbody tr.is-off { opacity: .45; }
+.adm-table input[type="number"] { width: 110px; text-align: start; }
+.adm-cat-row td {
+  background: rgba(248, 211, 152, .07);
+  font-weight: 800; color: var(--accent);
+}
+.adm-unit { color: var(--text-faint); font-size: var(--fs-body-sm); }
+
+/* ---------- הזמנות ---------- */
+.adm-order {
+  border: 1px solid var(--line-strong);
+  padding: var(--sp-4);
+  margin-bottom: var(--sp-4);
+}
+.adm-order-top {
+  display: flex; flex-wrap: wrap; gap: var(--sp-3);
+  align-items: baseline; justify-content: space-between;
+  margin-bottom: var(--sp-3);
+}
+.adm-order-ref { font-weight: 800; color: var(--accent); font-variant-numeric: tabular-nums; }
+.adm-order-when { color: var(--text-faint); font-size: var(--fs-body-sm); }
+.adm-order dl { display: grid; grid-template-columns: auto 1fr; gap: 4px var(--sp-4); margin: 0 0 var(--sp-3); }
+.adm-order dt { color: var(--text-faint); font-size: var(--fs-body-sm); }
+.adm-order dd { margin: 0; }
+.adm-order ul { list-style: none; margin: 0 0 var(--sp-3); padding: 0; font-size: var(--fs-body-sm); }
+.adm-order ul li { display: flex; justify-content: space-between; gap: var(--sp-4); padding-block: 3px; }
+.adm-order-total { font-weight: 800; font-size: var(--fs-body-lg); }
+.adm-order-foot { display: flex; flex-wrap: wrap; gap: var(--sp-3); align-items: center; }
+.adm-order-foot select { width: auto; min-width: 150px; }
+.adm-order[data-status="new"]       { border-inline-start: 4px solid var(--carnival-green); }
+.adm-order[data-status="cancelled"] { opacity: .5; }
+.adm-promo-flag {
+  display: inline-block; font-size: var(--fs-body-sm); font-weight: 700;
+  color: var(--carnival-green); border: 1px solid currentColor; padding: 2px 8px;
+}
+
+/* ---------- הודעות ושמירה ---------- */
+.adm-bar {
+  position: sticky; bottom: 0; z-index: 5;
+  display: flex; flex-wrap: wrap; gap: var(--sp-4); align-items: center;
+  background: var(--bg-deep);
+  border-top: 1px solid var(--line-gold);
+  padding: var(--sp-4) 0;
+  margin-top: var(--sp-6);
+}
+.adm-msg { margin: 0; }
+.adm-msg.is-ok    { color: var(--carnival-green); font-weight: 700; }
+.adm-msg.is-error { color: #ff9a92; font-weight: 700; }
+.adm-empty { color: var(--text-faint); }

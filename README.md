@@ -102,6 +102,24 @@ assets/docs/        התפריט המודפס (PDF)
 7. [ ] **לעקוב שבועיים** אחרי Coverage ו-Performance. ירידה זמנית של 1-2 שבועות
        היא נורמלית; ירידה שנמשכת חודש מעידה על כתובת שנשברה.
 
+### מערכת ההזמנות ככתובת נפרדת
+
+`order-app/` היא מערכת ההזמנות כאתר עצמאי, מוכן לפריסה בכתובת משלו.
+
+⚠️ **אין לערוך קבצים בתוך `order-app/`.** היא נבנית מהמקור:
+עורכים את `order.html`, `admin.html`, `assets/css/order.css`,
+`assets/js/order.js` וכו' - ואז `python3 _tools/build_order_app.py`.
+כך פרטי העסק, מערכת העיצוב והתרגומים נשארים במקור אחד.
+
+- ההדר והפוטר מקשרים חזרה לאתר הראשי דרך `data-link-root` בתג ה-body.
+  הנכסים נשארים מקומיים - `img-src 'self'` ב-CSP חוסם תמונות מדומיין אחר.
+- מסך הניהול יושב ב-`/admin/` עם `noindex,nofollow` וחסימה ב-robots.
+- לשינוי הכתובת: `python3 _tools/build_order_app.py https://order.casadobrasil.co.il/`
+
+- [ ] **לבחור אירוח לאפליקציה** - מאגר GitHub שני, או Netlify. אחרי
+      שהכתובת נקבעת: לעדכן את `href` של פריט `order` ב-`SITE.nav`,
+      ולהפוך את `order.html` ו-`admin.html` באתר הראשי להפניות.
+
 ### שאר המשימות
 
 - [ ] **תוכן CASA FRIENDS** הוא טיוטה (`SITE.friends.draft = true`).
