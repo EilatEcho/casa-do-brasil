@@ -116,9 +116,22 @@ assets/docs/        התפריט המודפס (PDF)
 - מסך הניהול יושב ב-`/admin/` עם `noindex,nofollow` וחסימה ב-robots.
 - לשינוי הכתובת: `python3 _tools/build_order_app.py https://order.casadobrasil.co.il/`
 
-- [ ] **לבחור אירוח לאפליקציה** - מאגר GitHub שני, או Netlify. אחרי
-      שהכתובת נקבעת: לעדכן את `href` של פריט `order` ב-`SITE.nav`,
-      ולהפוך את `order.html` ו-`admin.html` באתר הראשי להפניות.
+**האירוח: Netlify.** הפרויקט `casa-do-brasil-order` כבר קיים בחשבון,
+בכתובת `https://casa-do-brasil-order.netlify.app`. `netlify.toml` בשורש
+המאגר מגדיר `publish = "order-app"` ובלי פקודת בנייה - התיקייה נבנית
+כאן ונכנסת ל-git.
+
+כותרות התגובה יושבות ב-`order-app/_headers` ונוצרות מאותו קבוע CSP
+כמו תג ה-meta שבדפים, כדי שלא ייפרדו. שם גם נמצא מה ש-GitHub Pages
+לא איפשר: HSTS, ‏X-Content-Type-Options ו-frame-ancestors.
+
+- [ ] **לחבר את המאגר ב-Netlify** - Add new project → Import from Git →
+      לבחור את `casa-do-brasil`. בלי build command, publish מגיע מה-toml.
+- [ ] **אחרי הדיפלוי הראשון**: לעדכן את `href` של פריט `order` ב-`SITE.nav`
+      לכתובת של האפליקציה, ולהפוך את `order.html` באתר הראשי להפניה.
+      עד אז `/order` באתר הראשי ממשיך לעבוד, כך ששום קישור לא נשבר.
+- [ ] **דומיין משלו** (אופציונלי): `order.casadobrasil.co.il` ב-Netlify,
+      ואז `python3 _tools/build_order_app.py https://order.casadobrasil.co.il/`
 
 ### שאר המשימות
 

@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 Disallow: /admin
 
-Sitemap: https://eilatecho.github.io/casa-order/sitemap.xml
+Sitemap: https://casa-do-brasil-order.netlify.app/sitemap.xml
