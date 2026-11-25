@@ -13,6 +13,12 @@
   const S = window.SITE, I = window.ICON, R = window.ROOT || '';
   const L = window.LINK_ROOT || R;
 
+  /* STANDALONE - מערכת ההזמנות כאתר עצמאי (order-app).
+     ⚠️ במצב הזה אין תפריט אתר, אין סרגל סושיאל ואין קישור להזמנת
+        שולחן: הדף עומד בפני עצמו ולא מפנה לשום אתר אחר.
+        תוסף הנגישות ובאנר הקוקיז נשארים - הם נדרשים בכל אתר ציבורי. */
+  const STANDALONE = !!(document.body && document.body.dataset.standalone);
+
   /* פריט ניווט יכול להצביע לכתובת מלאה (מערכת ההזמנות יושבת בדומיין
      משלה). במקרה כזה אסור להדביק לפניו קידומת. */
   const abs = href => (/^(https?:)?\/\//.test(href) ? href : L + href);
@@ -230,6 +236,51 @@
   <div class="a11y-guide-bar" id="a11yGuideBar" aria-hidden="true"></div>`;
 
   /* ======================================================================
+     גרסאות עצמאיות - הדר ופוטר בלי אף קישור החוצה
+     ====================================================================== */
+  const headerSolo = `
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <div class="header-start">
+        <a class="header-link header-phone" href="${S.business.phoneHref}">${I.phone}<span>${S.business.phone}</span></a>
+      </div>
+
+      <span class="header-logo">
+        <img src="${R}assets/img/logo.svg" alt="קאזה דו ברזיל" width="200" height="144"
+             onerror="this.onerror=null;this.src=\'${R}assets/img/logo-800.png\'">
+      </span>
+
+      <div class="header-end">
+        <button class="header-link" id="langToggle" type="button"
+                data-i18n-aria-label="header.langLabel" aria-label="Switch to English">
+          ${I.globe}<span data-i18n="header.lang">EN</span>
+        </button>
+      </div>
+    </div>
+  </header>`;
+
+  const footerSolo = `
+  <footer class="site-footer site-footer--solo">
+    <div class="container">
+      <p class="footer-solo-name">${S.business.name}</p>
+      <p class="footer-solo-line">
+        <span data-i18n-text="address">${S.business.address}</span>
+      </p>
+      <p class="footer-solo-line">
+        <span data-i18n-text="hours">${S.business.hours}</span>
+      </p>
+      <p class="footer-solo-line">
+        <a href="${S.business.phoneHref}" dir="ltr">${S.business.phone}</a>
+      </p>
+      <nav class="footer-solo-legal" aria-label="מדיניות">
+        <a href="${R}privacy.html" data-i18n="footer.privacy">מדיניות פרטיות</a>
+        <a href="${R}accessibility.html" data-i18n="footer.accessibility">הצהרת נגישות</a>
+      </nav>
+      <p class="footer-solo-copy">&copy; <span id="footerYear"></span> ${S.business.name}</p>
+    </div>
+  </footer>`;
+
+  /* ======================================================================
      הזרקה לדף
      ====================================================================== */
   function mount(selector, html, position) {
@@ -237,9 +288,9 @@
     if (host) host.insertAdjacentHTML(position, html);
   }
 
-  mount('[data-partial="header"]', header, 'afterbegin');
-  mount('[data-partial="footer"]', footer, 'afterbegin');
-  mount('body', socialBar + cookieBanner + a11yWidget, 'beforeend');
+  mount('[data-partial="header"]', STANDALONE ? headerSolo : header, 'afterbegin');
+  mount('[data-partial="footer"]', STANDALONE ? footerSolo : footer, 'afterbegin');
+  mount('body', (STANDALONE ? '' : socialBar) + cookieBanner + a11yWidget, 'beforeend');
 
   const yearEl = document.getElementById('footerYear');
   if (yearEl) yearEl.textContent = new Date().getFullYear();

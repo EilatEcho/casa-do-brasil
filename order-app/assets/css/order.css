@@ -314,6 +314,32 @@
 .ord-done-ref strong { color: var(--accent); font-variant-numeric: tabular-nums; }
 .ord-done-lead { margin-top: var(--sp-4) !important; font-size: var(--fs-body-sm); }
 
+/* ==========================================================================
+   פוטר של האפליקציה העצמאית
+   --------------------------------------------------------------------------
+   בלי עמודות ובלי תפריט אתר - רק מי אנחנו, איפה, מתי ואיך מתקשרים.
+   ========================================================================== */
+.site-footer--solo { text-align: center; padding-block: var(--sp-7); }
+.footer-solo-name {
+  font-size: var(--fs-body-lg);
+  font-weight: 800;
+  color: var(--accent);
+  margin-bottom: var(--sp-3);
+}
+.footer-solo-line { color: var(--text-soft); margin: 0 0 6px; }
+.footer-solo-line a { color: var(--text-soft); }
+.footer-solo-legal {
+  display: flex; flex-wrap: wrap; gap: var(--sp-4);
+  justify-content: center;
+  margin-top: var(--sp-5);
+  font-size: var(--fs-body-sm);
+}
+.footer-solo-copy {
+  margin: var(--sp-5) 0 0;
+  font-size: var(--fs-body-sm);
+  color: var(--text-faint);
+}
+
 /* ---------- מצבי נגישות ---------- */
 html.a11y-no-motion .ord-step-btn { transition: none !important; }
 html.a11y-contrast .ord-form,
