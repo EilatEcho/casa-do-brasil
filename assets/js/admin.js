@@ -116,6 +116,25 @@
           '<input id="setArea" type="text" value="' + esc(s.delivery_area_he) + '"></div>' +
       '</div>' +
 
+      '<h2>מועדי איסוף</h2>' +
+      '<div class="adm-row2">' +
+        '<div class="adm-field"><label for="setFrom">פתיחה</label>' +
+          '<input id="setFrom" type="time" value="' + esc(String(s.pickup_from).slice(0,5)) + '"></div>' +
+        '<div class="adm-field"><label for="setTo">סגירה</label>' +
+          '<input id="setTo" type="time" value="' + esc(String(s.pickup_to).slice(0,5)) + '"></div>' +
+      '</div>' +
+      '<div class="adm-row2">' +
+        '<div class="adm-field"><label for="setLead">זמן הכנה מינימלי (דקות)</label>' +
+          '<input id="setLead2" type="number" min="0" step="15" value="' + esc(s.lead_minutes) + '">' +
+          '<small>הזמנה להיום לא תוכל להיקבע קרוב יותר מזה.</small></div>' +
+        '<div class="adm-field"><label for="setDays">עד כמה ימים קדימה</label>' +
+          '<input id="setDays" type="number" min="0" max="90" step="1" value="' + esc(s.max_days_ahead) + '"></div>' +
+      '</div>' +
+      '<div class="adm-field"><label for="setSlot">מרווח בין משבצות</label>' +
+        '<select id="setSlot">' + [15,30,60].map(function (m) {
+          return '<option value="' + m + '"' + (Number(s.slot_minutes) === m ? ' selected' : '') + '>' + m + ' דקות</option>';
+        }).join('') + '</select></div>' +
+
       '<div class="adm-field"><label for="setMin">מינימום להזמנה (₪, 0 = בלי מינימום)</label>' +
         '<input id="setMin" type="number" min="0" step="1" value="' + esc(s.min_order) + '">' +
         '<small>נבדק בשרת. הזמנה מתחת לסכום תידחה.</small></div>' +
@@ -156,7 +175,12 @@
       promo_he:         $('setPromoTxt').value.trim(),
       notice_he:        $('setNotice').value.trim(),
       closed_he:        $('setClosed').value.trim(),
-      lead_time_he:     $('setLead').value.trim()
+      lead_time_he:     $('setLead').value.trim(),
+      pickup_from:      $('setFrom').value,
+      pickup_to:        $('setTo').value,
+      lead_minutes:     Number($('setLead2').value) || 0,
+      max_days_ahead:   Number($('setDays').value) || 0,
+      slot_minutes:     Number($('setSlot').value) || 30
     };
     say(msg, 'שומר…');
     try {
@@ -286,6 +310,11 @@
         '<dt>לקוח</dt><dd>' + esc(o.customer_name) + '</dd>' +
         '<dt>טלפון</dt><dd><a href="tel:' + esc(o.phone) + '" dir="ltr">' + esc(o.phone) + '</a></dd>' +
         '<dt>מסירה</dt><dd>' + (o.method === 'delivery' ? 'משלוח' : 'איסוף עצמי') + '</dd>' +
+        (o.pickup_date
+          ? '<dt>מועד איסוף</dt><dd class="adm-pickup">' +
+            esc(new Date(o.pickup_date + 'T12:00:00').toLocaleDateString('he-IL',
+                { weekday: 'long', day: '2-digit', month: '2-digit' })) +
+            ' · ' + esc(String(o.pickup_time || '').slice(0, 5)) + '</dd>' : '') +
         (o.address ? '<dt>כתובת</dt><dd>' + esc(o.address) + '</dd>' : '') +
         (o.notes ? '<dt>הערות</dt><dd>' + esc(o.notes) + '</dd>' : '') +
       '</dl>' +

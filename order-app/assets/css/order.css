@@ -266,6 +266,7 @@
 @media (min-width: 620px) { .ord-grid2 { grid-template-columns: 1fr 1fr; } }
 
 .ord-field input,
+.ord-field select,
 .ord-field textarea {
   width: 100%;
   padding: 12px var(--sp-4);
@@ -276,7 +277,10 @@
   border-radius: 0;
 }
 .ord-field input:focus-visible,
+.ord-field select:focus-visible,
 .ord-field textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+/* ⚠️ גובה מינימלי לבוררי המועד - שטח נגיעה במובייל */
+.ord-field select { min-height: 46px; }
 .ord-field textarea { resize: vertical; }
 
 .ord-pay {
@@ -313,6 +317,8 @@
 }
 .ord-done-ref strong { color: var(--accent); font-variant-numeric: tabular-nums; }
 .ord-done-lead { margin-top: var(--sp-4) !important; font-size: var(--fs-body-sm); }
+.ord-done-when { color: var(--text) !important; margin-bottom: var(--sp-4) !important; }
+.ord-done-when strong { color: var(--accent); }
 
 /* ==========================================================================
    פוטר של האפליקציה העצמאית

@@ -92,6 +92,93 @@
       '</div>';
   }
 
+  /* ---------- מועד האיסוף ----------
+     ⚠️ המשבצות נבנות מחלון הפתיחה שבהגדרות, ולא מרשימה קבועה בקוד.
+        לשעה של היום מסוננות משבצות שכבר עברו או שקרובות מדי - זמן
+        ההכנה המינימלי. אותה בדיקה בדיוק רצה שוב בשרת, כי שעון הדפדפן
+        של הלקוח אינו מקור אמין. */
+  const pad = n => String(n).padStart(2, '0');
+  const toMin = hhmm => { const [h, m] = String(hhmm).split(':'); return (+h) * 60 + (+m); };
+
+  function todayIL() {
+    /* התאריך בישראל, לא במכשיר של הגולש */
+    const p = new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'Asia/Jerusalem', year: 'numeric', month: '2-digit', day: '2-digit'
+    }).format(new Date());
+    return p;   /* YYYY-MM-DD */
+  }
+
+  function nowMinIL() {
+    const p = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Asia/Jerusalem', hour: '2-digit', minute: '2-digit', hour12: false
+    }).format(new Date());
+    return toMin(p);
+  }
+
+  function slotsFor(dateStr) {
+    const from = toMin(settings.pickup_from || '12:00');
+    const to   = toMin(settings.pickup_to   || '22:30');
+    const step = Number(settings.slot_minutes) || 30;
+    const lead = Number(settings.lead_minutes) || 0;
+    const earliest = (dateStr === todayIL()) ? nowMinIL() + lead : -1;
+
+    const out = [];
+    for (let m = from; m <= to; m += step) {
+      if (m < earliest) continue;
+      out.push(pad(Math.floor(m / 60)) + ':' + pad(m % 60));
+    }
+    return out;
+  }
+
+  function dateOptions() {
+    const max = Number(settings.max_days_ahead) || 14;
+    const base = new Date(todayIL() + 'T12:00:00');
+    const out = [];
+    for (let i = 0; i <= max; i++) {
+      const d = new Date(base.getTime() + i * 86400000);
+      const iso = d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+      if (!slotsFor(iso).length) continue;        /* יום שכבר אין בו משבצת פנויה */
+      const label = i === 0 ? t('ord.today') : i === 1 ? t('ord.tomorrow')
+        : new Intl.DateTimeFormat(lang() === 'en' ? 'en-GB' : 'he-IL',
+            { weekday: 'long', day: 'numeric', month: 'numeric', timeZone: 'Asia/Jerusalem' }).format(d);
+      out.push({ iso: iso, label: label });
+    }
+    return out;
+  }
+
+  function pickupWhenBlock() {
+    if (!settings.pickup_enabled) return '';
+    const days = dateOptions();
+    if (!days.length) {
+      return '<p class="ord-msg is-error">' + esc(t('ord.noSlots')) + '</p>';
+    }
+    const slots = slotsFor(days[0].iso);
+    return '<div id="ordWhenWrap" class="ord-grid2">' +
+      '<div class="ord-field">' +
+        '<label for="ordDate">' + esc(t('ord.pickupDate')) + '</label>' +
+        '<select id="ordDate" required>' +
+          days.map(d => '<option value="' + esc(d.iso) + '">' + esc(d.label) + '</option>').join('') +
+        '</select>' +
+      '</div>' +
+      '<div class="ord-field">' +
+        '<label for="ordTime">' + esc(t('ord.pickupTime')) + '</label>' +
+        '<select id="ordTime" required>' +
+          slots.map(s => '<option value="' + s + '">' + s + '</option>').join('') +
+        '</select>' +
+      '</div>' +
+    '</div>';
+  }
+
+  /* בהחלפת תאריך - בונים מחדש את השעות, כי היום הנוכחי מוגבל בזמן ההכנה */
+  function syncSlots() {
+    const dEl = $('ordDate'), tEl = $('ordTime');
+    if (!dEl || !tEl) return;
+    const keep = tEl.value;
+    const slots = slotsFor(dEl.value);
+    tEl.innerHTML = slots.map(s => '<option value="' + s + '">' + s + '</option>').join('');
+    if (slots.includes(keep)) tEl.value = keep;
+  }
+
   function phoneBlock() {
     const B = window.SITE.business;
     return '<p class="ord-callrow">' +
@@ -247,7 +334,12 @@
     ADDRESS_REQUIRED: 'ord.errAddress',
     DELIVERY_DISABLED:'ord.errDelivery',
     PICKUP_DISABLED:  'ord.errPickup',
-    BELOW_MINIMUM:    'ord.errMinimum'
+    BELOW_MINIMUM:    'ord.errMinimum',
+    PICKUP_TIME_REQUIRED: 'ord.errWhen',
+    PICKUP_DATE_PAST: 'ord.errWhenPast',
+    PICKUP_DATE_FAR:  'ord.errWhenFar',
+    PICKUP_TIME_CLOSED: 'ord.errWhenClosed',
+    PICKUP_TOO_SOON:  'ord.errWhenSoon'
   };
 
   async function submit(e) {
@@ -272,6 +364,8 @@
       p_method:  T.method,
       p_address: T.method === 'delivery' ? $('ordAddress').value.trim() : null,
       p_notes:   $('ordNotes').value.trim() || null,
+      p_pickup_date: T.method === 'pickup' && $('ordDate') ? $('ordDate').value : null,
+      p_pickup_time: T.method === 'pickup' && $('ordTime') ? $('ordTime').value : null,
       p_items:   T.lines.map(l => {
         const o = { slug: l.p.slug, qty: l.q };
         const n = (notes[l.p.slug] || '').trim();
@@ -302,6 +396,12 @@
         '<p class="ord-done-mark" aria-hidden="true">✓</p>' +
         '<h2>' + esc(t('ord.doneTitle')) + '</h2>' +
         (o && o.ref ? '<p class="ord-done-ref">' + esc(t('ord.doneRef')) + ' <strong>' + esc(o.ref) + '</strong></p>' : '') +
+        (o && o.pickup_date
+          ? '<p class="ord-done-when">' + esc(t('ord.doneWhen')) + ' <strong>' +
+            esc(new Intl.DateTimeFormat(lang() === 'en' ? 'en-GB' : 'he-IL',
+                { weekday: 'long', day: 'numeric', month: 'numeric' })
+                .format(new Date(o.pickup_date + 'T12:00:00'))) +
+            ', ' + esc(o.pickup_time || '') + '</strong></p>' : '') +
         '<p>' + esc(t('ord.doneText')) + '</p>' +
         (lead ? '<p class="ord-done-lead">' + esc(lead) + '</p>' : '') +
         '<p class="ord-callrow">' +
@@ -319,6 +419,12 @@
     const on = m === 'delivery';
     wrap.hidden = !on;
     $('ordAddress').required = on;
+    const when = $('ordWhenWrap');
+    if (when) {
+      when.hidden = on;
+      if ($('ordDate')) $('ordDate').required = !on;
+      if ($('ordTime')) $('ordTime').required = !on;
+    }
     renderCart();
   }
 
@@ -347,6 +453,7 @@
     });
     document.querySelectorAll('input[name="ordMethod"]').forEach(r =>
       r.addEventListener('change', syncMethod));
+    if ($('ordDate')) $('ordDate').addEventListener('change', syncSlots);
     $('ordForm').addEventListener('submit', submit);
   }
 
@@ -376,6 +483,8 @@
           '<div id="ordCart" class="ord-cart"></div>' +
 
           methodBlock() +
+
+          pickupWhenBlock() +
 
           '<div id="ordAddressWrap" class="ord-field" hidden>' +
             '<label for="ordAddress">' + esc(t('ord.address')) + '</label>' +
